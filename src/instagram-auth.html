@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Graph API Token Generator</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .step {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 14px;
+        }
+        button {
+            background: #0095f6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #0081d6;
+        }
+        code {
+            background: #e8e8e8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .token {
+            background: #fff;
+            padding: 15px;
+            border: 2px solid #0095f6;
+            border-radius: 4px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Instagram Graph API Token Generator (2026)</h1>
+
+    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <p><strong>⚠️ IMPORTANT:</strong> The Instagram Basic Display API was deprecated on December 4, 2024.</p>
+        <p>This tool now uses the <strong>Instagram Graph API</strong> which requires a Business/Creator Instagram account.</p>
+        <p>Follow the complete setup guide in <code>INSTAGRAM_SETUP.md</code></p>
+    </div>
+
+    <div class="step" style="background: #e3f2fd; border: 2px solid #1976d2;">
+        <h2>🚀 Quick Start - Test Your Token First</h2>
+        <p>Paste your User Access Token from Graph API Explorer to verify it works:</p>
+        <input type="text" id="quick-token" placeholder="Paste your User Access Token here">
+        <button onclick="quickTest()">Quick Test Token</button>
+        <div id="quick-test-result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Prerequisites Checklist</h2>
+        <ul style="list-style: none; padding-left: 0;">
+            <li>☐ Instagram account converted to Business/Creator</li>
+            <li>☐ Facebook Page created and linked to Instagram</li>
+            <li>☐ Facebook Developer account created</li>
+            <li>☐ Facebook App created with Instagram product added</li>
+            <li>☐ Instagram account added as tester and invite accepted</li>
+        </ul>
+        <p><em>If you haven't completed these steps, please refer to INSTAGRAM_SETUP.md first.</em></p>
+    </div>
+
+    <div class="step">
+        <h2>Easy Method: Use Graph API Explorer</h2>
+        <p>The easiest way to get your token is using Facebook's Graph API Explorer:</p>
+        <ol>
+            <li>Go to <a href="https://developers.facebook.com/tools/explorer/" target="_blank">Graph API Explorer</a></li>
+            <li>Select your app from the dropdown</li>
+            <li>Click "Generate Access Token" → "Get User Access Token"</li>
+            <li>Grant permissions: <code>instagram_basic</code>, <code>pages_show_list</code>, <code>instagram_manage_insights</code></li>
+            <li>Get Page Access Token (see step below)</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Step 1: Enter Your App Credentials</h2>
+        <p>Get these from your Facebook Developer Dashboard</p>
+        <input type="text" id="app-id" placeholder="Facebook App ID">
+        <input type="text" id="app-secret" placeholder="Facebook App Secret">
+    </div>
+
+    <div class="step">
+        <h2>Step 2: Get Page Access Token</h2>
+        <p>Enter the User Access Token from Graph API Explorer:</p>
+        <input type="text" id="user-token" placeholder="User Access Token">
+        <button onclick="getPageToken()">Get Page Access Token</button>
+        <div id="page-token-result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 3: Get Instagram Business Account ID</h2>
+        <input type="text" id="page-token" placeholder="Page Access Token">
+        <button onclick="getIGBusinessId()">Get Instagram Business Account ID</button>
+        <div id="ig-id-result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 4: Exchange for Long-Lived Token</h2>
+        <input type="text" id="short-token" placeholder="Page Access Token (Short-Lived)">
+        <button onclick="getLongToken()">Get Long-Lived Token (60 days)</button>
+        <div id="long-token-result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 5: Test Your Token</h2>
+        <input type="text" id="ig-business-id" placeholder="Instagram Business Account ID">
+        <input type="text" id="test-token" placeholder="Long-Lived Access Token">
+        <button onclick="testToken()">Test Token & Get Posts</button>
+        <div id="test-result"></div>
+    </div>
+
+    <script>
+        async function getPageToken() {
+            const userToken = document.getElementById('user-token').value;
+
+            if (!userToken) {
+                alert('Please enter User Access Token');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://graph.facebook.com/v19.0/me/accounts?access_token=${userToken}`);
+                const data = await response.json();
+
+                // Check for API errors
+                if (data.error) {
+                    let errorMsg = `<div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                        <h3>❌ Error: ${data.error.message}</h3>
+                        <p><strong>Error Code:</strong> ${data.error.code}</p>
+                        <p><strong>Error Type:</strong> ${data.error.type}</p>
+                        <h4>Common Solutions:</h4>
+                        <ul>
+                            <li>Your token may have expired - generate a new one from Graph API Explorer</li>
+                            <li>Make sure you selected the correct app in Graph API Explorer</li>
+                            <li>Verify you granted the <code>pages_show_list</code> permission</li>
+                            <li>Try logging out and back into Facebook Developer</li>
+                        </ul>
+                    </div>`;
+                    document.getElementById('page-token-result').innerHTML = errorMsg;
+                    return;
+                }
+
+                if (data.data && data.data.length > 0) {
+                    let html = '<h3>✅ Connected Facebook Pages:</h3>';
+                    data.data.forEach((page, index) => {
+                        html += `
+                            <div style="background: #fff; padding: 10px; margin: 10px 0; border-radius: 4px; border: 1px solid #ddd;">
+                                <p><strong>${page.name}</strong></p>
+                                <p>Page ID: ${page.id}</p>
+                                <div class="token">${page.access_token}</div>
+                                <button onclick="copyToken('${page.access_token}')">Copy Page Token</button>
+                            </div>
+                        `;
+                        if (index === 0) {
+                            document.getElementById('page-token').value = page.access_token;
+                        }
+                    });
+                    document.getElementById('page-token-result').innerHTML = html;
+                } else {
+                    // No pages found
+                    document.getElementById('page-token-result').innerHTML = `
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 4px; color: #856404;">
+                            <h3>⚠️ No Facebook Pages Found</h3>
+                            <p>Your account doesn't have any Facebook Pages. You need a Facebook Page to use Instagram Graph API.</p>
+                            <h4>To fix this:</h4>
+                            <ol>
+                                <li>Go to <a href="https://www.facebook.com/pages/create" target="_blank">Create a Facebook Page</a></li>
+                                <li>Choose "Business or Brand"</li>
+                                <li>Fill in your business information</li>
+                                <li>After creation, go to your Page Settings → Instagram</li>
+                                <li>Connect your Instagram Business account to the Page</li>
+                                <li>Come back here and try again with a new User Access Token</li>
+                            </ol>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('page-token-result').innerHTML = `
+                    <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                        <h3>❌ Network Error</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>This usually means:</p>
+                        <ul>
+                            <li>Your internet connection is down</li>
+                            <li>Facebook's API is temporarily unavailable</li>
+                            <li>CORS issues (try using a different browser)</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        async function getIGBusinessId() {
+            const pageToken = document.getElementById('page-token').value;
+
+            if (!pageToken) {
+                alert('Please enter Page Access Token');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://graph.facebook.com/v19.0/me?fields=instagram_business_account&access_token=${pageToken}`);
+                const data = await response.json();
+
+                // Check for API errors
+                if (data.error) {
+                    document.getElementById('ig-id-result').innerHTML = `
+                        <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                            <h3>❌ Error: ${data.error.message}</h3>
+                            <p><strong>Common Solutions:</strong></p>
+                            <ul>
+                                <li>Make sure you're using the Page Access Token, not the User Access Token</li>
+                                <li>Verify the token hasn't expired</li>
+                                <li>Check that your app has the required permissions</li>
+                            </ul>
+                        </div>
+                    `;
+                    return;
+                }
+
+                if (data.instagram_business_account) {
+                    const igId = data.instagram_business_account.id;
+                    document.getElementById('ig-id-result').innerHTML = `
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 4px; color: #2e7d32;">
+                            <h3>✅ Instagram Business Account ID:</h3>
+                            <div class="token">${igId}</div>
+                            <button onclick="copyToken('${igId}')">Copy ID</button>
+                            <p><strong>Save this ID! You'll need it in your website code.</strong></p>
+                        </div>
+                    `;
+                    document.getElementById('ig-business-id').value = igId;
+                    document.getElementById('short-token').value = pageToken;
+                } else {
+                    document.getElementById('ig-id-result').innerHTML = `
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 4px; color: #856404;">
+                            <h3>⚠️ No Instagram Business Account Found</h3>
+                            <p>Your Facebook Page is not connected to an Instagram Business account.</p>
+                            <h4>To fix this:</h4>
+                            <ol>
+                                <li>Convert your Instagram account to a Business or Creator account:
+                                    <ul>
+                                        <li>Open Instagram app → Settings → Account</li>
+                                        <li>Switch to Professional Account → Business</li>
+                                    </ul>
+                                </li>
+                                <li>Link Instagram to your Facebook Page:
+                                    <ul>
+                                        <li>Go to your Facebook Page → Settings → Instagram</li>
+                                        <li>Click "Connect Account" and log in to Instagram</li>
+                                    </ul>
+                                </li>
+                                <li>Wait a few minutes, then try again</li>
+                            </ol>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('ig-id-result').innerHTML = `
+                    <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                        <h3>❌ Network Error</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function getLongToken() {
+            const appId = document.getElementById('app-id').value;
+            const appSecret = document.getElementById('app-secret').value;
+            const shortToken = document.getElementById('short-token').value;
+
+            if (!appId || !appSecret || !shortToken) {
+                alert('Please enter App ID, App Secret, and Page Access Token');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://graph.facebook.com/v19.0/oauth/access_token?grant_type=fb_exchange_token&client_id=${appId}&client_secret=${appSecret}&fb_exchange_token=${shortToken}`);
+                const data = await response.json();
+
+                // Check for API errors
+                if (data.error) {
+                    document.getElementById('long-token-result').innerHTML = `
+                        <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                            <h3>❌ Error: ${data.error.message}</h3>
+                            <p><strong>Common Solutions:</strong></p>
+                            <ul>
+                                <li>Verify your App ID and App Secret are correct (check Facebook Developer Dashboard)</li>
+                                <li>Make sure you're using the Page Access Token, not the User Access Token</li>
+                                <li>Your token may have already expired - get a new one from Step 2</li>
+                                <li>Check that your app is not in Development Mode restrictions</li>
+                            </ul>
+                        </div>
+                    `;
+                    return;
+                }
+
+                if (data.access_token) {
+                    const expiryDays = data.expires_in ? Math.floor(data.expires_in / 86400) : 'Unknown';
+                    document.getElementById('long-token-result').innerHTML = `
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 4px; color: #2e7d32;">
+                            <h3>✅ Long-Lived Page Access Token (valid for ~60 days):</h3>
+                            <div class="token">${data.access_token}</div>
+                            ${data.expires_in ? `<p>Expires in: ${data.expires_in} seconds (~${expiryDays} days)</p>` : ''}
+                            <p><strong>⚠️ IMPORTANT: Save this token securely! Use it in your website code.</strong></p>
+                            <p><strong>Note:</strong> You'll need to refresh this token every 60 days.</p>
+                            <button onclick="copyToken('${data.access_token}')">Copy Token</button>
+                        </div>
+                    `;
+                    document.getElementById('test-token').value = data.access_token;
+                } else {
+                    document.getElementById('long-token-result').innerHTML = `
+                        <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                            <h3>❌ Unexpected Response</h3>
+                            <p>The API returned an unexpected response:</p>
+                            <pre style="background: #f5f5f5; padding: 10px; overflow: auto;">${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('long-token-result').innerHTML = `
+                    <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                        <h3>❌ Network Error</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testToken() {
+            const igBusinessId = document.getElementById('ig-business-id').value;
+            const token = document.getElementById('test-token').value;
+
+            if (!igBusinessId || !token) {
+                alert('Please enter Instagram Business Account ID and Access Token');
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('test-result').innerHTML = `
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 4px; color: #1565c0;">
+                    <p>⏳ Testing token and fetching posts...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`https://graph.facebook.com/v19.0/${igBusinessId}/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp&limit=10&access_token=${token}`);
+                const data = await response.json();
+
+                // Check for API errors
+                if (data.error) {
+                    document.getElementById('test-result').innerHTML = `
+                        <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                            <h3>❌ Error: ${data.error.message}</h3>
+                            <p><strong>Error Code:</strong> ${data.error.code}</p>
+                            <h4>Common Solutions:</h4>
+                            <ul>
+                                <li>Verify the Instagram Business Account ID is correct</li>
+                                <li>Make sure you're using the long-lived token from Step 4</li>
+                                <li>Check that your Instagram account has at least one post</li>
+                                <li>Verify your app has the <code>instagram_basic</code> permission</li>
+                                <li>Make sure the Instagram account is added as a tester in your Facebook App</li>
+                            </ul>
+                        </div>
+                    `;
+                    return;
+                }
+
+                if (data.data && data.data.length > 0) {
+                    let html = `
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 4px; color: #2e7d32;">
+                            <h3>✅ Success! Found ${data.data.length} Instagram Posts</h3>
+                        </div>
+                    `;
+                    html += '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;">';
+
+                    data.data.slice(0, 6).forEach(post => {
+                        const imageUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
+                        html += `
+                            <div style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden;">
+                                <img src="${imageUrl}" style="width: 100%; height: 150px; object-fit: cover;">
+                                <p style="font-size: 12px; margin: 5px; text-align: center;">${post.media_type}</p>
+                            </div>
+                        `;
+                    });
+
+                    html += '</div>';
+                    html += `
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 4px; margin-top: 15px; color: #856404;">
+                            <h4>✅ Your Token is Working!</h4>
+                            <p><strong>Next Steps:</strong></p>
+                            <ol>
+                                <li>Copy the Instagram Business Account ID: <code>${igBusinessId}</code></li>
+                                <li>Copy the Long-Lived Access Token from Step 4</li>
+                                <li>Update your <code>instagram-feed.js</code> file with these values</li>
+                                <li>Set a reminder to refresh your token in ~50 days</li>
+                            </ol>
+                        </div>
+                    `;
+                    document.getElementById('test-result').innerHTML = html;
+                } else if (data.data && data.data.length === 0) {
+                    document.getElementById('test-result').innerHTML = `
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 4px; color: #856404;">
+                            <h3>⚠️ No Posts Found</h3>
+                            <p>The API call succeeded, but your Instagram account has no posts.</p>
+                            <p><strong>To fix this:</strong></p>
+                            <ul>
+                                <li>Make sure your Instagram Business account has at least one published post</li>
+                                <li>Wait a few minutes after posting, then try again</li>
+                                <li>Verify you're using the correct Instagram Business Account ID</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('test-result').innerHTML = `
+                        <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                            <h3>❌ Unexpected Response</h3>
+                            <pre style="background: #f5f5f5; padding: 10px; overflow: auto;">${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('test-result').innerHTML = `
+                    <div style="background: #ffebee; padding: 15px; border-radius: 4px; color: #c62828;">
+                        <h3>❌ Network Error</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>This could mean:</p>
+                        <ul>
+                            <li>Your internet connection is down</li>
+                            <li>Facebook's API is temporarily unavailable</li>
+                            <li>The request was blocked (check browser console for CORS errors)</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        async function quickTest() {
+            const token = document.getElementById('quick-token').value;
+
+            if (!token) {
+                alert('Please paste your User Access Token');
+                return;
+            }
+
+            document.getElementById('quick-test-result').innerHTML = `
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 4px; margin-top: 10px; color: #1565c0;">
+                    <p>⏳ Testing token...</p>
+                </div>
+            `;
+
+            try {
+                // Test 1: Get user info
+                const userResponse = await fetch(`https://graph.facebook.com/v24.0/me?fields=id,name&access_token=${token}`);
+                const userData = await userResponse.json();
+
+                if (userData.error) {
+                    document.getElementById('quick-test-result').innerHTML = `
+                        <div style="background: #ffebee; padding: 15px; border-radius: 4px; margin-top: 10px; color: #c62828;">
+                            <h3>❌ Token Error</h3>
+                            <p><strong>Error:</strong> ${userData.error.message}</p>
+                            <p>Your token is invalid or expired. Get a new one from Graph API Explorer.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Test 2: Get pages
+                const pagesResponse = await fetch(`https://graph.facebook.com/v24.0/me/accounts?access_token=${token}`);
+                const pagesData = await pagesResponse.json();
+
+                let html = `
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 4px; margin-top: 10px; color: #2e7d32;">
+                        <h3>✅ Token is Valid!</h3>
+                        <p><strong>Your Account:</strong> ${userData.name} (ID: ${userData.id})</p>
+                    </div>
+                `;
+
+                if (pagesData.data && pagesData.data.length > 0) {
+                    html += `
+                        <div style="background: #fff; padding: 15px; border-radius: 4px; margin-top: 10px; border: 1px solid #ddd;">
+                            <h4>✅ Found ${pagesData.data.length} Facebook Page(s):</h4>
+                    `;
+
+                    for (const page of pagesData.data) {
+                        html += `
+                            <div style="background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 4px;">
+                                <p><strong>${page.name}</strong> (ID: ${page.id})</p>
+                        `;
+
+                        // Try to get Instagram Business Account for this page
+                        try {
+                            const igResponse = await fetch(`https://graph.facebook.com/v24.0/${page.id}?fields=instagram_business_account&access_token=${page.access_token}`);
+                            const igData = await igResponse.json();
+
+                            if (igData.instagram_business_account) {
+                                html += `<p style="color: #2e7d32;">✅ Instagram Connected: ${igData.instagram_business_account.id}</p>`;
+                            } else {
+                                html += `<p style="color: #f57c00;">⚠️ No Instagram Business Account linked to this page</p>`;
+                            }
+                        } catch (e) {
+                            html += `<p style="color: #c62828;">❌ Could not check Instagram: ${e.message}</p>`;
+                        }
+
+                        html += `</div>`;
+                    }
+
+                    html += `
+                            <p style="margin-top: 15px;"><strong>Ready to continue!</strong> Paste your token in Step 2 below.</p>
+                        </div>
+                    `;
+
+                    // Auto-fill the token in Step 2
+                    document.getElementById('user-token').value = token;
+                } else {
+                    html += `
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 4px; margin-top: 10px; color: #856404;">
+                            <h4>⚠️ No Facebook Pages Found</h4>
+                            <p>You need to create a Facebook Page first.</p>
+                            <p><a href="https://www.facebook.com/pages/create" target="_blank">Create a Facebook Page →</a></p>
+                        </div>
+                    `;
+                }
+
+                document.getElementById('quick-test-result').innerHTML = html;
+
+            } catch (error) {
+                document.getElementById('quick-test-result').innerHTML = `
+                    <div style="background: #ffebee; padding: 15px; border-radius: 4px; margin-top: 10px; color: #c62828;">
+                        <h3>❌ Error</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Check your internet connection or try a different browser.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function copyToken(token) {
+            navigator.clipboard.writeText(token);
+            alert('Copied to clipboard!');
+        }
+    </script>
+</body>
+</html>

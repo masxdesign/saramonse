@@ -13,7 +13,13 @@
       "Bash(cat:*)",
       "Bash(git checkout:*)",
       "Bash(git rm:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(ren:*)",
+      "Bash(cp:*)",
+      "Bash(srcindex.njk)",
+      "Bash(npx @tailwindcss/cli:*)",
+      "Bash(npx @11ty/eleventy)"
     ],
     "deny": [],
     "ask": []

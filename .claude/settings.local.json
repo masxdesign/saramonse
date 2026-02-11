@@ -7,7 +7,11 @@
       "Bash(dir /s /b c:UserssalgaOneDriveDesktopsaramonse 2)",
       "Bash(nul)",
       "Bash(npm run build:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(npm run preview:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(cat:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

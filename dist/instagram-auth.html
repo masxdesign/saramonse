@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Graph API Token Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .step {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 14px;
+        }
+        button {
+            background: #0095f6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #0081d6;
+        }
+        code {
+            background: #e8e8e8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .token {
+            background: #fff;
+            padding: 15px;
+            border: 2px solid #0095f6;
+            border-radius: 4px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+    </style>
+  <link rel="stylesheet" crossorigin href="/assets/styles-D0VHMRmY.css">
+</head>
+<body>
+    <h1>Instagram Graph API Token Generator (2026)</h1>
+
+    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <p><strong>⚠️ IMPORTANT:</strong> The Instagram Basic Display API was deprecated on December 4, 2024.</p>
+        <p>This tool now uses the <strong>Instagram Graph API</strong> which requires a Business/Creator Instagram account.</p>
+        <p>Follow the complete setup guide in <code>INSTAGRAM_SETUP.md</code></p>
+    </div>
+
+    <div class="step">
+        <h2>Prerequisites Checklist</h2>
+        <ul style="list-style: none; padding-left: 0;">
+            <li>☐ Instagram account converted to Business/Creator</li>
+            <li>☐ Facebook Page created and linked to Instagram</li>
+            <li>☐ Facebook Developer account created</li>
+            <li>☐ Facebook App created with Instagram product added</li>
+            <li>☐ Instagram account added as tester and invite accepted</li>
+        </ul>
+        <p><em>If you haven't completed these steps, please refer to INSTAGRAM_SETUP.md first.</em></p>
+    </div>
+
+    <div class="step">
+        <h2>Easy Method: Use Graph API Explorer</h2>
+        <p>The easiest way to get your token is using Facebook's Graph API Explorer:</p>
+        <ol>
+            <li>Go to <a href="https://developers.facebook.com/tools/explorer/" target="_blank">Graph API Explorer</a></li>
+            <li>Select your app from the dropdown</li>
+            <li>Click "Generate Access Token" → "Get User Access Token"</li>
+            <li>Grant permissions: <code>instagram_basic</code>, <code>pages_show_list</code>, <code>instagram_manage_insights</code></li>
+            <li>Get Page Access Token (see step below)</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Step 1: Enter Your App Credentials</h2>
+        <p>Get these from your Facebook Developer Dashboard</p>
+        <input type="text" id="app-id" placeholder="Facebook App ID">
+        <input type="text" id="app-secret" placeholder="Facebook App Secret">
+    </div>
+
+    <div class="step">
+        <h2>Step 2: Get Page Access Token</h2>
+        <p>Enter the User Access Token from Graph API Explorer:</p>
+        <input type="text" id="user-token" placeholder="User Access Token">
+        <button onclick="getPageToken()">Get Page Access Token</button>
+        <div id="page-token-result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 3: Get Instagram Business Account ID</h2>
+        <input type="text" id="page-token" placeholder="Page Access Token">
+        <button onclick="getIGBusinessId()">Get Instagram Business Account ID</button>
+        <div id="ig-id-result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 4: Exchange for Long-Lived Token</h2>
+        <input type="text" id="short-token" placeholder="Page Access Token (Short-Lived)">
+        <button onclick="getLongToken()">Get Long-Lived Token (60 days)</button>
+        <div id="long-token-result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 5: Test Your Token</h2>
+        <input type="text" id="ig-business-id" placeholder="Instagram Business Account ID">
+        <input type="text" id="test-token" placeholder="Long-Lived Access Token">
+        <button onclick="testToken()">Test Token & Get Posts</button>
+        <div id="test-result"></div>
+    </div>
+
+    <script>
+        async function getPageToken() {
+            const userToken = document.getElementById('user-token').value;
+
+            if (!userToken) {
+                alert('Please enter User Access Token');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://graph.facebook.com/v19.0/me/accounts?access_token=${userToken}`);
+                const data = await response.json();
+
+                if (data.data && data.data.length > 0) {
+                    let html = '<h3>Connected Facebook Pages:</h3>';
+                    data.data.forEach((page, index) => {
+                        html += `
+                            <div style="background: #fff; padding: 10px; margin: 10px 0; border-radius: 4px;">
+                                <p><strong>${page.name}</strong></p>
+                                <p>Page ID: ${page.id}</p>
+                                <div class="token">${page.access_token}</div>
+                                <button onclick="copyToken('${page.access_token}')">Copy Page Token</button>
+                            </div>
+                        `;
+                        if (index === 0) {
+                            document.getElementById('page-token').value = page.access_token;
+                        }
+                    });
+                    document.getElementById('page-token-result').innerHTML = html;
+                } else {
+                    document.getElementById('page-token-result').innerHTML = `<p style="color: red;">Error: ${JSON.stringify(data)}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('page-token-result').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function getIGBusinessId() {
+            const pageToken = document.getElementById('page-token').value;
+
+            if (!pageToken) {
+                alert('Please enter Page Access Token');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://graph.facebook.com/v19.0/me?fields=instagram_business_account&access_token=${pageToken}`);
+                const data = await response.json();
+
+                if (data.instagram_business_account) {
+                    const igId = data.instagram_business_account.id;
+                    document.getElementById('ig-id-result').innerHTML = `
+                        <h3>Instagram Business Account ID:</h3>
+                        <div class="token">${igId}</div>
+                        <button onclick="copyToken('${igId}')">Copy ID</button>
+                        <p><strong>Save this ID! You'll need it in your website code.</strong></p>
+                    `;
+                    document.getElementById('ig-business-id').value = igId;
+                    document.getElementById('short-token').value = pageToken;
+                } else {
+                    document.getElementById('ig-id-result').innerHTML = `<p style="color: red;">No Instagram Business Account found. Make sure your Instagram account is connected to this Facebook Page.</p>`;
+                }
+            } catch (error) {
+                document.getElementById('ig-id-result').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function getLongToken() {
+            const appId = document.getElementById('app-id').value;
+            const appSecret = document.getElementById('app-secret').value;
+            const shortToken = document.getElementById('short-token').value;
+
+            if (!appId || !appSecret || !shortToken) {
+                alert('Please enter App ID, App Secret, and Page Access Token');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://graph.facebook.com/v19.0/oauth/access_token?grant_type=fb_exchange_token&client_id=${appId}&client_secret=${appSecret}&fb_exchange_token=${shortToken}`);
+                const data = await response.json();
+
+                if (data.access_token) {
+                    document.getElementById('long-token-result').innerHTML = `
+                        <h3>Long-Lived Page Access Token (valid for 60 days):</h3>
+                        <div class="token">${data.access_token}</div>
+                        <p>Expires in: ${data.expires_in} seconds (${Math.floor(data.expires_in / 86400)} days)</p>
+                        <p><strong>Save this token! Use it in your website code.</strong></p>
+                        <button onclick="copyToken('${data.access_token}')">Copy Token</button>
+                    `;
+                    document.getElementById('test-token').value = data.access_token;
+                } else {
+                    document.getElementById('long-token-result').innerHTML = `<p style="color: red;">Error: ${JSON.stringify(data)}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('long-token-result').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testToken() {
+            const igBusinessId = document.getElementById('ig-business-id').value;
+            const token = document.getElementById('test-token').value;
+
+            if (!igBusinessId || !token) {
+                alert('Please enter Instagram Business Account ID and Access Token');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://graph.facebook.com/v19.0/${igBusinessId}/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp&limit=10&access_token=${token}`);
+                const data = await response.json();
+
+                if (data.data) {
+                    let html = '<h3>Your Instagram Posts:</h3>';
+                    html += `<p>✅ Found ${data.data.length} posts</p>`;
+                    html += '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">';
+
+                    data.data.slice(0, 6).forEach(post => {
+                        const imageUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
+                        html += `
+                            <div>
+                                <img src="${imageUrl}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
+                                <p style="font-size: 12px; margin-top: 5px;">${post.media_type}</p>
+                            </div>
+                        `;
+                    });
+
+                    html += '</div>';
+                    html += '<p style="margin-top: 20px;"><strong>✅ Token is working! Copy the values above and update your instagram-feed.js file.</strong></p>';
+                    document.getElementById('test-result').innerHTML = html;
+                } else {
+                    document.getElementById('test-result').innerHTML = `<p style="color: red;">Error: ${JSON.stringify(data)}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('test-result').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        function copyToken(token) {
+            navigator.clipboard.writeText(token);
+            alert('Copied to clipboard!');
+        }
+    </script>
+</body>
+</html>

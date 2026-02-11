@@ -4,15 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "eleventy --serve & npm run css:watch",
+    "build": "npm run css:build && eleventy",
+    "preview": "eleventy --serve",
+    "css:watch": "npx @tailwindcss/cli -i ./src/styles.css -o ./_site/styles.css --watch",
+    "css:build": "npx @tailwindcss/cli -i ./src/styles.css -o ./_site/styles.css --minify"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
     "@tailwindcss/postcss": "^4.1.18",
     "autoprefixer": "^10.4.24",
     "postcss": "^8.5.6",

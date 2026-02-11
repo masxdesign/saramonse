@@ -11,7 +11,9 @@
       "Bash(npm run preview:*)",
       "Bash(npm uninstall:*)",
       "Bash(cat:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git rm:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

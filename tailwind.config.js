@@ -1,10 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./instagram-auth.html",
-    "./instagram-feed.js",
-    "./**/*.{js,ts,jsx,tsx}",
+    './src/**/*.{html,njk,md}',
+    './_site/**/*.html',
   ],
   theme: {
     extend: {

@@ -1,0 +1,71 @@
+<!-- Navigation - Compact Layout -->
+<nav class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 py-4">
+    <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
+        <!-- Hamburger Menu (Mobile) -->
+        <button class="mobile-menu-btn lg:hidden text-white hover:text-white/80 transition-colors">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+
+        <!-- Logo on Left -->
+        <a href="/" class="hidden lg:block flex-shrink-0">
+            <svg width="40" height="40" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="38" stroke="url(#gradient2)" stroke-width="2" fill="rgba(0,0,0,0.3)"/>
+                <circle cx="40" cy="40" r="30" fill="url(#gradient2)" opacity="0.2"/>
+                <text x="40" y="38" font-family="Georgia, serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">SARA</text>
+                <text x="40" y="50" font-family="Georgia, serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">MONSE</text>
+                <defs>
+                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#fb923c;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </a>
+
+        <!-- Mobile Logo (Center) -->
+        <a href="/" class="lg:hidden flex-shrink-0">
+            <svg width="40" height="40" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="38" stroke="url(#gradientMobile)" stroke-width="2" fill="rgba(0,0,0,0.3)"/>
+                <circle cx="40" cy="40" r="30" fill="url(#gradientMobile)" opacity="0.2"/>
+                <text x="40" y="38" font-family="Georgia, serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">SARA</text>
+                <text x="40" y="50" font-family="Georgia, serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">MONSE</text>
+                <defs>
+                    <linearGradient id="gradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#fb923c;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </a>
+
+        <!-- All Links Combined on Right (Desktop) -->
+        <ul class="hidden lg:flex gap-8 font-sans items-center">
+            <li><a href="/#home" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Home</a></li>
+            <li><a href="/#services" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Services</a></li>
+            <li><a href="/#book" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Book Now</a></li>
+            <li><a href="/#about" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">About Us</a></li>
+            <li><a href="#account" class="text-white hover:text-white/80 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></a></li>
+            <li><a href="#cart" class="text-white hover:text-white/80 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg></a></li>
+        </ul>
+
+        <!-- Cart Icon (Mobile) -->
+        <a href="#cart" class="lg:hidden text-white hover:text-white/80 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+        </a>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed top-20 w-full hidden lg:hidden bg-black/95 backdrop-blur-md z-40">
+    <ul class="flex flex-col items-center gap-6 py-8 font-sans">
+        <li><a href="/#home" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Home</a></li>
+        <li><a href="/#services" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Services</a></li>
+        <li><a href="/#book" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Book Now</a></li>
+        <li><a href="/#about" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">About Us</a></li>
+        <li><a href="#account" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Account</a></li>
+    </ul>
+</div>

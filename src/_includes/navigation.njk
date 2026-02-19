@@ -1,35 +1,59 @@
-<!-- Navigation - Compact Layout -->
-<nav class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 py-4">
+{#
+  Navigation - Centered Logo Layout
+  Set these variables before including:
+  - navTheme: "dark" or "light" (default: "light")
+  - navId: optional element ID
+  - navBg: background classes (default: "bg-white")
+  - navExtraClasses: additional classes (default: "")
+  - isHomepage: true/false for link targets (default: false)
+#}
+
+{% set textColor = "text-white" if navTheme == "dark" else "text-gray-900" %}
+{% set textHover = "hover:text-white/80" if navTheme == "dark" else "hover:text-gray-500" %}
+{% set textExtra = "text-shadow" if navTheme == "dark" else "" %}
+{% set mobileBg = "bg-black/95" if navTheme == "dark" else "bg-white/95" %}
+{% set mobileBorder = "" if navTheme == "dark" else "border-t border-gray-100" %}
+
+{% set homeLink = "#home" if isHomepage else "/" %}
+{% set servicesLink = "#services" if isHomepage else "/#services" %}
+{% set bookLink = "#book" if isHomepage else "/#book" %}
+{% set aboutLink = "#about" if isHomepage else "/about" %}
+
+<nav {% if navId %}id="{{ navId }}"{% endif %} class="fixed top-0 w-full {{ navBg or 'bg-white' }} z-50 py-6 {{ navExtraClasses or '' }}">
     <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
         <!-- Hamburger Menu (Mobile) -->
-        <button class="mobile-menu-btn lg:hidden text-white hover:text-white/80 transition-colors">
+        <button class="mobile-menu-btn lg:hidden {{ textColor }} {{ textHover }} transition-colors">
             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
         </button>
 
-        <!-- Logo on Left -->
-        <a href="/" class="hidden lg:block flex-shrink-0">
-            <img src="/assets/logo_128.png" alt="Saramonse Beauty" class="w-10 h-10">
-        </a>
-
-        <!-- Mobile Logo (Center) -->
-        <a href="/" class="lg:hidden flex-shrink-0">
-            <img src="/assets/logo_128.png" alt="Saramonse Beauty" class="w-10 h-10">
-        </a>
-
-        <!-- All Links Combined on Right (Desktop) -->
-        <ul class="hidden lg:flex gap-8 font-sans items-center">
-            <li><a href="/#home" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Home</a></li>
-            <li><a href="/#services" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Services</a></li>
-            <li><a href="/#book" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Book Now</a></li>
-            <li><a href="/#about" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">About Us</a></li>
-            <li><a href="#account" class="text-white hover:text-white/80 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></a></li>
-            <li><a href="#cart" class="text-white hover:text-white/80 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg></a></li>
+        <!-- Left Menu (Desktop) -->
+        <ul class="hidden lg:flex font-sans flex-1 justify-evenly items-center">
+            <li class="min-w-[30px]">&nbsp;</li>
+            <li class="min-w-[90px] text-center"><a href="{{ homeLink }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase {{ textExtra }}">Home</a></li>
+            <li class="min-w-[90px] text-center"><a href="{{ servicesLink }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase {{ textExtra }}">Services</a></li>
         </ul>
 
+        <!-- Center Logo -->
+        <a href="{{ homeLink }}" class="flex-shrink-0 mx-8 lg:mx-12">
+            <img src="/assets/logo_256.png" alt="Saramonse Beauty" class="w-16 h-16 lg:w-20 lg:h-20">
+        </a>
+
+        <!-- Right Menu (Desktop) -->
+        <div class="hidden lg:flex flex-1 items-center">
+            <ul class="flex font-sans flex-1 justify-evenly items-center">
+                <li class="min-w-[90px] text-center"><a href="{{ bookLink }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase {{ textExtra }}">Book Now</a></li>
+                <li class="min-w-[90px] text-center"><a href="{{ aboutLink }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase {{ textExtra }}">About Us</a></li>
+            </ul>
+            <div class="flex gap-6 w-auto shrink-0">
+                <a href="#account" class="{{ textColor }} {{ textHover }} transition-colors {{ textExtra }}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></a>
+                <a href="#cart" class="{{ textColor }} {{ textHover }} transition-colors {{ textExtra }}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg></a>
+            </div>
+        </div>
+
         <!-- Cart Icon (Mobile) -->
-        <a href="#cart" class="lg:hidden text-white hover:text-white/80 transition-colors">
+        <a href="#cart" class="lg:hidden {{ textColor }} {{ textHover }} transition-colors">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
             </svg>
@@ -38,12 +62,12 @@
 </nav>
 
 <!-- Mobile Menu -->
-<div id="mobile-menu" class="fixed top-20 w-full hidden lg:hidden bg-black/95 backdrop-blur-md z-40">
+<div id="mobile-menu" class="fixed top-20 w-full hidden lg:hidden {{ mobileBg }} backdrop-blur-md z-40 {{ mobileBorder }}">
     <ul class="flex flex-col items-center gap-6 py-8 font-sans">
-        <li><a href="/#home" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Home</a></li>
-        <li><a href="/#services" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Services</a></li>
-        <li><a href="/#book" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Book Now</a></li>
-        <li><a href="/#about" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">About Us</a></li>
-        <li><a href="#account" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Account</a></li>
+        <li><a href="{{ homeLink }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase">Home</a></li>
+        <li><a href="{{ servicesLink }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase">Services</a></li>
+        <li><a href="{{ bookLink }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase">Book Now</a></li>
+        <li><a href="{{ aboutLink }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase">About Us</a></li>
+        <li><a href="#account" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase">Account</a></li>
     </ul>
 </div>

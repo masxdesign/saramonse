@@ -11,45 +11,15 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="font-serif text-gray-800">
-    <!-- Navigation - Hero Layout (Centered Logo) -->
-    <nav id="nav-hero" class="fixed top-0 w-full bg-transparent z-50 py-6 transition-all duration-500 ease-in-out opacity-100 translate-y-0">
-        <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
-            <!-- Hamburger Menu (Mobile) -->
-            <button class="mobile-menu-btn lg:hidden text-white hover:text-white/80 transition-colors">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+    <!-- Hero Nav (Centered Logo, Dark/Transparent) -->
+    {% set navTheme = "dark" %}
+    {% set navId = "nav-hero" %}
+    {% set navBg = "bg-transparent" %}
+    {% set navExtraClasses = "transition-all duration-500 ease-in-out opacity-100 translate-y-0" %}
+    {% set isHomepage = true %}
+    {% include "navigation.njk" %}
 
-            <!-- Left Menu (Desktop) -->
-            <ul class="hidden lg:flex gap-12 font-sans flex-1">
-                <li><a href="#home" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase text-shadow">Home</a></li>
-                <li><a href="#services" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase text-shadow">Services</a></li>
-            </ul>
-
-            <!-- Center Logo -->
-            <a href="#home" class="flex-shrink-0">
-                <img src="/assets/logo_256.png" alt="Saramonse Beauty" class="w-16 h-16 lg:w-20 lg:h-20">
-            </a>
-
-            <!-- Right Menu (Desktop) -->
-            <ul class="hidden lg:flex gap-12 font-sans flex-1 justify-end items-center">
-                <li><a href="#book" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase text-shadow">Book Now</a></li>
-                <li><a href="#about" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase text-shadow">About Us</a></li>
-                <li><a href="#account" class="text-white hover:text-white/80 transition-colors text-shadow"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></a></li>
-                <li><a href="#cart" class="text-white hover:text-white/80 transition-colors text-shadow"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg></a></li>
-            </ul>
-
-            <!-- Cart Icon (Mobile) -->
-            <a href="#cart" class="lg:hidden text-white hover:text-white/80 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                </svg>
-            </a>
-        </div>
-    </nav>
-
-    <!-- Navigation - Compact Layout (Logo Left) -->
+    <!-- Compact Nav (Logo Left, Dark) - Homepage only, shown on scroll -->
     <nav id="nav-compact" class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 py-1.5 transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none">
         <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
             <!-- Hamburger Menu (Mobile) -->
@@ -82,17 +52,6 @@
             </a>
         </div>
     </nav>
-
-    <!-- Mobile Menu (Shared) -->
-    <div id="mobile-menu" class="fixed top-20 w-full hidden lg:hidden bg-black/95 backdrop-blur-md z-40">
-        <ul class="flex flex-col items-center gap-6 py-8 font-sans">
-            <li><a href="#home" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Home</a></li>
-            <li><a href="#services" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Services</a></li>
-            <li><a href="#book" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Book Now</a></li>
-            <li><a href="#about" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">About Us</a></li>
-            <li><a href="#account" class="text-white hover:text-white/80 transition-colors text-sm tracking-widest uppercase">Account</a></li>
-        </ul>
-    </div>
 
     {{ content | safe }}
 
@@ -128,14 +87,12 @@
             const shouldBeCompact = scrollY > heroHeight - 100;
 
             if (shouldBeCompact) {
-                // Slide up hero nav (exit), slide down compact nav (enter)
                 navHero.classList.remove('opacity-100', 'translate-y-0');
                 navHero.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
 
                 navCompact.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
                 navCompact.classList.add('opacity-100', 'translate-y-0');
             } else {
-                // Slide up compact nav (exit), slide down hero nav (enter)
                 navCompact.classList.remove('opacity-100', 'translate-y-0');
                 navCompact.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
 

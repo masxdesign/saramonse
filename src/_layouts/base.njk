@@ -7,13 +7,18 @@
     <title>{{ title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="font-serif text-gray-800">
+    {% set navTheme = "light" %}
+    {% set navBg = "bg-white" %}
+    {% set isHomepage = false %}
     {% include "navigation.njk" %}
 
-    {{ content | safe }}
+    <main class="pt-28 lg:pt-32">
+        {{ content | safe }}
+    </main>
 
     {% include "footer.njk" %}
 

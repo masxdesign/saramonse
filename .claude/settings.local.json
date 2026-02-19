@@ -19,7 +19,10 @@
       "Bash(cp:*)",
       "Bash(srcindex.njk)",
       "Bash(npx @tailwindcss/cli:*)",
-      "Bash(npx @11ty/eleventy)"
+      "Bash(npx @11ty/eleventy)",
+      "Bash(sips:*)",
+      "Bash(python3:*)",
+      "Bash(pip3 install:*)"
     ],
     "deny": [],
     "ask": []

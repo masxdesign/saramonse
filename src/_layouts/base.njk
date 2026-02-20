@@ -12,7 +12,7 @@
 </head>
 <body class="font-serif text-gray-800">
     {% set navTheme = "light" %}
-    {% set navBg = "bg-white" %}
+    {% set navBg = "nav-fade-light" %}
     {% set isHomepage = false %}
     {% include "navigation.njk" %}
 
@@ -23,22 +23,44 @@
     {% include "footer.njk" %}
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');
+            const overlay = document.getElementById('mobile-menu');
+            if (!overlay) return;
 
-            if (mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('hidden');
-                });
-
-                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-                mobileMenuLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        mobileMenu.classList.add('hidden');
-                    });
-                });
+            function openMenu(btn) {
+                const rect = btn.getBoundingClientRect();
+                overlay.style.setProperty('--ox', (rect.left + rect.width / 2) + 'px');
+                overlay.style.setProperty('--oy', (rect.top + rect.height / 2) + 'px');
+                overlay.classList.remove('menu-closing');
+                overlay.classList.add('menu-open');
+                mobileMenuBtns.forEach(b => b.classList.add('menu-open'));
+                document.documentElement.style.overflow = 'hidden';
             }
+
+            function closeMenu() {
+                overlay.classList.remove('menu-open');
+                overlay.classList.add('menu-closing');
+                overlay.addEventListener('animationend', () => {
+                    overlay.classList.remove('menu-closing');
+                }, { once: true });
+                mobileMenuBtns.forEach(b => b.classList.remove('menu-open'));
+                document.documentElement.style.overflow = '';
+            }
+
+            mobileMenuBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    if (overlay.classList.contains('menu-open')) {
+                        closeMenu();
+                    } else {
+                        openMenu(btn);
+                    }
+                });
+            });
+
+            overlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
         });
     </script>
 </body>

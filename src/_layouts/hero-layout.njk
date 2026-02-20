@@ -20,64 +20,52 @@
     {% include "navigation.njk" %}
 
     <!-- Compact Nav (Logo Left, Dark) - Homepage only, shown on scroll -->
-    <nav id="nav-compact" class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 py-1.5 transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none">
-        <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
-            <!-- Hamburger Menu (Mobile) -->
-            <button class="mobile-menu-btn lg:hidden text-white hover:text-white/80 transition-colors">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-
-            <!-- Logo on Left -->
-            <a href="#home" class="hidden lg:block flex-shrink-0">
-                <img src="/assets/logo_128.png" alt="Saramonse Beauty" class="w-8 h-8">
-            </a>
-
-            <!-- All Links Combined on Right (Desktop) -->
-            <ul class="hidden lg:flex gap-8 font-sans items-center">
-                <li><a href="#home" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Home</a></li>
-                <li><a href="#services" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Services</a></li>
-                <li><a href="#book" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">Book Now</a></li>
-                <li><a href="#about" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">About Us</a></li>
-                <li><a href="#account" class="text-white hover:text-white/80 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></a></li>
-                <li><a href="#cart" class="text-white hover:text-white/80 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg></a></li>
-            </ul>
-
-            <!-- Cart Icon (Mobile) -->
-            <a href="#cart" class="lg:hidden text-white hover:text-white/80 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                </svg>
-            </a>
-        </div>
-    </nav>
+    {% include "compact-nav.njk" %}
 
     {{ content | safe }}
 
     {% include "footer.njk" %}
 
     <script>
-        // Mobile menu toggle
         const mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const navHero = document.getElementById('nav-hero');
         const navCompact = document.getElementById('nav-compact');
         const heroSection = document.getElementById('home');
 
-        // Toggle mobile menu for both nav buttons
+        // Circle burst mobile menu
+        function openMenu(btn) {
+            const rect = btn.getBoundingClientRect();
+            mobileMenu.style.setProperty('--ox', (rect.left + rect.width / 2) + 'px');
+            mobileMenu.style.setProperty('--oy', (rect.top + rect.height / 2) + 'px');
+            mobileMenu.classList.remove('menu-closing');
+            mobileMenu.classList.add('menu-open');
+            mobileMenuBtns.forEach(b => b.classList.add('menu-open'));
+            document.documentElement.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.remove('menu-open');
+            mobileMenu.classList.add('menu-closing');
+            mobileMenu.addEventListener('animationend', () => {
+                mobileMenu.classList.remove('menu-closing');
+            }, { once: true });
+            mobileMenuBtns.forEach(b => b.classList.remove('menu-open'));
+            document.documentElement.style.overflow = '';
+        }
+
         mobileMenuBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+                if (mobileMenu.classList.contains('menu-open')) {
+                    closeMenu();
+                } else {
+                    openMenu(btn);
+                }
             });
         });
 
-        // Close mobile menu when clicking a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
 
         // Switch between nav layouts on scroll with slide-up animation

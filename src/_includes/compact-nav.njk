@@ -1,0 +1,67 @@
+{#
+  Compact Nav — Logo Left, Links Right
+  Shown on scroll (past the hero section) in both hero layouts.
+  Driven by src/_data/navigation.js — same source of truth as navigation.njk.
+
+  Reads isHomepage (set in the parent layout) to choose anchorHref vs href,
+  matching the behaviour of the main navigation include.
+#}
+
+{% macro compactHref(item) %}{{ item.anchorHref if isHomepage and item.anchorHref else item.href }}{% endmacro %}
+
+<nav id="nav-compact" class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 py-1.5 transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none">
+    <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
+
+        <!-- Hamburger (Mobile) -->
+        <button class="mobile-menu-btn lg:hidden text-white hover:text-white/80 transition-colors">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+
+        <!-- Logo (Desktop) -->
+        <a href="{{ compactHref(navigation.left[0]) }}" class="hidden lg:block flex-shrink-0">
+            <img src="/assets/logo_128.png" alt="Saramonse Beauty" class="w-8 h-8">
+        </a>
+
+        <!-- All links flat on the right (Desktop) -->
+        <ul class="hidden lg:flex gap-8 font-sans items-center">
+            {% for item in navigation.left %}
+            <li>
+                <a href="{{ compactHref(item) }}" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">
+                    {{ item.label }}
+                </a>
+            </li>
+            {% endfor %}
+            {% for item in navigation.right %}
+            <li>
+                <a href="{{ compactHref(item) }}" class="text-white hover:text-white/80 transition-colors text-xs tracking-widest uppercase">
+                    {{ item.label }}
+                </a>
+            </li>
+            {% endfor %}
+            {% for icon in navigation.icons %}
+            <li>
+                <a href="{{ icon.href }}" class="text-white hover:text-white/80 transition-colors">
+                    {% if icon.icon == "account" %}
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    {% elif icon.icon == "cart" %}
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    {% endif %}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Cart (Mobile) -->
+        <a href="#cart" class="lg:hidden text-white hover:text-white/80 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+        </a>
+    </div>
+</nav>

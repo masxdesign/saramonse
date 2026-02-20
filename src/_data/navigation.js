@@ -16,7 +16,7 @@
  * The navigation template reads this data and renders everything automatically.
  */
 
-export default {
+const nav = {
   left: [
     {
       label: "Home",
@@ -51,3 +51,18 @@ export default {
     { label: "Cart",    href: "#cart",    icon: "cart"    }
   ]
 };
+
+// Flat ordered list used by the mobile overlay — keeps the template loop simple
+// and means animation-delay indices are computed here rather than hard-coded in CSS.
+nav.mobileItems = [
+  ...nav.left.flatMap(item => [
+    { label: item.label, href: item.href, anchorHref: item.anchorHref, kind: "main" },
+    ...(item.children || []).map(child => ({ label: child.label, href: child.href, kind: "child" }))
+  ]),
+  ...nav.right.map(item => ({ label: item.label, href: item.href, anchorHref: item.anchorHref, kind: "main" })),
+  ...nav.icons
+    .filter(icon => icon.icon !== "cart")
+    .map(icon => ({ label: icon.label, href: icon.href, kind: "icon" }))
+];
+
+export default nav;

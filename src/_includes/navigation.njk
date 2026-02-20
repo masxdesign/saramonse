@@ -120,37 +120,22 @@
 <!-- Mobile Menu — Circle Burst Overlay -->
 <div id="mobile-menu" class="mobile-menu-overlay fixed inset-0 lg:hidden z-[55]" style="background-color: #1e1218;">
     <nav class="flex flex-col items-center justify-center h-full font-sans">
-        {% for item in navigation.left %}
-        <div class="menu-item w-full text-center">
+        {% for item in navigation.mobileItems %}
+        <div class="menu-item w-full text-center" style="animation-delay: calc(0.28s + {{ loop.index0 }} * 0.08s)">
+            {% if item.kind == "main" %}
             <a href="{{ itemHref(item) }}" class="block text-white hover:text-white/70 transition-colors text-3xl tracking-[0.2em] uppercase py-4">
                 {{ item.label }}
             </a>
-        </div>
-        {% if item.children %}
-        {% for child in item.children %}
-        <div class="menu-item w-full text-center">
-            <a href="{{ child.href }}" class="block text-white/40 hover:text-white/70 transition-colors text-xs tracking-[0.3em] uppercase py-2">
-                &mdash; {{ child.label }}
+            {% elif item.kind == "child" %}
+            <a href="{{ item.href }}" class="block text-white/40 hover:text-white/70 transition-colors text-xs tracking-[0.3em] uppercase py-2">
+                &mdash; {{ item.label }}
             </a>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endfor %}
-        {% for item in navigation.right %}
-        <div class="menu-item w-full text-center">
-            <a href="{{ itemHref(item) }}" class="block text-white hover:text-white/70 transition-colors text-3xl tracking-[0.2em] uppercase py-4">
+            {% elif item.kind == "icon" %}
+            <a href="{{ item.href }}" class="block text-white/40 hover:text-white/70 transition-colors text-xs tracking-[0.3em] uppercase py-3">
                 {{ item.label }}
             </a>
+            {% endif %}
         </div>
-        {% endfor %}
-        {% for icon in navigation.icons %}
-        {% if icon.icon != "cart" %}
-        <div class="menu-item w-full text-center">
-            <a href="{{ icon.href }}" class="block text-white/40 hover:text-white/70 transition-colors text-xs tracking-[0.3em] uppercase py-3">
-                {{ icon.label }}
-            </a>
-        </div>
-        {% endif %}
         {% endfor %}
     </nav>
 </div>

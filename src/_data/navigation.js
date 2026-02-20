@@ -7,10 +7,13 @@
  *  icons  — icon-only links shown on the far right (desktop) and on mobile
  *
  * Per item:
- *  label      — display text
- *  href       — URL used on regular pages
- *  anchorHref — URL used on the homepage (anchor link, e.g. "#services")
- *  children   — optional array of sub-items; presence triggers a dropdown
+ *  label       — display text
+ *  href        — URL used on regular pages
+ *  anchorHref  — URL used on the homepage (anchor link, e.g. "#services")
+ *  children    — optional array of sub-items; presence triggers a dropdown
+ *  parentLink  — (optional) set true to keep the parent label as a clickable
+ *                link even when it has children; omit/false for a non-clickable
+ *                label that only opens the dropdown (e.g. Services)
  *
  * To add a menu item or sub-item, edit this file only.
  * The navigation template reads this data and renders everything automatically.

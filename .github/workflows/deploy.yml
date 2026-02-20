@@ -1,4 +1,4 @@
-name: Deploy to one.com via FTP
+name: Deploy to one.com via SFTP
 
 on:
   push:
@@ -25,14 +25,16 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Deploy to FTP
+      - name: Deploy via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: sftp
+          server: ssh.masxdesign.com
+          port: 22
+          username: masxdesign.com
+          password: ${{ secrets.SFTP_PASSWORD }}
           local-dir: ./_site/
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          server-dir: ${{ secrets.SFTP_SERVER_DIR }}
           exclude: |
             **/.git*
             **/.git*/**

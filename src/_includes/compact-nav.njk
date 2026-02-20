@@ -9,14 +9,14 @@
 
 {% macro compactHref(item) %}{{ item.anchorHref if isHomepage and item.anchorHref else item.href }}{% endmacro %}
 
-<nav id="nav-compact" class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 py-1.5 transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none">
+<nav id="nav-compact" class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-[60] py-1.5 transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none">
     <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
 
         <!-- Hamburger (Mobile) -->
-        <button class="mobile-menu-btn lg:hidden text-white hover:text-white/80 transition-colors">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
+        <button class="mobile-menu-btn lg:hidden text-white transition-colors flex flex-col justify-between w-7 h-5" aria-label="Toggle menu">
+            <span class="burger-bar block w-full h-0.5 bg-current rounded-full"></span>
+            <span class="burger-bar block w-full h-0.5 bg-current rounded-full"></span>
+            <span class="burger-bar block w-full h-0.5 bg-current rounded-full"></span>
         </button>
 
         <!-- Logo (Desktop) -->

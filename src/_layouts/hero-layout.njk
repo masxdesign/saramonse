@@ -27,26 +27,45 @@
     {% include "footer.njk" %}
 
     <script>
-        // Mobile menu toggle
         const mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const navHero = document.getElementById('nav-hero');
         const navCompact = document.getElementById('nav-compact');
         const heroSection = document.getElementById('home');
 
-        // Toggle mobile menu for both nav buttons
+        // Circle burst mobile menu
+        function openMenu(btn) {
+            const rect = btn.getBoundingClientRect();
+            mobileMenu.style.setProperty('--ox', (rect.left + rect.width / 2) + 'px');
+            mobileMenu.style.setProperty('--oy', (rect.top + rect.height / 2) + 'px');
+            mobileMenu.classList.remove('menu-closing');
+            mobileMenu.classList.add('menu-open');
+            mobileMenuBtns.forEach(b => b.classList.add('menu-open'));
+            document.documentElement.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.remove('menu-open');
+            mobileMenu.classList.add('menu-closing');
+            mobileMenu.addEventListener('animationend', () => {
+                mobileMenu.classList.remove('menu-closing');
+            }, { once: true });
+            mobileMenuBtns.forEach(b => b.classList.remove('menu-open'));
+            document.documentElement.style.overflow = '';
+        }
+
         mobileMenuBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+                if (mobileMenu.classList.contains('menu-open')) {
+                    closeMenu();
+                } else {
+                    openMenu(btn);
+                }
             });
         });
 
-        // Close mobile menu when clicking a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
 
         // Switch between nav layouts on scroll with slide-up animation

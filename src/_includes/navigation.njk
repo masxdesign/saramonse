@@ -21,14 +21,14 @@
 {# Helper macro: resolve the correct href for an item #}
 {% macro itemHref(item) %}{{ item.anchorHref if isHomepage and item.anchorHref else item.href }}{% endmacro %}
 
-<nav {% if navId %}id="{{ navId }}"{% endif %} class="fixed top-0 w-full {{ navBg or 'bg-white' }} z-50 py-6 {{ navExtraClasses or '' }}">
+<nav {% if navId %}id="{{ navId }}"{% endif %} class="fixed top-0 w-full {{ navBg or 'bg-white' }} z-[60] py-6 {{ navExtraClasses or '' }}">
     <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
 
         <!-- Hamburger Button (Mobile) -->
-        <button class="mobile-menu-btn lg:hidden {{ textColor }} {{ textHover }} transition-colors">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
+        <button class="mobile-menu-btn lg:hidden {{ textColor }} transition-colors flex flex-col justify-between w-7 h-5" aria-label="Toggle menu">
+            <span class="burger-bar block w-full h-0.5 bg-current rounded-full"></span>
+            <span class="burger-bar block w-full h-0.5 bg-current rounded-full"></span>
+            <span class="burger-bar block w-full h-0.5 bg-current rounded-full"></span>
         </button>
 
         <!-- Left Menu (Desktop) -->
@@ -117,40 +117,40 @@
     </div>
 </nav>
 
-<!-- Mobile Menu -->
-<div id="mobile-menu" class="fixed top-20 w-full hidden lg:hidden {{ mobileBg }} backdrop-blur-md z-40 {{ mobileBorder }}">
-    <ul class="flex flex-col items-center gap-6 py-8 font-sans">
+<!-- Mobile Menu — Circle Burst Overlay -->
+<div id="mobile-menu" class="mobile-menu-overlay fixed inset-0 lg:hidden z-[55]" style="background-color: #1e1218;">
+    <nav class="flex flex-col items-center justify-center h-full font-sans">
         {% for item in navigation.left %}
-        <li>
-            <a href="{{ itemHref(item) }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase">
+        <div class="menu-item w-full text-center">
+            <a href="{{ itemHref(item) }}" class="block text-white hover:text-white/70 transition-colors text-3xl tracking-[0.2em] uppercase py-4">
                 {{ item.label }}
             </a>
-        </li>
+        </div>
         {% if item.children %}
         {% for child in item.children %}
-        <li>
-            <a href="{{ child.href }}" class="{{ textColor }} {{ textHover }} transition-colors text-xs tracking-widest uppercase opacity-70">
+        <div class="menu-item w-full text-center">
+            <a href="{{ child.href }}" class="block text-white/40 hover:text-white/70 transition-colors text-xs tracking-[0.3em] uppercase py-2">
                 &mdash; {{ child.label }}
             </a>
-        </li>
+        </div>
         {% endfor %}
         {% endif %}
         {% endfor %}
         {% for item in navigation.right %}
-        <li>
-            <a href="{{ itemHref(item) }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase">
+        <div class="menu-item w-full text-center">
+            <a href="{{ itemHref(item) }}" class="block text-white hover:text-white/70 transition-colors text-3xl tracking-[0.2em] uppercase py-4">
                 {{ item.label }}
             </a>
-        </li>
+        </div>
         {% endfor %}
         {% for icon in navigation.icons %}
         {% if icon.icon != "cart" %}
-        <li>
-            <a href="{{ icon.href }}" class="{{ textColor }} {{ textHover }} transition-colors text-sm tracking-widest uppercase">
+        <div class="menu-item w-full text-center">
+            <a href="{{ icon.href }}" class="block text-white/40 hover:text-white/70 transition-colors text-xs tracking-[0.3em] uppercase py-3">
                 {{ icon.label }}
             </a>
-        </li>
+        </div>
         {% endif %}
         {% endfor %}
-    </ul>
+    </nav>
 </div>

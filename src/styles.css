@@ -15,6 +15,16 @@
 }
 
 /* ============================================
+   Light-theme nav gradient
+   Fades from solid white at the top to transparent at the bottom so that
+   content scrolling behind the nav is veiled rather than hard-clipped.
+   ============================================ */
+
+.nav-fade-light {
+  background: linear-gradient(to bottom, white 55%, transparent);
+}
+
+/* ============================================
    Circle Burst Mobile Menu
    ============================================ */
 

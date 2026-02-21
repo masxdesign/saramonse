@@ -16,7 +16,6 @@
     {% set navId = "nav-hero" %}
     {% set navBg = "bg-transparent" %}
     {% set navExtraClasses = "transition-all duration-500 ease-in-out opacity-100 translate-y-0" %}
-    {% set isHomepage = false %}
     {% include "navigation.njk" %}
 
     <!-- Compact Nav (Logo Left, Dark) - shown on scroll -->
@@ -45,25 +44,119 @@
     {% include "footer.njk" %}
 
     <script>
-        // Mobile menu toggle for both nav buttons
         const mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const navHero = document.getElementById('nav-hero');
         const navCompact = document.getElementById('nav-compact');
         const heroSection = document.getElementById('video-hero');
 
+        // Circle burst mobile menu.
+        // Clip-path is animated via JS-set inline transitions rather than @keyframes
+        // so that Safari iOS can interpolate it correctly (Safari cannot interpolate
+        // clip-path when CSS custom properties appear inside @keyframes).
+        const EASE = 'cubic-bezier(0.77, 0, 0.175, 1)';
+
+        function setClipPath(val) {
+            mobileMenu.style.webkitClipPath = val;
+            mobileMenu.style.clipPath = val;
+        }
+
+        function setTransition(duration) {
+            const t = duration
+                ? `-webkit-clip-path ${duration} ${EASE}, clip-path ${duration} ${EASE}`
+                : 'none';
+            mobileMenu.style.webkitTransition = t;
+            mobileMenu.style.transition = t;
+        }
+
+        function openMenu(btn) {
+            const rect = btn.getBoundingClientRect();
+            const ox = Math.round(rect.left + rect.width / 2);
+            const oy = Math.round(rect.top + rect.height / 2);
+
+            // Make element visible before animating — Safari does not reliably
+            // hide/show position:fixed elements with clip-path alone.
+            mobileMenu.style.visibility = 'visible';
+
+            // Snap to closed at button position without transition.
+            setTransition(null);
+            setClipPath(`circle(0% at ${ox}px ${oy}px)`);
+
+            // Force reflow so the "no transition" state commits.
+            mobileMenu.getBoundingClientRect(); // eslint-disable-line no-unused-expressions
+
+            // Animate burst open.
+            setTransition('0.65s');
+            setClipPath(`circle(150% at ${ox}px ${oy}px)`);
+
+            mobileMenu.classList.remove('menu-closing');
+            mobileMenu.classList.add('menu-open');
+            mobileMenuBtns.forEach(b => b.classList.add('menu-open'));
+
+            // iOS Safari ignores overflow:hidden on <html>/<body>; use position:fixed.
+            const sy = window.scrollY ?? window.pageYOffset;
+            document.body.dataset.menuScrollY = sy;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${sy}px`;
+            document.body.style.width = '100%';
+        }
+
+        function closeMenu() {
+            // Read the origin so the circle collapses toward the same button.
+            const cp = mobileMenu.style.clipPath || mobileMenu.style.webkitClipPath || '';
+            const m  = cp.match(/at\s+([\d.]+)px\s+([\d.]+)px/);
+            const ox = m ? m[1] : '40';
+            const oy = m ? m[2] : '40';
+
+            mobileMenu.classList.remove('menu-open');
+            mobileMenu.classList.add('menu-closing');
+            mobileMenuBtns.forEach(b => b.classList.remove('menu-open'));
+
+            // Animate burst closed.
+            setTransition('0.5s');
+            setClipPath(`circle(0% at ${ox}px ${oy}px)`);
+
+            // Restore scroll (iOS-safe).
+            const sy = parseInt(document.body.dataset.menuScrollY || '0', 10);
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, sy);
+
+            // Safari sometimes skips transitionend for clip-path; use a timeout
+            // fallback (slightly longer than the 0.5s close transition).
+            const closeTimer = setTimeout(() => {
+                mobileMenu.classList.remove('menu-closing');
+                mobileMenu.style.visibility = 'hidden';
+                mobileMenu.removeEventListener('transitionend', onEnd);
+                mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
+            }, 600);
+
+            function onEnd(e) {
+                if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
+                    clearTimeout(closeTimer);
+                    mobileMenu.classList.remove('menu-closing');
+                    mobileMenu.style.visibility = 'hidden';
+                    mobileMenu.removeEventListener('transitionend', onEnd);
+                    mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
+                }
+            }
+            mobileMenu.addEventListener('transitionend', onEnd);
+            mobileMenu.addEventListener('webkitTransitionEnd', onEnd);
+        }
+
         mobileMenuBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+                if (mobileMenu.classList.contains('menu-open')) {
+                    closeMenu();
+                } else {
+                    openMenu(btn);
+                }
             });
         });
 
-        // Close mobile menu when clicking a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
 
         // Switch between nav layouts on scroll

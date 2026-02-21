@@ -13,7 +13,6 @@
 <body class="font-serif text-gray-800">
     {% set navTheme = "light" %}
     {% set navBg = "nav-fade-light" %}
-    {% set isHomepage = false %}
     {% include "navigation.njk" %}
 
     <main class="pt-28 lg:pt-32">
@@ -49,6 +48,10 @@
                 var rect = btn.getBoundingClientRect();
                 var ox = Math.round(rect.left + rect.width / 2);
                 var oy = Math.round(rect.top + rect.height / 2);
+
+                // Make element visible before animating — Safari does not reliably
+                // hide/show position:fixed elements with clip-path alone.
+                overlay.style.visibility = 'visible';
 
                 // Snap to closed state at the button's position with no transition.
                 setTransition(null);
@@ -96,10 +99,21 @@
                 document.body.style.width = '';
                 window.scrollTo(0, sy);
 
-                // Clean up the menu-closing class once the transition ends.
+                // Clean up once the transition ends. Safari sometimes skips
+                // transitionend for clip-path, so add a timeout fallback
+                // (slightly longer than the 0.5s close transition).
+                var closeTimer = setTimeout(function () {
+                    overlay.classList.remove('menu-closing');
+                    overlay.style.visibility = 'hidden';
+                    overlay.removeEventListener('transitionend', onEnd);
+                    overlay.removeEventListener('webkitTransitionEnd', onEnd);
+                }, 600);
+
                 function onEnd(e) {
                     if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
+                        clearTimeout(closeTimer);
                         overlay.classList.remove('menu-closing');
+                        overlay.style.visibility = 'hidden';
                         overlay.removeEventListener('transitionend', onEnd);
                         overlay.removeEventListener('webkitTransitionEnd', onEnd);
                     }

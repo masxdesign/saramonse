@@ -18,7 +18,6 @@
     {% set navId = "nav-hero" %}
     {% set navBg = "bg-transparent" %}
     {% set navExtraClasses = "transition-all duration-500 ease-in-out opacity-100 translate-y-0" %}
-    {% set isHomepage = true %}
     {% include "navigation.njk" %}
 
     <!-- Compact Nav (Logo Left, Dark) - Homepage only, shown on scroll -->
@@ -58,6 +57,10 @@
             const rect = btn.getBoundingClientRect();
             const ox = Math.round(rect.left + rect.width / 2);
             const oy = Math.round(rect.top + rect.height / 2);
+
+            // Make element visible before animating — Safari does not reliably
+            // hide/show position:fixed elements with clip-path alone.
+            mobileMenu.style.visibility = 'visible';
 
             // Snap to closed at button position without transition.
             setTransition(null);
@@ -104,9 +107,20 @@
             document.body.style.width = '';
             window.scrollTo(0, sy);
 
+            // Safari sometimes skips transitionend for clip-path; use a timeout
+            // fallback (slightly longer than the 0.5s close transition).
+            const closeTimer = setTimeout(() => {
+                mobileMenu.classList.remove('menu-closing');
+                mobileMenu.style.visibility = 'hidden';
+                mobileMenu.removeEventListener('transitionend', onEnd);
+                mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
+            }, 600);
+
             function onEnd(e) {
                 if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
+                    clearTimeout(closeTimer);
                     mobileMenu.classList.remove('menu-closing');
+                    mobileMenu.style.visibility = 'hidden';
                     mobileMenu.removeEventListener('transitionend', onEnd);
                     mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
                 }

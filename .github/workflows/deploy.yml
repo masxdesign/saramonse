@@ -33,5 +33,5 @@ jobs:
           username: masxdesign.com
           password: ${{ secrets.SFTP_PASSWORD }}
           local_path: ./_site/*
-          remote_path: ${{ secrets.SFTP_SERVER_DIR }}
+          remote_path: ${{ vars.SFTP_SERVER_DIR }}
           sftp_only: true

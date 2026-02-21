@@ -60,7 +60,7 @@
 
             // Make element visible before animating — Safari does not reliably
             // hide/show position:fixed elements with clip-path alone.
-            mobileMenu.style.visibility = 'visible';
+            mobileMenu.style.display = 'block';
 
             // Snap to closed at button position without transition.
             setTransition(null);
@@ -111,7 +111,7 @@
             // fallback (slightly longer than the 0.5s close transition).
             const closeTimer = setTimeout(() => {
                 mobileMenu.classList.remove('menu-closing');
-                mobileMenu.style.visibility = 'hidden';
+                mobileMenu.style.display = 'none';
                 mobileMenu.removeEventListener('transitionend', onEnd);
                 mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
             }, 600);
@@ -120,7 +120,7 @@
                 if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
                     clearTimeout(closeTimer);
                     mobileMenu.classList.remove('menu-closing');
-                    mobileMenu.style.visibility = 'hidden';
+                    mobileMenu.style.display = 'none';
                     mobileMenu.removeEventListener('transitionend', onEnd);
                     mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
                 }

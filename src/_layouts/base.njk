@@ -12,10 +12,17 @@
 </head>
 <body class="font-serif text-gray-800">
     {% set navTheme = "light" %}
+    {% set navVariant = "compact" %}
+    {% set navId = "nav-main" %}
     {% set navBg = "nav-fade-light" %}
+    {% set navExtraClasses = "transition-all duration-500 ease-in-out opacity-100 translate-y-0" %}
     {% include "navigation.njk" %}
 
-    <main class="pt-28 lg:pt-32">
+    {% if scrollCompactNav %}
+    {% include "compact-nav.njk" %}
+    {% endif %}
+
+    <main class="pt-20 lg:pt-24">
         {{ content | safe }}
     </main>
 
@@ -136,6 +143,30 @@
                 link.addEventListener('click', closeMenu);
             });
         });
+
+        {% if scrollCompactNav %}
+        (function () {
+            var navMain    = document.getElementById('nav-main');
+            var navCompact = document.getElementById('nav-compact');
+            var THRESHOLD  = 80;
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > THRESHOLD) {
+                    navMain.classList.remove('opacity-100', 'translate-y-0');
+                    navMain.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+
+                    navCompact.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+                    navCompact.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    navCompact.classList.remove('opacity-100', 'translate-y-0');
+                    navCompact.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+
+                    navMain.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+                    navMain.classList.add('opacity-100', 'translate-y-0');
+                }
+            });
+        })();
+        {% endif %}
     </script>
 </body>
 </html>

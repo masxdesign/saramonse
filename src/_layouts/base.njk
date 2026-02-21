@@ -51,7 +51,7 @@
 
                 // Make element visible before animating — Safari does not reliably
                 // hide/show position:fixed elements with clip-path alone.
-                overlay.style.visibility = 'visible';
+                overlay.style.display = 'block';
 
                 // Snap to closed state at the button's position with no transition.
                 setTransition(null);
@@ -104,7 +104,7 @@
                 // (slightly longer than the 0.5s close transition).
                 var closeTimer = setTimeout(function () {
                     overlay.classList.remove('menu-closing');
-                    overlay.style.visibility = 'hidden';
+                    overlay.style.display = 'none';
                     overlay.removeEventListener('transitionend', onEnd);
                     overlay.removeEventListener('webkitTransitionEnd', onEnd);
                 }, 600);
@@ -113,7 +113,7 @@
                     if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
                         clearTimeout(closeTimer);
                         overlay.classList.remove('menu-closing');
-                        overlay.style.visibility = 'hidden';
+                        overlay.style.display = 'none';
                         overlay.removeEventListener('transitionend', onEnd);
                         overlay.removeEventListener('webkitTransitionEnd', onEnd);
                     }

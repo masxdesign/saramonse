@@ -49,16 +49,17 @@
    Safari iOS can interpolate the clip-path correctly (Safari cannot
    interpolate clip-path when CSS custom properties are used inside
    @keyframes, causing the animation to flash or not play at all).
-   visibility:hidden is added as a Safari fallback because clip-path:circle(0%)
-   alone does not reliably hide position:fixed elements in Safari — the dark
-   background can bleed through when scrolling. JS controls visibility via
-   inline style so the close animation can still play before the element is
-   fully hidden. */
+   display:none is used (not visibility:hidden) because Safari does not
+   reliably honour visibility:hidden on position:fixed elements that have
+   clip-path — the background bleeds through GPU compositing layers during
+   scroll. display:none removes the element from the compositing tree entirely
+   so there is nothing to bleed. JS switches to display:block just before the
+   open animation and back to display:none after the close animation. */
 .mobile-menu-overlay {
   -webkit-clip-path: circle(0% at 40px 40px);
   clip-path: circle(0% at 40px 40px);
   pointer-events: none;
-  visibility: hidden;
+  display: none;
 }
 .mobile-menu-overlay.menu-open {
   pointer-events: auto;

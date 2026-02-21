@@ -1,0 +1,40 @@
+name: Deploy to one.com via SFTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Deploy via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          protocol: sftp
+          server: ssh.masxdesign.com
+          port: 22
+          username: masxdesign.com
+          password: ${{ secrets.SFTP_PASSWORD }}
+          local-dir: ./_site/
+          server-dir: ${{ secrets.SFTP_SERVER_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**

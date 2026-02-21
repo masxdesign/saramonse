@@ -35,25 +35,84 @@
         const navCompact = document.getElementById('nav-compact');
         const heroSection = document.getElementById('home');
 
-        // Circle burst mobile menu
+        // Circle burst mobile menu.
+        // Clip-path is animated via JS-set inline transitions rather than @keyframes
+        // so that Safari iOS can interpolate it correctly (Safari cannot interpolate
+        // clip-path when CSS custom properties appear inside @keyframes).
+        const EASE = 'cubic-bezier(0.77, 0, 0.175, 1)';
+
+        function setClipPath(val) {
+            mobileMenu.style.webkitClipPath = val;
+            mobileMenu.style.clipPath = val;
+        }
+
+        function setTransition(duration) {
+            const t = duration
+                ? `-webkit-clip-path ${duration} ${EASE}, clip-path ${duration} ${EASE}`
+                : 'none';
+            mobileMenu.style.webkitTransition = t;
+            mobileMenu.style.transition = t;
+        }
+
         function openMenu(btn) {
             const rect = btn.getBoundingClientRect();
-            mobileMenu.style.setProperty('--ox', (rect.left + rect.width / 2) + 'px');
-            mobileMenu.style.setProperty('--oy', (rect.top + rect.height / 2) + 'px');
+            const ox = Math.round(rect.left + rect.width / 2);
+            const oy = Math.round(rect.top + rect.height / 2);
+
+            // Snap to closed at button position without transition.
+            setTransition(null);
+            setClipPath(`circle(0% at ${ox}px ${oy}px)`);
+
+            // Force reflow so the "no transition" state commits.
+            mobileMenu.getBoundingClientRect(); // eslint-disable-line no-unused-expressions
+
+            // Animate burst open.
+            setTransition('0.65s');
+            setClipPath(`circle(150% at ${ox}px ${oy}px)`);
+
             mobileMenu.classList.remove('menu-closing');
             mobileMenu.classList.add('menu-open');
             mobileMenuBtns.forEach(b => b.classList.add('menu-open'));
-            document.documentElement.style.overflow = 'hidden';
+
+            // iOS Safari ignores overflow:hidden on <html>/<body>; use position:fixed.
+            const sy = window.scrollY ?? window.pageYOffset;
+            document.body.dataset.menuScrollY = sy;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${sy}px`;
+            document.body.style.width = '100%';
         }
 
         function closeMenu() {
+            // Read the origin so the circle collapses toward the same button.
+            const cp = mobileMenu.style.clipPath || mobileMenu.style.webkitClipPath || '';
+            const m  = cp.match(/at\s+([\d.]+)px\s+([\d.]+)px/);
+            const ox = m ? m[1] : '40';
+            const oy = m ? m[2] : '40';
+
             mobileMenu.classList.remove('menu-open');
             mobileMenu.classList.add('menu-closing');
-            mobileMenu.addEventListener('animationend', () => {
-                mobileMenu.classList.remove('menu-closing');
-            }, { once: true });
             mobileMenuBtns.forEach(b => b.classList.remove('menu-open'));
-            document.documentElement.style.overflow = '';
+
+            // Animate burst closed.
+            setTransition('0.5s');
+            setClipPath(`circle(0% at ${ox}px ${oy}px)`);
+
+            // Restore scroll (iOS-safe).
+            const sy = parseInt(document.body.dataset.menuScrollY || '0', 10);
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, sy);
+
+            function onEnd(e) {
+                if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
+                    mobileMenu.classList.remove('menu-closing');
+                    mobileMenu.removeEventListener('transitionend', onEnd);
+                    mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
+                }
+            }
+            mobileMenu.addEventListener('transitionend', onEnd);
+            mobileMenu.addEventListener('webkitTransitionEnd', onEnd);
         }
 
         mobileMenuBtns.forEach(btn => {

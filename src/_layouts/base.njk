@@ -24,31 +24,91 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');
-            const overlay = document.getElementById('mobile-menu');
+            var mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');
+            var overlay = document.getElementById('mobile-menu');
             if (!overlay) return;
 
+            var EASE = 'cubic-bezier(0.77, 0, 0.175, 1)';
+
+            // Set clip-path via inline style with -webkit- prefix for Safari.
+            function setClipPath(val) {
+                overlay.style.webkitClipPath = val;
+                overlay.style.clipPath = val;
+            }
+
+            // Set the clip-path CSS transition (or 'none' to disable).
+            function setTransition(duration) {
+                var t = duration
+                    ? '-webkit-clip-path ' + duration + ' ' + EASE + ', clip-path ' + duration + ' ' + EASE
+                    : 'none';
+                overlay.style.webkitTransition = t;
+                overlay.style.transition = t;
+            }
+
             function openMenu(btn) {
-                const rect = btn.getBoundingClientRect();
-                overlay.style.setProperty('--ox', (rect.left + rect.width / 2) + 'px');
-                overlay.style.setProperty('--oy', (rect.top + rect.height / 2) + 'px');
+                var rect = btn.getBoundingClientRect();
+                var ox = Math.round(rect.left + rect.width / 2);
+                var oy = Math.round(rect.top + rect.height / 2);
+
+                // Snap to closed state at the button's position with no transition.
+                setTransition(null);
+                setClipPath('circle(0% at ' + ox + 'px ' + oy + 'px)');
+
+                // Force a reflow so the "no transition" state commits before animating.
+                overlay.getBoundingClientRect(); // eslint-disable-line no-unused-expressions
+
+                // Animate burst open.
+                setTransition('0.65s');
+                setClipPath('circle(150% at ' + ox + 'px ' + oy + 'px)');
+
                 overlay.classList.remove('menu-closing');
                 overlay.classList.add('menu-open');
-                mobileMenuBtns.forEach(b => b.classList.add('menu-open'));
-                document.documentElement.style.overflow = 'hidden';
+                mobileMenuBtns.forEach(function (b) { b.classList.add('menu-open'); });
+
+                // iOS Safari ignores overflow:hidden on <html>/<body>; use position:fixed.
+                var sy = window.scrollY !== undefined ? window.scrollY : window.pageYOffset;
+                document.body.dataset.menuScrollY = sy;
+                document.body.style.position = 'fixed';
+                document.body.style.top = '-' + sy + 'px';
+                document.body.style.width = '100%';
             }
 
             function closeMenu() {
+                // Read the origin from the currently-set clip-path so the circle
+                // collapses back toward the same button that opened it.
+                var cp = overlay.style.clipPath || overlay.style.webkitClipPath || '';
+                var m  = cp.match(/at\s+([\d.]+)px\s+([\d.]+)px/);
+                var ox = m ? m[1] : '40';
+                var oy = m ? m[2] : '40';
+
                 overlay.classList.remove('menu-open');
                 overlay.classList.add('menu-closing');
-                overlay.addEventListener('animationend', () => {
-                    overlay.classList.remove('menu-closing');
-                }, { once: true });
-                mobileMenuBtns.forEach(b => b.classList.remove('menu-open'));
-                document.documentElement.style.overflow = '';
+                mobileMenuBtns.forEach(function (b) { b.classList.remove('menu-open'); });
+
+                // Animate burst closed.
+                setTransition('0.5s');
+                setClipPath('circle(0% at ' + ox + 'px ' + oy + 'px)');
+
+                // Restore scroll position (iOS-safe).
+                var sy = parseInt(document.body.dataset.menuScrollY || '0', 10);
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.width = '';
+                window.scrollTo(0, sy);
+
+                // Clean up the menu-closing class once the transition ends.
+                function onEnd(e) {
+                    if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
+                        overlay.classList.remove('menu-closing');
+                        overlay.removeEventListener('transitionend', onEnd);
+                        overlay.removeEventListener('webkitTransitionEnd', onEnd);
+                    }
+                }
+                overlay.addEventListener('transitionend', onEnd);
+                overlay.addEventListener('webkitTransitionEnd', onEnd);
             }
 
-            mobileMenuBtns.forEach(btn => {
+            mobileMenuBtns.forEach(function (btn) {
                 btn.addEventListener('click', function () {
                     if (overlay.classList.contains('menu-open')) {
                         closeMenu();
@@ -58,7 +118,7 @@
                 });
             });
 
-            overlay.querySelectorAll('a').forEach(link => {
+            overlay.querySelectorAll('a').forEach(function (link) {
                 link.addEventListener('click', closeMenu);
             });
         });

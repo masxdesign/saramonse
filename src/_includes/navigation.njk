@@ -16,8 +16,10 @@
 {% set mobileBorder = ""                   if navTheme == "dark" else "border-t border-gray-100" %}
 {% set dropdownBg  = "bg-black/90 backdrop-blur-md" if navTheme == "dark" else "bg-white shadow-lg" %}
 {% set dropdownText = "text-white hover:text-white/80" if navTheme == "dark" else "text-gray-700 hover:text-gray-900" %}
+{% set navPy       = "py-3" if navVariant == "compact" else "py-6" %}
+{% set logoSize    = "w-[38px] h-[38px] lg:w-12 lg:h-12" if navVariant == "compact" else "w-16 h-16 lg:w-20 lg:h-20" %}
 
-<nav {% if navId %}id="{{ navId }}"{% endif %} class="fixed top-0 w-full {{ navBg or 'bg-white' }} z-[60] py-6 {{ navExtraClasses or '' }}">
+<nav {% if navId %}id="{{ navId }}"{% endif %} class="fixed top-0 w-full {{ navBg or 'bg-white' }} z-[60] {{ navPy }} {{ navExtraClasses or '' }}">
     <div class="w-full max-w-screen-lg mx-auto px-6 flex justify-between items-center">
 
         <!-- Hamburger Button (Mobile) -->
@@ -66,7 +68,7 @@
 
         <!-- Center Logo -->
         <a href="{{ navigation.left[0].href }}" class="flex-shrink-0 mx-8 lg:mx-12">
-            <img src="/assets/logo_256.png" alt="Saramonse Beauty" class="w-16 h-16 lg:w-20 lg:h-20">
+            <img src="/assets/logo_256.png" alt="Saramonse Beauty" class="{{ logoSize }}">
         </a>
 
         <!-- Right Menu (Desktop) -->

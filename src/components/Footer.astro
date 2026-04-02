@@ -1,0 +1,217 @@
+---
+interface Props {
+  footerTheme?: 'light' | 'dark';
+  isHomepage?: boolean;
+}
+
+const { footerTheme = 'light', isHomepage = false } = Astro.props;
+
+const ftBg = footerTheme === 'dark' ? 'bg-black' : 'bg-white';
+const ftText = footerTheme === 'dark' ? 'text-white' : 'text-gray-900';
+const ftTextMuted = footerTheme === 'dark' ? 'text-white/70' : 'text-gray-700';
+const ftTextHover = footerTheme === 'dark' ? 'hover:text-white' : 'hover:text-gray-900';
+const ftSocial =
+  footerTheme === 'dark' ? 'text-white hover:text-white/70' : 'text-gray-900 hover:text-gray-600';
+const ftBottomBorder = footerTheme === 'dark' ? 'border-white/20' : 'border-gray-200';
+const ftBottomText = footerTheme === 'dark' ? 'text-white/60' : 'text-gray-600';
+const ftBottomHover = footerTheme === 'dark' ? 'hover:text-white' : 'hover:text-gray-900';
+---
+
+<footer>
+  {
+    isHomepage ? (
+      <div class="bg-black text-white py-16 sm:py-20">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 text-center">
+          <h2
+            class="text-3xl sm:text-4xl lg:text-5xl font-light mb-12 tracking-wide"
+            style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+          >
+            Let's Talk
+          </h2>
+
+          <div class="space-y-4 max-w-lg mx-auto">
+            <div class="flex items-center justify-center gap-3">
+              <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <span class="text-white/90">123 Beauty Lane, London, UK</span>
+            </div>
+            <div class="flex items-center justify-center gap-3">
+              <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+              </svg>
+              <a href="tel:+1234567890" class="text-white/90 hover:text-white transition-colors">
+                +1 (234) 567-890
+              </a>
+            </div>
+            <div class="flex items-center justify-center gap-3">
+              <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+              </svg>
+              <a href="mailto:hello@saramonsebeauty.com" class="text-white/90 hover:text-white transition-colors">
+                hello@saramonsebeauty.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : null
+  }
+
+  <div class={ftBg}>
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 py-16 sm:py-20">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div>
+          <div class="mb-12">
+            <img src="/assets/logo_128.png" alt="Sara Monse" width="128" height="128" />
+          </div>
+
+          <div class="mb-12 max-w-md">
+            <h3 class:list={['text-xs font-semibold tracking-widest uppercase mb-6', ftText]}>
+              Receive Updates Via Email
+            </h3>
+            {footerTheme === 'dark' ? (
+              <form class="flex items-center gap-4 border-b border-white pb-3">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  class="flex-1 bg-transparent text-white placeholder:text-white/50 text-base font-light italic focus:outline-none"
+                />
+                <button type="submit" class="text-white hover:text-white/70 transition-colors shrink-0" aria-label="Subscribe">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                    />
+                  </svg>
+                </button>
+              </form>
+            ) : (
+              <form class="flex items-center gap-4 border-b border-gray-900 pb-3">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  class="flex-1 bg-transparent text-gray-900 placeholder:text-gray-400 text-base font-light italic focus:outline-none"
+                />
+                <button type="submit" class="text-gray-900 hover:text-gray-600 transition-colors shrink-0" aria-label="Subscribe">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                    />
+                  </svg>
+                </button>
+              </form>
+            )}
+          </div>
+
+          <div class="flex gap-6">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[ftSocial, 'transition-colors']}
+              aria-label="Instagram"
+            >
+              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[ftSocial, 'transition-colors']}
+              aria-label="Facebook"
+            >
+              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </a>
+            <a
+              href="https://tiktok.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[ftSocial, 'transition-colors']}
+              aria-label="TikTok"
+            >
+              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 lg:gap-16">
+          <div>
+            <ul class="space-y-6">
+              <li>
+                <a href="/#contact" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
+                  Location & Contact Form
+                </a>
+              </li>
+              <li>
+                <a href="/#services" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
+                  Services
+                </a>
+              </li>
+              <li>
+                <a href="#" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
+                  Social Links
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <ul class="space-y-6">
+              <li>
+                <a href="/#about" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="/#book" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
+                  Book Now
+                </a>
+              </li>
+              <li>
+                <a href="/privacy-policy" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
+                  Privacy Policy
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class:list={[ftBg, 'border-t', ftBottomBorder]}>
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 py-8">
+      <div class:list={['grid sm:grid-cols-2 gap-6 text-sm font-sans', ftBottomText]}>
+        <div class="flex flex-wrap gap-4 sm:gap-6 justify-center sm:justify-start">
+          <a href="/privacy-policy" class:list={[ftBottomHover, 'transition-colors']}>
+            Terms & Conditions
+          </a>
+          <a href="/privacy-policy" class:list={[ftBottomHover, 'transition-colors']}>
+            Security & Privacy
+          </a>
+          <a href="#" class:list={[ftBottomHover, 'transition-colors']}>
+            Accessibility
+          </a>
+        </div>
+        <div class="text-center sm:text-right">
+          <p>&copy; 2025 Sara Monse Ltd | Registered in England No. 23474939</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -5,6 +5,13 @@ const INSTAGRAM_CONFIG = {
     limit: 10 // Number of posts to fetch
 };
 
+function isPlaceholderConfig() {
+    return (
+        String(INSTAGRAM_CONFIG.instagramBusinessAccountId).includes('YOUR_') ||
+        String(INSTAGRAM_CONFIG.accessToken).includes('YOUR_')
+    );
+}
+
 // Caching configuration
 const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 let cachedPosts = null;
@@ -14,6 +21,10 @@ let cacheTimestamp = null;
  * Fetch Instagram posts from the Graph API
  */
 async function fetchInstagramPosts() {
+    if (isPlaceholderConfig()) {
+        return [];
+    }
+
     const now = Date.now();
 
     // Return cached data if still valid
@@ -65,6 +76,28 @@ function createInstagramPostHTML(post, index) {
     `;
 }
 
+function attachLoadMoreHandlers(grid, loadMoreBtn, postsLength) {
+    if (!loadMoreBtn) return;
+    if (postsLength > 5) {
+        loadMoreBtn.style.display = 'block';
+        loadMoreBtn.onclick = () => {
+            grid.querySelectorAll('.instagram-hidden').forEach((post) => post.classList.remove('hidden'));
+            loadMoreBtn.style.display = 'none';
+        };
+    } else {
+        const hasHiddenStatic = grid.querySelectorAll('.instagram-hidden').length > 0;
+        if (hasHiddenStatic) {
+            loadMoreBtn.style.display = 'block';
+            loadMoreBtn.onclick = () => {
+                grid.querySelectorAll('.instagram-hidden').forEach((post) => post.classList.remove('hidden'));
+                loadMoreBtn.style.display = 'none';
+            };
+        } else {
+            loadMoreBtn.style.display = 'none';
+        }
+    }
+}
+
 /**
  * Load and display Instagram posts
  */
@@ -73,6 +106,11 @@ async function loadInstagramFeed() {
     const loadMoreBtn = document.getElementById('load-more-btn');
 
     if (!grid) return;
+
+    if (isPlaceholderConfig()) {
+        attachLoadMoreHandlers(grid, loadMoreBtn, 0);
+        return;
+    }
 
     // Show loading state
     grid.innerHTML = '<p class="col-span-full text-center text-gray-600">Loading Instagram posts...</p>';
@@ -100,19 +138,7 @@ async function loadInstagramFeed() {
         });
     });
 
-    // Setup load more button
-    if (loadMoreBtn && posts.length > 5) {
-        loadMoreBtn.style.display = 'block';
-        loadMoreBtn.onclick = () => {
-            const hiddenPosts = grid.querySelectorAll('.instagram-hidden');
-            hiddenPosts.forEach(post => {
-                post.classList.remove('hidden');
-            });
-            loadMoreBtn.style.display = 'none';
-        };
-    } else if (loadMoreBtn) {
-        loadMoreBtn.style.display = 'none';
-    }
+    attachLoadMoreHandlers(grid, loadMoreBtn, posts.length);
 }
 
 /**

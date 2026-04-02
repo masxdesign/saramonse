@@ -50,17 +50,22 @@ const nav = {
   ]
 };
 
-// Flat ordered list used by the mobile overlay — keeps the template loop simple
-// and means animation-delay indices are computed here rather than hard-coded in CSS.
-nav.mobileItems = [
-  ...nav.left.flatMap(item => [
-    { label: item.label, href: item.href, kind: "main" },
-    ...(item.children || []).map(child => ({ label: child.label, href: child.href, kind: "child" }))
+// Mobile overlay: scrollable links, then a bottom bar (CTA + Account). Book Now is matched by href `/#book`.
+const rightWithoutCta = nav.right.filter((item) => item.href !== '/#book');
+const bookNowItem = nav.right.find((item) => item.href === '/#book');
+const accountItem = nav.icons.find((icon) => icon.icon === 'account');
+
+nav.mobilePrimaryItems = [
+  ...nav.left.flatMap((item) => [
+    { label: item.label, href: item.href, kind: 'main' },
+    ...(item.children || []).map((child) => ({ label: child.label, href: child.href, kind: 'child' })),
   ]),
-  ...nav.right.map(item => ({ label: item.label, href: item.href, kind: "main" })),
-  ...nav.icons
-    .filter(icon => icon.icon !== "cart")
-    .map(icon => ({ label: icon.label, href: icon.href, kind: "icon" }))
+  ...rightWithoutCta.map((item) => ({ label: item.label, href: item.href, kind: 'main' })),
+];
+
+nav.mobileOverlayFooter = [
+  ...(bookNowItem ? [{ label: bookNowItem.label, href: bookNowItem.href, kind: 'cta' }] : []),
+  ...(accountItem ? [{ label: accountItem.label, href: accountItem.href, kind: 'account' }] : []),
 ];
 
 export default nav;

@@ -1,10 +1,11 @@
 ---
-layout: hero-layout.njk
-title: Saramonse Beauty | Premium Beauty Therapy
-description: Saramonse Beauty - Premium beauty therapy services
-isHomepage: true
+import HeroLayout from '../layouts/HeroLayout.astro';
 ---
-
+<HeroLayout
+  title="Saramonse Beauty | Premium Beauty Therapy"
+  description="Saramonse Beauty - Premium beauty therapy services"
+  isHomepage={true}
+>
 <!-- Hero Section -->
 <section class="relative min-h-screen flex flex-col" id="home">
     <!-- Background Image with Dark Overlay -->
@@ -249,7 +250,7 @@ isHomepage: true
         </div>
     </div>
 
-    <script>
+    <script is:inline>
         // Capture original slide inner cards before Splide mounts and adds clones
         var reviewInnerCards = document.querySelectorAll('.review-card-inner');
         var reviewIndicators = document.querySelectorAll('.indicator');
@@ -387,23 +388,23 @@ isHomepage: true
 
             <!-- Hidden posts that will show when "Load More" is clicked -->
             <div class="instagram-post instagram-hidden hidden aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="/assets/instagram-6.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                <img src="/assets/instagram-1.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
             </div>
             <div class="instagram-post instagram-hidden hidden aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="instagram-7.jpg" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                <img src="/assets/instagram-2.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
             </div>
             <div class="instagram-post instagram-hidden hidden aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="instagram-8.jpg" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                <img src="/assets/instagram-3.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
             </div>
             <div class="instagram-post instagram-hidden hidden aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="instagram-9.jpg" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                <img src="/assets/instagram-4.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
             </div>
             <div class="instagram-post instagram-hidden hidden aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="instagram-10.jpg" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                <img src="/assets/instagram-5.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
             </div>
         </div>
@@ -416,5 +417,6 @@ isHomepage: true
         </div>
     </div>
 
-    <script type="module" src="./instagram-feed.js"></script>
+    <script type="module" src="/instagram-feed.js"></script>
 </section>
+</HeroLayout>

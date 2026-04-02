@@ -53,7 +53,14 @@ import navigation from '../data/navigation.js';
           class="menu-item w-full max-w-sm text-center"
           style={`animation-delay: calc(0.28s + ${index} * 0.08s)`}
         >
-          {item.kind === 'main' ? (
+          {item.kind === 'parent' ? (
+            <span
+              class="block cursor-default select-none py-2.5 text-2xl font-light tracking-[0.2em] text-white/95 uppercase sm:text-3xl"
+              role="presentation"
+            >
+              {item.label}
+            </span>
+          ) : item.kind === 'main' ? (
             <a
               href={item.href}
               class="block py-2.5 text-2xl font-light tracking-[0.2em] text-white/95 uppercase transition-colors hover:text-white sm:text-3xl"

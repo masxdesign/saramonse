@@ -1,10 +1,14 @@
 ---
+import navigation from '../data/navigation.js';
+
 interface Props {
   footerTheme?: 'light' | 'dark';
   isHomepage?: boolean;
 }
 
 const { footerTheme = 'light', isHomepage = false } = Astro.props;
+
+const currentYear = new Date().getFullYear();
 
 const ftBg = footerTheme === 'dark' ? 'bg-black' : 'bg-white';
 const ftText = footerTheme === 'dark' ? 'text-white' : 'text-gray-900';
@@ -15,6 +19,12 @@ const ftSocial =
 const ftBottomBorder = footerTheme === 'dark' ? 'border-white/20' : 'border-gray-200';
 const ftBottomText = footerTheme === 'dark' ? 'text-white/60' : 'text-gray-600';
 const ftBottomHover = footerTheme === 'dark' ? 'hover:text-white' : 'hover:text-gray-900';
+/** Nested footer links: lighter weight + softer tone vs primary row (Home / Services label). */
+const ftNavChild =
+  footerTheme === 'dark'
+    ? 'text-white/65 font-light text-sm tracking-wide transition-colors hover:text-white'
+    : 'text-gray-500 font-light text-sm tracking-wide transition-colors hover:text-gray-900';
+const ftNavChildRule = footerTheme === 'dark' ? 'border-white/15' : 'border-gray-200/90';
 ---
 
 <footer>
@@ -152,36 +162,72 @@ const ftBottomHover = footerTheme === 'dark' ? 'hover:text-white' : 'hover:text-
         <div class="grid grid-cols-2 gap-8 lg:gap-16">
           <div>
             <ul class="space-y-6">
-              <li>
-                <a href="/#contact" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
-                  Location & Contact Form
-                </a>
-              </li>
-              <li>
-                <a href="/#services" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="#" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
-                  Social Links
-                </a>
-              </li>
+              {
+                navigation.left.map((item) => {
+                  const groupId = `footer-nav-${item.label.replace(/\s+/g, '-').toLowerCase()}`;
+                  const childList =
+                    item.children?.length ? (
+                      <ul
+                        class:list={[
+                          'mt-2.5 list-none space-y-2.5 border-l pl-5',
+                          ftNavChildRule,
+                        ]}
+                      >
+                        {item.children.map((child) => (
+                          <li>
+                            <a href={child.href} class:list={ftNavChild}>
+                              {child.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null;
+
+                  return item.children?.length && !item.parentLink ? (
+                    <li>
+                      <div role="group" aria-labelledby={groupId}>
+                        <span id={groupId} class:list={[ftTextMuted, 'block text-sm font-normal']}>
+                          {item.label}
+                        </span>
+                        {childList}
+                      </div>
+                    </li>
+                  ) : (
+                    <li>
+                      {item.children?.length && item.parentLink ? (
+                        <div role="group" aria-labelledby={groupId}>
+                          <a
+                            id={groupId}
+                            href={item.href}
+                            class:list={[ftTextMuted, ftTextHover, 'text-sm transition-colors']}
+                          >
+                            {item.label}
+                          </a>
+                          {childList}
+                        </div>
+                      ) : (
+                        <a href={item.href} class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
+                          {item.label}
+                        </a>
+                      )}
+                    </li>
+                  );
+                })
+              }
             </ul>
           </div>
 
           <div>
             <ul class="space-y-6">
-              <li>
-                <a href="/#about" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="/#book" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
-                  Book Now
-                </a>
-              </li>
+              {
+                navigation.right.map((item) => (
+                  <li>
+                    <a href={item.href} class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
+                      {item.label}
+                    </a>
+                  </li>
+                ))
+              }
               <li>
                 <a href="/privacy-policy" class:list={[ftTextMuted, ftTextHover, 'transition-colors text-sm']}>
                   Privacy Policy
@@ -209,7 +255,7 @@ const ftBottomHover = footerTheme === 'dark' ? 'hover:text-white' : 'hover:text-
           </a>
         </div>
         <div class="text-center sm:text-right">
-          <p>&copy; 2025 Sara Monse Ltd | Registered in England No. 23474939</p>
+          <p>&copy; {currentYear} Sara Monse Ltd | Registered in England No. 23474939</p>
         </div>
       </div>
     </div>

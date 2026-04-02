@@ -60,12 +60,11 @@ async function fetchInstagramPosts() {
 /**
  * Create HTML for an Instagram post card
  */
-function createInstagramPostHTML(post, index) {
+function createInstagramPostHTML(post) {
     const imageUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
-    const hiddenClass = index >= 5 ? 'instagram-hidden hidden' : '';
 
     return `
-        <div class="instagram-post ${hiddenClass} aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer" data-permalink="${post.permalink}">
+        <div class="instagram-post aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer" data-permalink="${post.permalink}">
             <img src="${imageUrl}" alt="${post.caption || 'Instagram post'}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" loading="lazy">
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                 <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
@@ -76,39 +75,15 @@ function createInstagramPostHTML(post, index) {
     `;
 }
 
-function attachLoadMoreHandlers(grid, loadMoreBtn, postsLength) {
-    if (!loadMoreBtn) return;
-    if (postsLength > 5) {
-        loadMoreBtn.style.display = 'block';
-        loadMoreBtn.onclick = () => {
-            grid.querySelectorAll('.instagram-hidden').forEach((post) => post.classList.remove('hidden'));
-            loadMoreBtn.style.display = 'none';
-        };
-    } else {
-        const hasHiddenStatic = grid.querySelectorAll('.instagram-hidden').length > 0;
-        if (hasHiddenStatic) {
-            loadMoreBtn.style.display = 'block';
-            loadMoreBtn.onclick = () => {
-                grid.querySelectorAll('.instagram-hidden').forEach((post) => post.classList.remove('hidden'));
-                loadMoreBtn.style.display = 'none';
-            };
-        } else {
-            loadMoreBtn.style.display = 'none';
-        }
-    }
-}
-
 /**
  * Load and display Instagram posts
  */
 async function loadInstagramFeed() {
     const grid = document.getElementById('instagram-grid');
-    const loadMoreBtn = document.getElementById('load-more-btn');
 
     if (!grid) return;
 
     if (isPlaceholderConfig()) {
-        attachLoadMoreHandlers(grid, loadMoreBtn, 0);
         return;
     }
 
@@ -120,12 +95,11 @@ async function loadInstagramFeed() {
 
     if (posts.length === 0) {
         grid.innerHTML = '<p class="col-span-full text-center text-gray-600">No posts found. Please check your access token.</p>';
-        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
         return;
     }
 
     // Clear grid and add posts
-    grid.innerHTML = posts.map((post, index) => createInstagramPostHTML(post, index)).join('');
+    grid.innerHTML = posts.map((post) => createInstagramPostHTML(post)).join('');
 
     // Add click handlers to open Instagram posts
     const postElements = grid.querySelectorAll('.instagram-post');
@@ -137,8 +111,6 @@ async function loadInstagramFeed() {
             }
         });
     });
-
-    attachLoadMoreHandlers(grid, loadMoreBtn, posts.length);
 }
 
 /**

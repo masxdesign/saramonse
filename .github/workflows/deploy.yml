@@ -26,12 +26,12 @@ jobs:
         run: npm run build
 
       - name: Deploy via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
+          protocol: sftp
           server: ssh.masxdesign.com
           port: 22
           username: masxdesign.com
           password: ${{ secrets.SFTP_PASSWORD }}
-          local_path: ./dist/*
-          remote_path: ${{ vars.SFTP_SERVER_DIR }}
-          sftp_only: true
+          local-dir: ./dist/
+          server-dir: ${{ vars.SFTP_SERVER_DIR }}

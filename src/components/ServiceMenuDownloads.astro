@@ -1,0 +1,45 @@
+---
+import type { ServiceMenu } from '../data/menus/types';
+
+interface Props {
+  menu: ServiceMenu;
+  /** Applied to the row that wraps the default slot (e.g. Book Treatment). */
+  primaryRowClass?: string;
+}
+
+const { menu, primaryRowClass = '' } = Astro.props;
+
+const fullBrochureHref = '/assets/all-services-menu.pdf';
+const sectionPdfHref = `/assets/${menu.pdfFileName}`;
+---
+
+<div class="max-w-4xl mx-auto flex flex-col gap-8">
+  <div class:list={['flex flex-wrap gap-6', primaryRowClass]}>
+    <slot />
+  </div>
+  <div class="border-t border-gray-200 pt-6 sm:pt-8">
+    <p
+      class="font-sans text-xs tracking-[0.25em] uppercase text-gray-500 mb-4"
+    >
+      Download price list
+    </p>
+    <div class="flex flex-wrap gap-4">
+      <a
+        href={fullBrochureHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
+      >
+        Full salon menu (PDF)
+      </a>
+      <a
+        href={sectionPdfHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block border border-pink-400 text-pink-400 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-pink-400 hover:text-white transition-colors"
+      >
+        {menu.displayName} only (PDF)
+      </a>
+    </div>
+  </div>
+</div>

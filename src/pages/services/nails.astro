@@ -1,7 +1,18 @@
 ---
 import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
+import MenuBlocks from '../../components/menus/MenuBlocks.astro';
+import MenuProse from '../../components/menus/MenuProse.astro';
 import { serviceFaqs } from '../../data/faq-content.js';
+import {
+  nailsExtrasBlocks,
+  nailsFeetBlocks,
+  nailsHandsBlocks,
+  nailsNailArtColLeft,
+  nailsNailArtColRight,
+  nailsNailArtQuote,
+  nailsRemovalBlocks,
+} from '../../data/menus/nails';
 ---
 
 <VideoHeroLayout
@@ -53,81 +64,7 @@ import { serviceFaqs } from '../../data/faq-content.js';
       </h2>
 
       <div class="divide-y divide-gray-200">
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">File &amp; Colour</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;12</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          A quick refresh for your nails! Shaping, buffing, and polish application for a neat finish. (25mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Full Manicure</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;28</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Includes nail shaping, cuticle care, buffing, hydrating moisturiser, and polish for healthy, beautifully
-          groomed nails. (50mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Gel Manicure</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">35</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Nails are shaped and prepped before applying long-lasting gel polish that stays glossy and chip-free for up to 2
-          weeks. (60mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">BIAB Manicure</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;45</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Our BIAB (Builder in a Bottle) treatment strengthens natural nails with a flexible builder gel, finished with
-          your choice of colour for a strong yet elegant look. (75mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">BIAB Infill (Natural Nails)</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;38</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Maintenance for BIAB nails. The builder gel is rebalanced and refreshed with colour so your nails stay strong
-          and flawless. (60mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Gel Extensions - TGB Fullset</h3>
-          <span class="text-lg sm:text-xl text-pink-500 font-sans shrink-0 ml-4">&pound;45&nbsp;&nbsp;*Intro Price</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          A complete enhancement service using The Gel Bottle (TGB) full form system to create beautifully pre-shaped
-          nails with added length, strength, and a flawless finish. For Small to Medium length extensions. (120mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Gel Extensions - TGB Infill</h3>
-          <span class="text-lg sm:text-xl text-pink-500 font-sans shrink-0 ml-4">&pound;38&nbsp;&nbsp;*Intro Price</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Maintenance for your TGB full form extensions; the nails are rebalanced, reshaped, and finished with fresh
-          colour to keep them strong, even, and looking perfect. (90mins)
-        </p>
-      </div>
+        <MenuBlocks blocks={nailsHandsBlocks} />
       </div>
 
       <h2
@@ -138,48 +75,7 @@ import { serviceFaqs } from '../../data/faq-content.js';
       </h2>
 
       <div class="divide-y divide-gray-200">
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">File &amp; Colour</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;15</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          A quick refresh for your toes! Shaping, buffing, and polish application for a neat finish. (30mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Full Pedicure</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;38</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          A complete foot treatment including soak, exfoliation, nail and cuticle care, buff, massage, and polish
-          application; leaving your feet soft, refreshed, and beautifully finished. (60mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Gel Pedicure</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;46</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          All the benefits of our Full Pedicure, finished with long-lasting gel polish for glossy toes that stay flawless
-          for weeks. Perfect for holidays or all-season shine. (75mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Gel Toes (Colour Only)</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;30</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Quick and effective! Nails are shaped, cuticles prepped, and finished with chip-resistant gel polish for a
-          neat, polished look that lasts. (40mins)
-        </p>
-      </div>
+        <MenuBlocks blocks={nailsFeetBlocks} />
       </div>
 
       <h2
@@ -189,61 +85,7 @@ import { serviceFaqs } from '../../data/faq-content.js';
         Extras
       </h2>
 
-      <div class="max-w-3xl">
-        <div class="grid grid-cols-[1.6fr_1fr_1fr] gap-x-6 gap-y-4 items-baseline">
-          <div></div>
-          <p class="text-body-intro text-gray-900 font-light tracking-[0.25em] uppercase">Hands</p>
-          <p class="text-body-intro text-gray-900 font-light tracking-[0.25em] uppercase">Feet</p>
-
-          <p class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Nail Repair</p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;3</span>
-          </p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;4</span>
-          </p>
-
-          <p class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">French Design</p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal opacity-0">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;8</span>
-          </p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal opacity-0">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;10</span>
-          </p>
-
-          <p class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Scrub + Hot Towel</p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal opacity-0">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;10</span>
-          </p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal opacity-0">From</span><span class="text-lg sm:text-xl font-bold">-</span>
-          </p>
-
-          <p class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Mask + Hot Towel</p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal opacity-0">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;12</span>
-          </p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal opacity-0">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;14</span>
-          </p>
-
-          <p class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Massage (15mins)</p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal opacity-0">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;12</span>
-          </p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal opacity-0">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;15</span>
-          </p>
-
-          <p class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Nail Art (POC)</p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;5</span>
-          </p>
-          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
-            <span class="text-sm font-normal">From</span><span class="text-lg sm:text-xl font-bold tabular-nums">&pound;5</span>
-          </p>
-        </div>
-      </div>
+      <MenuBlocks blocks={nailsExtrasBlocks} />
 
       <h2
         class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mt-20 sm:mt-24 lg:mt-28 mb-10 sm:mb-12"
@@ -253,34 +95,7 @@ import { serviceFaqs } from '../../data/faq-content.js';
       </h2>
 
       <div class="max-w-3xl space-y-10">
-        <div>
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans mb-3">Gel Polish - Take Off</h3>
-          <div class="space-y-3 pl-6 sm:pl-8">
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline max-w-md">
-              <p class="text-lg sm:text-xl text-gray-900 font-sans">Gel Polish Done by Us</p>
-              <p class="text-lg sm:text-xl text-gray-900 font-sans">&pound;5</p>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline max-w-md">
-              <p class="text-lg sm:text-xl text-gray-900 font-sans">Gel Polish Done Elsewhere</p>
-              <p class="text-lg sm:text-xl text-gray-900 font-sans">&pound;12</p>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans mb-3">BIAB Gel - Take Off</h3>
-          <div class="space-y-3 pl-6 sm:pl-8">
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline max-w-md">
-              <p class="text-lg sm:text-xl text-gray-900 font-sans">BIAB Done by Us</p>
-              <p class="text-lg sm:text-xl text-gray-900 font-sans">&pound;5</p>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline max-w-md">
-              <p class="text-lg sm:text-xl text-gray-900 font-sans">BIAB Done Elsewhere</p>
-              <p class="text-lg sm:text-xl text-gray-900 font-sans">&pound;12</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        <MenuBlocks blocks={nailsRemovalBlocks} />
       </div>
     </div>
   </section>
@@ -295,72 +110,14 @@ import { serviceFaqs } from '../../data/faq-content.js';
         Nail Art
       </h2>
 
-      <p class="text-2xl text-gray-900 font-light italic text-center leading-relaxed max-w-4xl mx-auto mb-16 sm:mb-20">
-        &ldquo;Nail art is creative way to express your personality through colour, design and detail. From simple
-        elegance to bold statements, it transforms your nails into tiny works of art.&rdquo;
-      </p>
+      <MenuProse block={nailsNailArtQuote} />
 
       <div class="grid md:grid-cols-2 gap-x-16 lg:gap-x-20 gap-y-16">
         <div class="space-y-12">
-          <div>
-            <div class="flex justify-between items-baseline mb-4">
-              <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Chrome / Cat-Eye Effect (Fullset)</h3>
-              <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;12</span>
-            </div>
-            <p class="text-body-intro text-gray-700 font-sans leading-relaxed">
-              A layer of luxe, light-reflecting chrome. AKA the trending &lsquo;Glazed Donut&rsquo; manicure, available
-              in four stunning shades.
-            </p>
-          </div>
-
-          <div>
-            <div class="flex justify-between items-baseline mb-4">
-              <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Feature Nail Art (one nail per hand)</h3>
-              <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;10</span>
-            </div>
-            <p class="text-body-intro text-gray-700 font-sans leading-relaxed">
-              Touch of detail on one nail each hand. Marble, Floral, chrome accent.
-            </p>
-          </div>
-
-          <div>
-            <div class="flex justify-between items-baseline mb-4">
-              <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Gems / Charms (per nail)</h3>
-              <span class="inline-flex items-baseline gap-1.5 shrink-0 ml-4 font-sans text-gray-900 tabular-nums">
-                <span class="text-sm font-normal">From</span><span class="text-lg sm:text-xl font-bold">&pound;2</span>
-              </span>
-            </div>
-            <p class="text-body-intro text-gray-700 font-sans leading-relaxed">
-              Add sparkle or texture with rhinestones or mini charms, priced per gem &amp; nail.
-            </p>
-          </div>
+          <MenuBlocks blocks={nailsNailArtColLeft} />
         </div>
-
         <div class="space-y-12">
-          <div>
-            <div class="flex justify-between items-baseline mb-4">
-              <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Bespoke (Fullset)</h3>
-              <span class="inline-flex items-baseline gap-1.5 shrink-0 ml-4 font-sans text-gray-900 tabular-nums">
-                <span class="text-sm font-normal">From</span><span class="text-lg sm:text-xl font-bold">&pound;40</span>
-              </span>
-            </div>
-            <p class="text-body-intro text-gray-700 font-sans leading-relaxed">
-              Custom hand-painted designs. Show a photo you&rsquo;ve seen on social media, or we can discuss ideas
-              together to create a personalised look.
-            </p>
-          </div>
-
-          <div>
-            <div class="flex justify-between items-baseline mb-4">
-              <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">NAIL ART - SM Collection</h3>
-              <span class="inline-flex items-baseline gap-1.5 shrink-0 ml-4 font-sans text-gray-900 tabular-nums">
-                <span class="text-sm font-normal">From</span><span class="text-lg sm:text-xl font-bold">&pound;16</span>
-              </span>
-            </div>
-            <p class="text-body-intro text-gray-700 font-sans leading-relaxed">
-              Choose from my curated set of trendy, pre-approved designs for a stylish full look.
-            </p>
-          </div>
+          <MenuBlocks blocks={nailsNailArtColRight} />
         </div>
       </div>
     </div>

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "generate:menus": "tsx scripts/generate-menu-pdfs.ts",
+    "build": "npm run generate:menus && astro build",
     "preview": "astro preview"
   },
   "keywords": [],
@@ -13,13 +14,19 @@
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.24",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
+    "tsx": "^4.21.0",
     "vite": "^7.3.1"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.2",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^5.18.1"
+    "astro": "^5.18.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }

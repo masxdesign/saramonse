@@ -1,7 +1,12 @@
 ---
 import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
+import MenuBlocks from '../../components/menus/MenuBlocks.astro';
 import { serviceFaqs } from '../../data/faq-content.js';
+import { eyesMenu } from '../../data/menus/eyes';
+
+const eyesRows = eyesMenu.blocks.filter((b) => b.type === 'simpleRow');
+const eyesComing = eyesMenu.blocks.find((b) => b.type === 'comingSoon');
 ---
 
 <VideoHeroLayout
@@ -45,39 +50,14 @@ import { serviceFaqs } from '../../data/faq-content.js';
   <!-- Treatments -->
   <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
     <div class="max-w-4xl mx-auto divide-y divide-gray-200">
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Brow Shape</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;10</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Define and refine your brows with our professional shaping service. Using a combination of threading, tweezing,
-          and trimming to create a natural, flattering shape tailored to your face. (20mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Brow Wax</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;15</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Define and refine your brows with our professional shaping service. Using a combination of waxing, tweezing,
-          and trimming to create a natural, flattering shape tailored to your face. (25mins)
-        </p>
-      </div>
+      <MenuBlocks blocks={eyesRows} />
     </div>
   </section>
 
   <!-- Upcoming -->
   <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
-    <div class="max-w-4xl mx-auto text-center py-12 sm:py-16">
-      <h3 class="text-xl sm:text-2xl text-gray-900 font-semibold font-sans tracking-[0.14em] mb-8">
-        Eyelash Extensions / Brow Services
-      </h3>
-      <p class="text-3xl sm:text-4xl text-gray-900 font-light tracking-[0.08em]" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">
-        Coming Soon...
-      </p>
+    <div class="max-w-4xl mx-auto">
+      {eyesComing && eyesComing.type === 'comingSoon' && <MenuBlocks blocks={[eyesComing]} />}
     </div>
   </section>
 

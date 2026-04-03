@@ -1,0 +1,43 @@
+---
+import type { MenuBlock } from '../../data/menus/types';
+import { formatPounds, priceDisplayParts } from './menu-format';
+
+interface Props {
+  block: Extract<MenuBlock, { type: 'simpleRow' }>;
+}
+
+const { block } = Astro.props;
+const pd = priceDisplayParts(block.price);
+const intro = block.priceStyle === 'intro';
+---
+
+<div class="py-10 sm:py-12">
+  <div class="flex justify-between items-baseline mb-4">
+    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">{block.title}</h3>
+    {
+      pd.mode === 'from' ? (
+        <div class="shrink-0 w-44 flex justify-end">
+          <span class="inline-flex items-baseline gap-1.5 font-sans text-gray-900">
+            <span class="text-sm font-normal">From</span>
+            <span class="text-lg sm:text-xl font-bold tabular-nums">{formatPounds(pd.amount!)}</span>
+          </span>
+        </div>
+      ) : (
+        <span
+          class:list={[
+            'text-lg sm:text-xl font-sans shrink-0 ml-4',
+            intro ? 'text-pink-500' : 'text-gray-900',
+          ]}
+        >
+          {formatPounds(pd.amount!)}
+          {block.priceNote ? (
+            <>
+              &nbsp;&nbsp;{block.priceNote}
+            </>
+          ) : null}
+        </span>
+      )
+    }
+  </div>
+  <p class="text-body text-gray-700 font-sans leading-relaxed">{block.description}</p>
+</div>

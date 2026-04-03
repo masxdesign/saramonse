@@ -1,7 +1,10 @@
 ---
 import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
+import MenuBlocks from '../../components/menus/MenuBlocks.astro';
+import MenuFatDissolve from '../../components/menus/MenuFatDissolve.astro';
 import { serviceFaqs } from '../../data/faq-content.js';
+import { injectablesFatDissolveBlock, injectablesRestBlocks } from '../../data/menus/injectables';
 ---
 
 <VideoHeroLayout
@@ -45,88 +48,14 @@ import { serviceFaqs } from '../../data/faq-content.js';
   <!-- Fat Dissolve Injections -->
   <section class="px-6 sm:px-8 pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-24 lg:pb-28">
     <div class="max-w-4xl mx-auto">
-      <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 font-sans tracking-tight mb-8 sm:mb-10">
-        Fat Dissolve Injections
-      </h3>
-
-      <p class="text-body text-gray-900 font-sans font-normal leading-relaxed mb-12 sm:mb-14 lg:mb-16 max-w-3xl">
-        Our Fat Dissolve Injections target stubborn pockets of fat that don&rsquo;t shift with diet or exercise. Using a
-        safe, effective solution, the treatment breaks down fat cells which are then naturally eliminated by the body.
-      </p>
-
-      <p class="text-body text-gray-900 font-sans font-normal underline underline-offset-[5px] decoration-1 mb-8 sm:mb-10">
-        We Offer Treatments for:
-      </p>
-
-      <div class="space-y-6 sm:space-y-7">
-        <div class="flex justify-between items-baseline gap-x-6">
-          <p class="text-body text-gray-900 font-sans font-normal leading-relaxed min-w-0 flex-1 pr-2">
-            <span class="font-bold">Cheeks</span> - to slim and contour the face
-          </p>
-          <div class="shrink-0 w-44 flex justify-end">
-            <span class="inline-flex items-baseline gap-1.5 font-sans text-gray-900">
-              <span class="text-sm font-normal">From</span>
-              <span class="text-lg sm:text-xl font-bold tabular-nums">&pound;150</span>
-            </span>
-          </div>
-        </div>
-
-        <div class="flex justify-between items-baseline gap-x-6">
-          <p class="text-body text-gray-900 font-sans font-normal leading-relaxed min-w-0 flex-1 pr-2">
-            <span class="font-bold">Chin</span> - to reduce the appearance of a double chin
-          </p>
-          <div class="shrink-0 w-44 flex justify-end">
-            <span class="inline-flex items-baseline gap-1.5 font-sans text-gray-900">
-              <span class="text-sm font-normal">From</span>
-              <span class="text-lg sm:text-xl font-bold tabular-nums">&pound;150</span>
-            </span>
-          </div>
-        </div>
-
-        <div class="flex justify-between items-baseline gap-x-6">
-          <p class="text-body text-gray-900 font-sans font-normal leading-relaxed min-w-0 flex-1 pr-2">
-            <span class="font-bold">Abdomen</span> - to smooth and flatten the tummy area
-          </p>
-          <div class="shrink-0 w-44 flex justify-end">
-            <span class="inline-flex items-baseline gap-1.5 font-sans text-gray-900">
-              <span class="text-sm font-normal">From</span>
-              <span class="text-lg sm:text-xl font-bold tabular-nums">&pound;180</span>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <p class="text-body text-gray-900 font-sans font-normal leading-relaxed mt-14 sm:mt-16 lg:mt-20 max-w-3xl">
-        (Results are gradual, with best outcomes achieved over a course of sessions.)
-      </p>
+      <MenuFatDissolve block={injectablesFatDissolveBlock} />
     </div>
   </section>
 
-  <!-- Vitamin B12 & Profhilo (same treatment format as Facials) -->
+  <!-- Vitamin B12 & Profhilo -->
   <section class="px-6 sm:px-8 pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24">
     <div class="max-w-4xl mx-auto divide-y divide-gray-200">
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Vitamin B12</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;27</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          Boost your energy, focus, and overall wellbeing with a quick Vitamin B12 injection. This essential nutrient
-          supports the immune system, reduces fatigue, and helps improve mood and metabolism. (20mins)
-        </p>
-      </div>
-
-      <div class="py-10 sm:py-12">
-        <div class="flex justify-between items-baseline mb-4">
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Profhilo (Skin Boosters)</h3>
-          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;200</span>
-        </div>
-        <p class="text-body text-gray-700 font-sans leading-relaxed">
-          An injectable skin booster containing high concentrations of hyaluronic acid. Profhilo&reg; works beneath the skin
-          to hydrate, improve elasticity, and stimulate collagen and elastin, leaving skin firmer, smoother, and more
-          radiant. (45mins)
-        </p>
-      </div>
+      <MenuBlocks blocks={injectablesRestBlocks} />
     </div>
   </section>
 

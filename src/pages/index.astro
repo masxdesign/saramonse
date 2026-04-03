@@ -1,5 +1,9 @@
 ---
 import HeroLayout from '../layouts/HeroLayout.astro';
+import GiftVouchersSection from '../components/GiftVouchersSection.astro';
+import InstagramSection from '../components/InstagramSection.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { homeFaqItems } from '../data/faq-content.js';
 ---
 <HeroLayout
   title="Saramonse Beauty | Premium Beauty Therapy"
@@ -8,9 +12,21 @@ import HeroLayout from '../layouts/HeroLayout.astro';
 >
 <!-- Hero Section -->
 <section class="relative min-h-screen flex flex-col" id="home">
-    <!-- Background Image with Dark Overlay -->
+    <!-- Background Video with Dark Overlay -->
     <div class="absolute inset-0 z-0">
-        <img src="/assets/hero.jpg" alt="Saramonse Beauty - Beauty therapy hero" class="w-full h-full object-cover">
+        <video
+            class="w-full h-full object-cover object-center"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="/assets/home4-hero-poster.jpg"
+            aria-label="Saramonse Beauty - Beauty therapy hero video"
+        >
+            <source src="/assets/home4-hero.small.webm" type="video/webm" />
+            <source src="/assets/home4-hero.small.mp4" type="video/mp4" />
+        </video>
         <div class="absolute inset-0 bg-black/20"></div>
     </div>
 
@@ -19,8 +35,8 @@ import HeroLayout from '../layouts/HeroLayout.astro';
         <div class="px-8 md:pl-16 lg:pl-24 max-w-xl">
             <h1 class="text-4xl md:text-5xl text-white mb-4 leading-tight tracking-wide uppercase font-light text-shadow-lg" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Facials Designed<br>To Refresh &<br>Renew</h1>
             <div class="mb-8">
-                <p class="text-sm md:text-base text-white/90 font-sans font-light leading-relaxed mb-2">Get glowing with our tailored Facials at Sara Monse. Designed for instant and long-lasting results.</p>
-                <p class="text-sm md:text-base text-pink-400 font-sans italic">Book your glow-up today!</p>
+                <p class="text-body-hero text-white/90 font-sans font-light leading-relaxed mb-2">Get glowing with our tailored Facials at Sara Monse. Designed for instant and long-lasting results.</p>
+                <p class="text-body-hero text-pink-400 font-sans italic">Book your glow-up today!</p>
             </div>
             <a href="#book" class="inline-block px-10 py-4 bg-gradient-to-r from-orange-400 to-pink-500 text-white font-sans font-semibold tracking-widest uppercase text-sm hover:shadow-2xl transition-all w-fit">Book Now</a>
         </div>
@@ -53,11 +69,11 @@ import HeroLayout from '../layouts/HeroLayout.astro';
             </h2>
 
             <div class="space-y-6">
-                <p class="text-base text-gray-700 font-sans leading-relaxed">
+                <p class="text-body text-gray-700 font-sans leading-relaxed">
                     Located in the heart of Bermondsey, SE1 London, Sara Monsé Beauty is a family-led home-based salon with over 18 years of experience in the beauty industry. We specialise in bespoke facials, relaxing massages, expert nail treatments, and specialist skin and wellness injections.
                 </p>
 
-                <p class="text-base text-gray-700 font-sans leading-relaxed">
+                <p class="text-body text-gray-700 font-sans leading-relaxed">
                     Combining professional expertise with a warm, welcoming atmosphere, our mission is to create a sanctuary where clients across Bermondsey and surrounding London areas can unwind, renew, and feel truly cared for.
                 </p>
             </div>
@@ -80,11 +96,11 @@ import HeroLayout from '../layouts/HeroLayout.astro';
         <!-- Content -->
         <div class="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12 sm:p-12 lg:p-16 bg-[#f8f6f3] order-2">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light mb-4 sm:mb-6" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Facials</h3>
-            <p class="text-sm sm:text-base text-gray-700 font-sans leading-relaxed mb-6 sm:mb-8">
+            <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 sm:mb-8">
                 Personalised treatments that go beyond skin deep, blending care, artistry, and renewal.
             </p>
-            <a href="#book" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
-                Book now
+            <a href="/services/facials/" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
+                Explore facials
             </a>
         </div>
     </div>
@@ -98,11 +114,11 @@ import HeroLayout from '../layouts/HeroLayout.astro';
         <!-- Content -->
         <div class="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12 sm:p-12 lg:p-16 bg-white order-2">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light mb-4 sm:mb-6" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Body</h3>
-            <p class="text-sm sm:text-base text-gray-700 font-sans leading-relaxed mb-6 sm:mb-8">
+            <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 sm:mb-8">
                 Rebalance body and mind with treatments designed to release tension and restore harmony.
             </p>
-            <a href="#book" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
-                Book now
+            <a href="/services/body/" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
+                Discover body treatments
             </a>
         </div>
     </div>
@@ -120,11 +136,11 @@ import HeroLayout from '../layouts/HeroLayout.astro';
                 </div>
                 <!-- Content -->
                 <h3 class="text-2xl sm:text-3xl text-gray-900 font-light mb-4" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Injectables</h3>
-                <p class="text-sm sm:text-base text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
+                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
                     Advanced treatments designed to revitalise, refine, and restore confidence.
                 </p>
-                <a href="#book" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
-                    Book now
+                <a href="/services/injectables/" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
+                    Explore injectables
                 </a>
             </div>
 
@@ -136,11 +152,11 @@ import HeroLayout from '../layouts/HeroLayout.astro';
                 </div>
                 <!-- Content -->
                 <h3 class="text-2xl sm:text-3xl text-gray-900 font-light mb-4" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Eyes</h3>
-                <p class="text-sm sm:text-base text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
+                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
                     Frame your beauty with expert shaping that brings depth and definition to your gaze.
                 </p>
-                <a href="#book" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
-                    Book now
+                <a href="/services/eyes/" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
+                    Explore eyes
                 </a>
             </div>
 
@@ -152,11 +168,11 @@ import HeroLayout from '../layouts/HeroLayout.astro';
                 </div>
                 <!-- Content -->
                 <h3 class="text-2xl sm:text-3xl text-gray-900 font-light mb-4" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Nails</h3>
-                <p class="text-sm sm:text-base text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
+                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
                     From timeless elegance to modern artistry, every manicure is a statement of care and style.
                 </p>
-                <a href="#book" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
-                    Book now
+                <a href="/services/nails/" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
+                    Explore nails
                 </a>
             </div>
         </div>
@@ -164,7 +180,7 @@ import HeroLayout from '../layouts/HeroLayout.astro';
 </section>
 
 <!-- Reviews & Testimonials Section -->
-<section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8 bg-white">
+<section class="pt-16 sm:pt-20 lg:pt-24 pb-6 sm:pb-8 lg:pb-10 px-6 sm:px-8 bg-white">
     <div class="max-w-7xl mx-auto">
         <!-- Section Title -->
         <h2 class="text-2xl sm:text-3xl lg:text-4xl text-center text-gray-900 font-light mb-12 sm:mb-16 lg:mb-20 tracking-wide uppercase" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">
@@ -178,7 +194,7 @@ import HeroLayout from '../layouts/HeroLayout.astro';
                 <div class="splide__track">
                     <ul class="splide__list">
                         <!-- Review Card 1 -->
-                        <li class="splide__slide px-2 sm:px-6">
+                        <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
                             <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
                                 <h3 class="text-xl sm:text-2xl text-gray-900 font-semibold mb-4 font-sans">Alejandra Espinosa</h3>
                                 <div class="flex gap-1 mb-6">
@@ -188,13 +204,13 @@ import HeroLayout from '../layouts/HeroLayout.astro';
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                 </div>
-                                <p class="text-sm sm:text-base text-gray-700 font-sans leading-relaxed">
+                                <p class="text-body-card text-gray-700 font-sans leading-relaxed">
                                     I recently purchased the wireless earbuds from this store, and they exceeded all my expectations with their superb sound quality and comfortable fit. The customer service was also outstanding, making my shopping experience truly enjoyable.
                                 </p>
                             </div>
                         </li>
                         <!-- Review Card 2 -->
-                        <li class="splide__slide px-2 sm:px-6">
+                        <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
                             <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
                                 <h3 class="text-xl sm:text-2xl text-gray-900 font-semibold mb-4 font-sans">Fabiola Mendoza</h3>
                                 <div class="flex gap-1 mb-6">
@@ -204,13 +220,13 @@ import HeroLayout from '../layouts/HeroLayout.astro';
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                 </div>
-                                <p class="text-sm sm:text-base text-gray-700 font-sans leading-relaxed">
+                                <p class="text-body-card text-gray-700 font-sans leading-relaxed">
                                     I recently purchased the wireless earbuds from this store, and they exceeded all my expectations with their superb sound quality and comfortable fit. The customer service was also outstanding, making my shopping experience truly enjoyable.
                                 </p>
                             </div>
                         </li>
                         <!-- Review Card 3 -->
-                        <li class="splide__slide px-2 sm:px-6">
+                        <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
                             <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
                                 <h3 class="text-xl sm:text-2xl text-gray-900 font-semibold mb-4 font-sans">Glenda Quintero</h3>
                                 <div class="flex gap-1 mb-6">
@@ -220,7 +236,7 @@ import HeroLayout from '../layouts/HeroLayout.astro';
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                 </div>
-                                <p class="text-sm sm:text-base text-gray-700 font-sans leading-relaxed">
+                                <p class="text-body-card text-gray-700 font-sans leading-relaxed">
                                     I recently purchased the wireless earbuds from this store, and they exceeded all my expectations with their superb sound quality and comfortable fit. The customer service was also outstanding, making my shopping experience truly enjoyable.
                                 </p>
                             </div>
@@ -275,7 +291,8 @@ import HeroLayout from '../layouts/HeroLayout.astro';
                 if (i === index) {
                     card.style.border      = '2px solid transparent';
                     card.style.borderImage = 'linear-gradient(to bottom right, #fb923c, #ec4899) 1';
-                    card.style.boxShadow   = '0 20px 40px rgba(0, 0, 0, 0.15)';
+                    card.style.boxShadow   =
+                      '0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.1)';
                 } else {
                     card.style.border      = '';
                     card.style.borderImage = '';
@@ -312,96 +329,14 @@ import HeroLayout from '../layouts/HeroLayout.astro';
     </script>
 </section>
 
-<!-- Gift Vouchers Section -->
-<section class="bg-[#f8f6f3]">
-    <div class="flex flex-col lg:flex-row">
-        <!-- Content -->
-        <div class="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12 sm:p-12 lg:p-16 order-2 lg:order-1">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl text-gray-900 font-light mb-6 sm:mb-8 tracking-wide uppercase" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Gift Vouchers</h2>
-            <p class="text-base sm:text-lg text-gray-700 font-sans leading-relaxed mb-8 sm:mb-10">
-                Give the gift of self-care with our beauty salon gift vouchers, the perfect treat for glowing skin and pampered nails.
-            </p>
-            <a href="#book" class="inline-block px-10 py-4 bg-gray-900 text-white font-sans font-semibold tracking-widest uppercase text-sm hover:bg-gray-800 transition-all w-fit">
-                Buy Now
-            </a>
-        </div>
+<FaqAccordion
+  heading="Questions"
+  intro="A few things first-time visitors often ask about Sara Monse Beauty."
+  items={homeFaqItems}
+  defaultOpenCount={1}
+  class="bg-[#f8f6f3] !pt-8 sm:!pt-10 lg:!pt-12"
+/>
 
-        <!-- Image -->
-        <div class="w-full lg:w-1/2 h-80 sm:h-96 lg:h-auto bg-beauty-light overflow-hidden order-1 lg:order-2">
-            <img src="/assets/gift-voucher.png" alt="Gift voucher with black bow" class="w-full h-full object-cover">
-        </div>
-    </div>
-</section>
-
-<!-- Instagram Feed Section -->
-<section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8 bg-white">
-    <div class="max-w-7xl mx-auto">
-        <!-- Section Title -->
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl text-center text-gray-900 font-light mb-12 sm:mb-16 tracking-wide" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">
-            Follow us on Instagram @Saramonsebeauty
-        </h2>
-
-        <!-- Instagram Grid -->
-        <div id="instagram-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
-            <!-- Instagram posts will be loaded here -->
-            <!-- Placeholder images for now -->
-            <div class="instagram-post aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="/assets/instagram-1.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="instagram-post aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="/assets/instagram-2.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="instagram-post aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="/assets/instagram-3.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="instagram-post aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="/assets/instagram-4.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="instagram-post aspect-square bg-beauty-light overflow-hidden relative group cursor-pointer">
-                <img src="/assets/instagram-5.png" alt="Instagram post" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Load more on Instagram -->
-        <div class="flex justify-center">
-            <a
-                id="load-more-btn"
-                href="https://www.instagram.com/saramonsebeauty/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View more on Instagram @Saramonsebeauty (opens in a new tab)"
-                class="inline-block px-12 py-4 border-2 border-gray-900 text-gray-900 font-sans font-medium tracking-wider uppercase text-sm hover:bg-gray-900 hover:text-white transition-all text-center"
-            >
-                Load More
-            </a>
-        </div>
-    </div>
-
-    <script type="module" src="/instagram-feed.js"></script>
-</section>
+<GiftVouchersSection />
+<InstagramSection />
 </HeroLayout>

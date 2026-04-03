@@ -1,11 +1,15 @@
 ---
 import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import { serviceFaqs } from '../../data/faq-content.js';
 ---
 
 <VideoHeroLayout
   title="Facials | Saramonse Beauty"
   description="Bespoke facial treatments at Saramonse Beauty - tailored skincare rituals for radiance and renewal"
-  videoSrc="/assets/facials-hero.mp4?t=1"
+  videoWebmSrc="/assets/facials-hero.small.webm?t=1"
+  videoMp4Src="/assets/facials-hero.small.mp4?t=1"
+  videoPoster="/assets/facials-hero-poster.jpg"
   footerTheme="dark"
 >
   <!-- Intro -->
@@ -18,7 +22,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
         Facials
       </h2>
 
-      <p class="text-base sm:text-lg text-gray-700 font-sans leading-relaxed max-w-2xl mb-10">
+      <p class="text-body-intro text-gray-700 font-sans leading-relaxed max-w-2xl mb-10">
         Personalised treatments that go beyond skin deep, blending care, artistry, and renewal.
       </p>
 
@@ -45,7 +49,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Consultation</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;20</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           A detailed skin analysis and discussion to understand your concerns and goals, helping us recommend the most
           suitable treatments for your needs. (40mins)
         </p>
@@ -56,7 +60,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Refresh Facial</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;40</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Our Refresh Facial is a 30min treatment with cleanse, exfoliation, mask and hydration. A quick yet effective
           boost for refreshed, glowing skin. Perfect for a lunch time pick me up or before an event.
         </p>
@@ -67,7 +71,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Deep Cleansing Facial</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;55</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Give your skin the deep reset it deserves. This 60 minute treatment combines a thorough cleanse, exfoliation,
           steam and extractions (if needed) to clear away impurities and unclog pores. A purifying mask and hydrating
           finish will leave your complexion balanced, refreshed and glowing.
@@ -79,7 +83,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Dermaplaning</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;60</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Reveal instantly smoother, brighter skin with our Dermaplaning Facial. This gentle treatment uses a surgical
           blade to carefully exfoliate the skin&rsquo;s surface, removing dead skin cells and fine &ldquo;peach
           fuzz&rdquo;. The result is a radiant complexion, better product absorption and a flawless base for makeup.
@@ -92,7 +96,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Microdermabrasion (Skin Base)</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;45</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Experience a professional deep exfoliation with our SkinBase Microdermabrasion Facial. Using fine crystals, this
           treatment gently removes dead skin cells, unclogs pores and stimulates cell renewal for a smoother, clearer, and
           brighter complexion. Your treatment is finished with a calm mask and nourishing cream. (45mins)
@@ -104,7 +108,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Hydrofacial</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;99</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Our Hydro-Facial is a results driven treatment that combines deep cleansing exfoliation, hydration and targeted
           serums to refresh and revitalise your skin. Using advanced hydro-technology, the treatment removes impurities
           while infusing nourishing ingredients to leave your complexion smoother, brighter and deeply hydrated. (90mins)
@@ -116,7 +120,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">SM Vitamin Facial</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">From &pound;50</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Our Vitamin Infusion Facial uses advanced infusion techniques with targeted serums to deliver essential
           vitamins, antioxidants, and active ingredients directly into the skin. This treatment helps to deeply hydrate,
           brighten, and revitalise, while boosting collagen production and protecting against environmental damage. Ideal
@@ -130,7 +134,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Collagen Lift (Skin Base)</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">From &pound;70</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Our SkinBase Collagen Lift Facial uses advanced radio frequency technology to stimulate collagen and elastin
           production, tightening and toning the skin naturally. This non-invasive treatment helps to smooth fine lines
           and wrinkles, lift and firm the contours of the face, and improve overall skin texture. Perfect for clients
@@ -144,7 +148,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Soft Pro Peeling</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">From &pound;60</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Our Soft Professional Peel is a results-driven facial peel using up to 20% AHA and BHA acids to gently
           resurface the skin. This treatment removes dead skin cells, unclogs pores, and stimulates cell renewal, leaving
           the complexion smoother, brighter, and more even in tone.<br />This treatment is ideal for dull or uneven skin
@@ -159,26 +163,26 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Professional Cosmelan Treatment</h3>
           <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;970</span>
         </div>
-        <p class="text-base text-gray-700 font-sans leading-relaxed mb-4">
+        <p class="text-body text-gray-700 font-sans leading-relaxed mb-4">
           The Cosmelan&reg; Professional Peel from Mesoesthetic is the world&rsquo;s leading depigmentation treatment,
           designed to target and correct all types of hyperpigmentation; including melasma, sun spots, age spots, and
           post-inflammatory marks.
         </p>
-        <p class="text-base text-gray-700 font-sans leading-relaxed mb-4">
+        <p class="text-body text-gray-700 font-sans leading-relaxed mb-4">
           This medical-grade peel works by inhibiting melanin production, visibly reducing dark patches and creating a
           more even, radiant complexion. Results are noticeable within weeks and continue to improve over time with the
           full aftercare protocol.
         </p>
-        <p class="text-base text-gray-700 font-sans leading-relaxed underline mb-2">Includes</p>
-        <ul class="list-disc list-inside text-base text-gray-700 font-sans leading-relaxed mb-4 space-y-1">
+        <p class="text-body text-gray-700 font-sans leading-relaxed underline mb-2">Includes</p>
+        <ul class="list-disc list-inside text-body text-gray-700 font-sans leading-relaxed mb-4 space-y-1">
           <li>In clinic peel application</li>
           <li>Pre and Post maintenance kit (For Homecare and essential for long-lasting results)</li>
           <li>Follow-up reviews</li>
         </ul>
-        <p class="text-base text-gray-700 font-sans leading-relaxed mb-2">
+        <p class="text-body text-gray-700 font-sans leading-relaxed mb-2">
           Treatment time: Approx. 45&ndash;60 minutes (single in-clinic session + homecare)
         </p>
-        <p class="text-base text-gray-700 font-sans leading-relaxed">A prior consultation is essential before booking this treatment.</p>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">A prior consultation is essential before booking this treatment.</p>
       </div>
     </div>
   </section>
@@ -199,7 +203,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
             <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Add on Microdermabrasion</h3>
             <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;20</span>
           </div>
-          <p class="text-base text-gray-700 font-sans leading-relaxed">
+          <p class="text-body text-gray-700 font-sans leading-relaxed">
             Boost your results with a deep exfoliation that removes dead skin cells and unclogs pores, leaving your skin
             smoother and brighter.<br />Can be added to: Deep Cleansing Facial, Vitamin Infusion Facial.
           </p>
@@ -210,7 +214,7 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
             <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Add On LED Light Therapy</h3>
             <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;20</span>
           </div>
-          <p class="text-base text-gray-700 font-sans leading-relaxed">
+          <p class="text-body text-gray-700 font-sans leading-relaxed">
             Target specific skin concerns with soothing LED light therapy. Red light stimulates collagen and calms
             inflammation, while blue light helps reduce bacteria and blemishes, leaving skin balanced and rejuvenated.<br
             />Can be added to: Dermaplaning Facial, HydroFacial, Vitamin Infusion Facial, Microdermabrasion, Collagen Lift.
@@ -236,4 +240,11 @@ import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
       >
     </div>
   </section>
+
+  <FaqAccordion
+    heading="Common questions"
+    items={serviceFaqs.facials}
+    defaultOpenCount={0}
+    class="bg-[#f8f6f3] !pt-4 sm:!pt-6 lg:!pt-8"
+  />
 </VideoHeroLayout>

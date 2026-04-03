@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GiftVouchersSection from '../components/GiftVouchersSection.astro';
+import InstagramSection from '../components/InstagramSection.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { allFaqItems } from '../data/faq-content.js';
+---
+
+<BaseLayout
+  title="FAQ | Saramonse Beauty"
+  description="Frequently asked questions about bookings, payments, cancellations, and visits at Saramonse Beauty."
+  scrollCompactNav={true}
+>
+  <section class="pt-6 sm:pt-8 lg:pt-10 pb-10 sm:pb-12 lg:pb-16 px-6 sm:px-8">
+    <div class="max-w-5xl mx-auto flex justify-center">
+      <h1 class="w-[88%] sm:w-[72%] md:w-[58%] lg:w-[45%] max-w-full shrink-0">
+        <img
+          src="/assets/faq-title.svg"
+          alt="Frequently Asked Questions"
+          class="block w-full h-auto mx-auto"
+          width="1142"
+          height="384"
+          loading="eager"
+          decoding="async"
+        />
+      </h1>
+    </div>
+  </section>
+
+  <FaqAccordion
+    items={allFaqItems}
+    defaultOpenCount={3}
+    moreHref={null}
+    class="!pt-0 !pb-12 sm:!pb-16 lg:!pb-20"
+  />
+
+  <!-- CTA (matches facials page; buttons centered) -->
+  <section class="pt-6 sm:pt-8 lg:pt-10 pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
+    <div class="max-w-4xl mx-auto flex flex-wrap gap-6 justify-center">
+      <a
+        href="/#book"
+        class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
+        >Book Treatment</a
+      >
+      <a
+        href="/assets/facials-menu.pdf"
+        target="_blank"
+        class="inline-block border border-pink-400 text-pink-400 font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:bg-pink-400 hover:text-white transition-colors"
+        >Download Menu</a
+      >
+    </div>
+  </section>
+
+  <GiftVouchersSection />
+  <InstagramSection />
+</BaseLayout>

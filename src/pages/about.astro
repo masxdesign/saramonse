@@ -7,9 +7,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="Learn about Sara Monse Beauty - a mother-daughter founded brand rooted in South American heritage"
   scrollCompactNav={true}
 >
-  <!-- Hero Title -->
-  <section class="py-12 sm:py-16 lg:py-20 text-center">
-    <h1 class="text-6xl sm:text-7xl lg:text-8xl" style="font-family: 'Alex Brush', cursive;">About Us</h1>
+  <!-- Hero title: vector signature (responsive width; matches Contact / FAQ) -->
+  <section class="pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 px-6 sm:px-8">
+    <div class="max-w-5xl mx-auto flex justify-center">
+      <h1 class="w-[88%] sm:w-[72%] md:w-[58%] lg:w-[45%] max-w-full shrink-0">
+        <img
+          src="/assets/about-us-title.svg"
+          alt="About Us"
+          class="block w-full h-auto mx-auto"
+          width="968"
+          height="366"
+          loading="eager"
+          decoding="async"
+        />
+      </h1>
+    </div>
   </section>
 
   <!-- Our Story -->
@@ -27,18 +39,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Our Story
         </h2>
 
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Sara Monse Beauty is a mother–daughter founded brand, rooted in our South American heritage and shaped by a
           shared vision: to redefine beauty as a ritual of calm, connection, and care.
         </p>
 
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Based in our private home salon, we have created an intimate sanctuary designed for peace and transformation.
           Here, every treatment from bespoke facials and therapeutic massage to modern nail care is delivered with
           artistry and intention.
         </p>
 
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           Clients come not only for results, but for the feeling: the quiet, the warmth, the sense of being truly cared
           for.
         </p>
@@ -57,13 +69,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </h2>
 
       <div class="max-w-4xl space-y-6 mb-16">
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           At Sara Monse Beauty, our mission is to create a sanctuary where beauty and wellbeing meet. We believe that
           every treatment should be more than skin deep it should be a moment of calm, a ritual of care, and a reminder
           of your own radiance.
         </p>
 
-        <p class="text-base text-gray-700 font-sans leading-relaxed">
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
           We are devoted to nurturing both the outer glow and the inner self, offering a space where you can slow down,
           breathe, and reconnect. Every facial, massage, and nail treatment is crafted with intention designed not only
           to beautify, but to restore balance, confidence, and peace.
@@ -86,7 +98,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         What We Offer
       </h2>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 lg:gap-16">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 lg:gap-16">
         <div class="flex flex-col items-center text-center">
           <div
             class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72"
@@ -95,7 +107,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             aria-label="Nails"
           >
           </div>
-          <span class="text-base sm:text-lg text-gray-900 font-sans">Nails</span>
+          <span class="text-body-intro text-gray-900 font-sans">Nails</span>
         </div>
 
         <div class="flex flex-col items-center text-center">
@@ -106,7 +118,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             aria-label="Facials"
           >
           </div>
-          <span class="text-base sm:text-lg text-gray-900 font-sans">Facials</span>
+          <span class="text-body-intro text-gray-900 font-sans">Facials</span>
         </div>
 
         <div class="flex flex-col items-center text-center">
@@ -117,7 +129,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             aria-label="Massages"
           >
           </div>
-          <span class="text-base sm:text-lg text-gray-900 font-sans">Massages</span>
+          <span class="text-body-intro text-gray-900 font-sans">Massages</span>
         </div>
 
         <div class="flex flex-col items-center text-center">
@@ -128,7 +140,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             aria-label="Injectables"
           >
           </div>
-          <span class="text-base sm:text-lg text-gray-900 font-sans">Injectables</span>
+          <span class="text-body-intro text-gray-900 font-sans">Injectables</span>
         </div>
       </div>
     </div>
@@ -150,7 +162,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             ><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
             ></path></svg
           >
-          <p class="text-base text-gray-700 font-sans leading-relaxed">
+          <p class="text-body text-gray-700 font-sans leading-relaxed">
             <strong class="text-gray-900">18+ Years of Expertise</strong> – Decades of skill in facials, massage, and nail
             artistry.
           </p>
@@ -161,7 +173,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             ><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
             ></path></svg
           >
-          <p class="text-base text-gray-700 font-sans leading-relaxed">
+          <p class="text-body text-gray-700 font-sans leading-relaxed">
             <strong class="text-gray-900">A Private Sanctuary</strong> – An intimate home-based salon designed for calm
             and renewal.
           </p>
@@ -172,7 +184,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             ><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
             ></path></svg
           >
-          <p class="text-base text-gray-700 font-sans leading-relaxed">
+          <p class="text-body text-gray-700 font-sans leading-relaxed">
             <strong class="text-gray-900">Bilingual Care</strong> – Welcoming you in both Spanish and English, with South
             American warmth.
           </p>
@@ -183,7 +195,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             ><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
             ></path></svg
           >
-          <p class="text-base text-gray-700 font-sans leading-relaxed">
+          <p class="text-body text-gray-700 font-sans leading-relaxed">
             <strong class="text-gray-900">Award-Winning Service</strong> – Proud to be 'Highly Recommended' by Fresha
             Awards 2025, recognising our commitment to quality, care, and client trust.
           </p>

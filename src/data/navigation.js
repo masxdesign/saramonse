@@ -26,8 +26,18 @@ const nav = {
       href: "/"
     },
     {
+      label: "About Us",
+      href: "/about"
+    },
+    {
       label: "Services",
-      children: [{ label: "Facials", href: "/services/facials/" }],
+      children: [
+        { label: "Facials", href: "/services/facials/" },
+        { label: "Body", href: "/services/body/" },
+        { label: "Eyes", href: "/services/eyes/" },
+        { label: "Nails", href: "/services/nails/" },
+        { label: "Injectables", href: "/services/injectables/" },
+      ],
     },
   ],
 
@@ -37,8 +47,12 @@ const nav = {
       href: "/#book"
     },
     {
-      label: "About Us",
-      href: "/about"
+      label: "Contact",
+      href: "/contact/"
+    },
+    {
+      label: "FAQ",
+      href: "/faq/"
     }
   ],
 

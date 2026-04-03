@@ -18,6 +18,37 @@
 }
 
 @layer utilities {
+  /* Body copy: +1pt vs default 1rem (used site-wide for intro + paragraph text) */
+  .text-body {
+    font-size: calc(1rem + 1pt);
+  }
+  .text-body-intro {
+    font-size: calc(1rem + 1pt);
+  }
+  @media (min-width: 640px) {
+    .text-body-intro {
+      font-size: calc(1.125rem + 1pt);
+    }
+  }
+  /* text-sm sm:text-base */
+  .text-body-card {
+    font-size: calc(0.875rem + 1pt);
+  }
+  @media (min-width: 640px) {
+    .text-body-card {
+      font-size: calc(1rem + 1pt);
+    }
+  }
+  /* text-sm md:text-base (hero overlay lines) */
+  .text-body-hero {
+    font-size: calc(0.875rem + 1pt);
+  }
+  @media (min-width: 768px) {
+    .text-body-hero {
+      font-size: calc(1rem + 1pt);
+    }
+  }
+
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   }
@@ -101,4 +132,25 @@
 @keyframes menu-item-in {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Homepage reviews Splide: room for shadow + active slide above neighbours (Splide track clips overflow) */
+#reviews-splide .splide__track {
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+@media (min-width: 640px) {
+  #reviews-splide .splide__track {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+}
+#reviews-splide .splide__slide {
+  overflow: visible !important;
+}
+#reviews-splide .splide__slide.is-active {
+  position: relative;
+  z-index: 2;
 }

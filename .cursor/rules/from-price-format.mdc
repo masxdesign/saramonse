@@ -1,0 +1,44 @@
+---
+description: Format "From" before a currency price — typography and layout
+globs: src/**/*.astro
+alwaysApply: false
+---
+
+# From + price formatting
+
+When **"From" prefixes a price** (e.g. `From £150` in a treatment row, extras grid, or price column), **do not** put plain text like `From £150` in one span at a single size.
+
+## Required pattern
+
+- **"From":** `text-sm font-normal`
+- **Amount:** `text-lg sm:text-xl font-bold tabular-nums` (include `&pound;` or currency in this span)
+- **Pair:** wrap in `inline-flex items-baseline gap-1.5` so the gap between "From" and the figure is always the same.
+
+```html
+<span class="inline-flex items-baseline gap-1.5 font-sans text-gray-900 tabular-nums">
+  <span class="text-sm font-normal">From</span>
+  <span class="text-lg sm:text-xl font-bold tabular-nums">&pound;150</span>
+</span>
+```
+
+## Alignment in a row (title left, price right)
+
+If the row uses `flex justify-between` with variable-width left copy, give the price block a **fixed width** and **right-align** the pair so every row lines up (see Injectables Fat Dissolve):
+
+```html
+<div class="shrink-0 w-44 flex justify-end">
+  <span class="inline-flex items-baseline gap-1.5 font-sans text-gray-900">
+    <span class="text-sm font-normal">From</span>
+    <span class="text-lg sm:text-xl font-bold tabular-nums">&pound;180</span>
+  </span>
+</div>
+```
+
+## When this does **not** apply
+
+- Normal prose ("from simple to bold") — no special formatting.
+- Prices **without** a "From" prefix — use the same treatment-title + price pattern as Facials (`text-lg sm:text-xl` on both title and price, semibold title).
+
+## Examples in repo
+
+`nails.astro` (Extras + Nail Art), `injectables.astro` (Fat Dissolve).

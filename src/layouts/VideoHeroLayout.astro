@@ -8,6 +8,8 @@ interface Props {
   title: string;
   description?: string;
   videoSrc?: string;
+  videoWebmSrc?: string;
+  videoMp4Src?: string;
   videoPoster?: string;
   footerTheme?: 'light' | 'dark';
 }
@@ -16,9 +18,13 @@ const {
   title,
   description = 'Saramonse Beauty',
   videoSrc = '/assets/hero-video.mp4',
+  videoWebmSrc = '',
+  videoMp4Src = '',
   videoPoster = '',
   footerTheme = 'light',
 } = Astro.props;
+
+const resolvedMp4Src = videoMp4Src || videoSrc;
 ---
 
 <!doctype html>
@@ -49,22 +55,67 @@ const {
       navId="nav-compact"
       navBg="nav-fade-light"
       navExtraClasses="transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none"
-      includeMobileOverlay={false}
     />
 
     <div id="video-hero" class="relative w-full aspect-[21/7] overflow-hidden bg-black">
       <video
-        class="absolute w-[calc(100%+10px)] object-cover object-top"
+        class="absolute inset-0 h-full w-full object-cover object-center"
         autoplay
         muted
         loop
         playsinline
+        preload="metadata"
         poster={videoPoster || undefined}
       >
-        <source src={videoSrc} type="video/mp4" />
+        {videoWebmSrc ? <source src={videoWebmSrc} type="video/webm" /> : null}
+        <source src={resolvedMp4Src} type="video/mp4" />
       </video>
       <div class="absolute inset-y-0 -inset-x-40 bg-gradient-to-b from-black/80 to-black/20 z-10"></div>
     </div>
+
+    <script is:inline>
+      (function () {
+        var el = document.querySelector('#video-hero video');
+        if (!el) return;
+        el.defaultMuted = true;
+        el.muted = true;
+        el.setAttribute('muted', '');
+        el.setAttribute('playsinline', '');
+        el.playsInline = true;
+        try {
+          el.setAttribute('webkit-playsinline', '');
+        } catch (e) {}
+
+        function tryPlay() {
+          var p = el.play();
+          if (p && typeof p.then === 'function') p.catch(function () {});
+        }
+
+        if (el.readyState >= 2) tryPlay();
+        else el.addEventListener('canplay', function onCan() {
+          el.removeEventListener('canplay', onCan);
+          tryPlay();
+        });
+
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting && el.paused) tryPlay();
+              });
+            },
+            { rootMargin: '0px', threshold: 0.01 }
+          ).observe(el);
+        }
+
+        document.addEventListener('visibilitychange', function () {
+          if (!document.hidden && el.paused) tryPlay();
+        });
+        window.addEventListener('pageshow', function (ev) {
+          if (el.paused) tryPlay();
+        });
+      })();
+    </script>
 
     <main class="bg-white">
       <slot />

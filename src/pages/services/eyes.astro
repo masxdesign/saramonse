@@ -1,0 +1,107 @@
+---
+import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import { serviceFaqs } from '../../data/faq-content.js';
+---
+
+<VideoHeroLayout
+  title="Eyes | Saramonse Beauty"
+  description="Eye treatments at Saramonse Beauty - lash and brow services for beautifully defined eyes"
+  videoWebmSrc="/assets/eyes-hero.small.webm?t=1"
+  videoMp4Src="/assets/eyes-hero.small.mp4?t=1"
+  videoPoster="/assets/eyes-hero-poster.jpg"
+  footerTheme="dark"
+>
+  <!-- Intro -->
+  <section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h2
+        class="text-4xl sm:text-5xl lg:text-6xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
+        style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+      >
+        Eyes
+      </h2>
+
+      <p class="text-body-intro text-gray-700 font-sans leading-relaxed max-w-3xl mb-10">
+        Enhance and define your natural beauty with our eye treatments; from perfectly shaped brows to long-lasting lash
+        extensions and more.
+      </p>
+
+      <div class="flex flex-wrap justify-start gap-4">
+        <a
+          href="/#book"
+          class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
+          >Book Treatment</a
+        >
+        <a
+          href="#gift-vouchers"
+          class="inline-block border border-pink-400 text-pink-400 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-pink-400 hover:text-white transition-colors"
+          >Buy Gift Vouchers</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- Treatments -->
+  <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
+    <div class="max-w-4xl mx-auto divide-y divide-gray-200">
+      <div class="py-10 sm:py-12">
+        <div class="flex justify-between items-baseline mb-4">
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Brow Shape</h3>
+          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;10</span>
+        </div>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
+          Define and refine your brows with our professional shaping service. Using a combination of threading, tweezing,
+          and trimming to create a natural, flattering shape tailored to your face. (20mins)
+        </p>
+      </div>
+
+      <div class="py-10 sm:py-12">
+        <div class="flex justify-between items-baseline mb-4">
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Brow Wax</h3>
+          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;15</span>
+        </div>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
+          Define and refine your brows with our professional shaping service. Using a combination of waxing, tweezing,
+          and trimming to create a natural, flattering shape tailored to your face. (25mins)
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming -->
+  <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
+    <div class="max-w-4xl mx-auto text-center py-12 sm:py-16">
+      <h3 class="text-xl sm:text-2xl text-gray-900 font-semibold font-sans tracking-[0.14em] mb-8">
+        Eyelash Extensions / Brow Services
+      </h3>
+      <p class="text-3xl sm:text-4xl text-gray-900 font-light tracking-[0.08em]" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">
+        Coming Soon...
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
+    <div class="max-w-4xl mx-auto flex flex-wrap justify-center gap-6">
+      <a
+        href="/#book"
+        class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
+        >Book Treatment</a
+      >
+      <a
+        href="/assets/eyes-menu.pdf"
+        target="_blank"
+        class="inline-block border border-pink-400 text-pink-400 font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:bg-pink-400 hover:text-white transition-colors"
+        >Download Menu</a
+      >
+    </div>
+  </section>
+
+  <FaqAccordion
+    heading="Common questions"
+    items={serviceFaqs.eyes}
+    defaultOpenCount={0}
+    class="bg-[#f8f6f3] !pt-4 sm:!pt-6 lg:!pt-8"
+  />
+</VideoHeroLayout>

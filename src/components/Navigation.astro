@@ -47,7 +47,7 @@ const logoSize =
 >
   <div
     class:list={[
-      'relative flex w-full max-w-screen-lg mx-auto items-center justify-between px-4 sm:px-6 lg:px-6',
+      'relative flex w-full max-w-[calc(66rem-5px)] mx-auto items-center justify-between px-4 sm:px-6 lg:px-6 lg:-translate-x-[calc(2em-7px)]',
       'pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]',
     ]}
   >
@@ -83,7 +83,7 @@ const logoSize =
       </svg>
     </button>
 
-    <ul class="hidden lg:flex font-sans flex-1 justify-evenly items-center">
+    <ul class="hidden lg:flex font-sans flex-1 justify-evenly items-center lg:gap-x-12 lg:leading-none">
       <li class="min-w-[30px]">&nbsp;</li>
       {
         navigation.left.map((item) => (
@@ -102,7 +102,7 @@ const logoSize =
                 ]}
               >
                 {item.label}
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
@@ -118,7 +118,7 @@ const logoSize =
               >
                 {item.label}
                 {item.children ? (
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                   </svg>
                 ) : null}
@@ -127,7 +127,7 @@ const logoSize =
             {item.children ? (
               <ul class="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block min-w-[160px]">
                 {item.children.map((child) => (
-                  <li class:list={[dropdownBg, 'rounded']}>
+                  <li class:list={[dropdownBg, 'first:rounded-t last:rounded-b']}>
                     <a
                       href={child.href}
                       class:list={[dropdownText, 'block px-5 py-3 text-xs tracking-widest uppercase transition-colors']}
@@ -154,11 +154,12 @@ const logoSize =
       <img src="/assets/logo_256.png" alt="Saramonse Beauty" class={logoSize} />
     </a>
 
-    <div class="hidden lg:flex flex-1 items-center">
-      <ul class="flex font-sans flex-1 justify-evenly items-center">
+    <div class="hidden lg:flex flex-1 items-center justify-end">
+      <div class="flex items-center gap-x-8">
+        <ul class="flex font-sans items-center gap-x-8 lg:leading-none">
         {
           navigation.right.map((item) => (
-            <li class:list={['min-w-[90px] text-center', item.children ? 'relative group' : '']}>
+            <li class:list={[item.children ? 'relative group' : '']}>
               {item.children && !item.parentLink ? (
                 <span
                   class:list={[
@@ -168,7 +169,7 @@ const logoSize =
                   ]}
                 >
                   {item.label}
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                   </svg>
                 </span>
@@ -184,7 +185,7 @@ const logoSize =
                 >
                   {item.label}
                   {item.children ? (
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                   ) : null}
@@ -193,7 +194,7 @@ const logoSize =
               {item.children ? (
                 <ul class="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block min-w-[160px]">
                   {item.children.map((child) => (
-                    <li class:list={[dropdownBg, 'rounded']}>
+                    <li class:list={[dropdownBg, 'first:rounded-t last:rounded-b']}>
                       <a
                         href={child.href}
                         class:list={[dropdownText, 'block px-5 py-3 text-xs tracking-widest uppercase transition-colors']}
@@ -207,13 +208,13 @@ const logoSize =
             </li>
           ))
         }
-      </ul>
-      <div class="flex gap-6 w-auto shrink-0">
+        </ul>
+        <div class="flex items-center gap-x-8 shrink-0">
         {
           navigation.icons.map((icon) => (
             <a href={icon.href} class:list={[textColor, textHover, 'transition-colors', textExtra]}>
               {icon.icon === 'account' ? (
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -222,7 +223,7 @@ const logoSize =
                   />
                 </svg>
               ) : icon.icon === 'cart' ? (
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -234,6 +235,7 @@ const logoSize =
             </a>
           ))
         }
+        </div>
       </div>
     </div>
 

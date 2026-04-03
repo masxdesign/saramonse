@@ -1,0 +1,152 @@
+---
+import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import { serviceFaqs } from '../../data/faq-content.js';
+---
+
+<VideoHeroLayout
+  title="Body | Saramonse Beauty"
+  description="Body treatments at Saramonse Beauty - massage and body rituals to ease tension and restore balance"
+  videoWebmSrc="/assets/body-hero.small.webm?t=1"
+  videoMp4Src="/assets/body-hero.small.mp4?t=1"
+  videoPoster="/assets/body-hero-poster.jpg"
+  footerTheme="dark"
+>
+  <!-- Intro -->
+  <section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h2
+        class="text-4xl sm:text-5xl lg:text-6xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
+        style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+      >
+        Body
+      </h2>
+
+      <p class="text-body-intro text-gray-700 font-sans leading-relaxed max-w-3xl mb-10">
+        Our body treatments are designed to relax, restore, and sculpt from soothing massages that melt away stress to
+        advanced therapies that tone, detoxify, and revitalise your body.
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a
+          href="/#book"
+          class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
+          >Book Treatment</a
+        >
+        <a
+          href="#gift-vouchers"
+          class="inline-block border border-pink-400 text-pink-400 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-pink-400 hover:text-white transition-colors"
+          >Buy Gift Vouchers</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- Treatments -->
+  <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
+    <div class="max-w-4xl mx-auto divide-y divide-gray-200">
+      <div class="py-10 sm:py-12">
+        <div class="flex flex-wrap items-baseline justify-between gap-4 mb-4">
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Relaxing Massage</h3>
+          <div class="flex items-baseline gap-6 sm:gap-12">
+            <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0">30mins | &pound;40</span>
+            <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0">60mins | &pound;70</span>
+          </div>
+        </div>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
+          Unwind with our full-body Relaxing Massage, designed to release tension, reduce stress, and restore a sense of
+          calm. Using gentle, flowing techniques, this treatment soothes muscles and promotes deep relaxation for body and
+          mind.
+        </p>
+      </div>
+
+      <div class="py-10 sm:py-12">
+        <div class="flex flex-wrap items-baseline justify-between gap-4 mb-4">
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Lymphatic Drainage Massage</h3>
+          <div class="flex items-baseline gap-6 sm:gap-12">
+            <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0">30mins | &pound;45</span>
+            <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0">60mins | &pound;75</span>
+          </div>
+        </div>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
+          A specialised massage that encourages the natural drainage of the lymph, helping to reduce swelling, improve
+          circulation, and detoxify the body. Ideal for clients experiencing fluid retention, sluggish circulation, or
+          those recovering post-treatment.
+        </p>
+      </div>
+
+      <div class="py-10 sm:py-12">
+        <div class="flex justify-between items-baseline mb-4">
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Back, Neck, Shoulder Massage</h3>
+          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;39</span>
+        </div>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
+          Target tension in the areas that need it most. This focused massage relieves stiffness and stress in the back,
+          neck, and shoulders - perfect for desk workers or anyone carrying daily tension in these common problem zones.
+          (30mins)
+        </p>
+      </div>
+
+      <div class="py-10 sm:py-12">
+        <div class="flex justify-between items-baseline mb-4">
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Maderotherapy (Wood Therapy)</h3>
+          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;90</span>
+        </div>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
+          An advanced body-sculpting massage using specially crafted wooden tools to stimulate circulation, break down
+          localised fat deposits, and improve skin tone. This natural technique helps contour the body, reduce cellulite,
+          and leave skin looking firmer and smoother. (60mins)
+        </p>
+      </div>
+
+      <div class="py-10 sm:py-12">
+        <div class="flex justify-between items-baseline mb-4">
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Single Session Faradic Machine</h3>
+          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;40</span>
+        </div>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
+          Our Faradic treatment uses low-frequency electrical impulses to stimulate and contract muscles, mimicking the
+          effect of exercise. This helps tone and firm targeted areas, improve muscle definition, and support inch-loss
+          programs. A great option for clients wanting visible body contouring without strenuous workouts. (35mins)
+        </p>
+      </div>
+
+      <div class="py-10 sm:py-12">
+        <div class="flex justify-between items-baseline mb-4">
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">Single Session Pressotherapy Machine</h3>
+          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">&pound;30</span>
+        </div>
+        <p class="text-body text-gray-700 font-sans leading-relaxed">
+          Pressotherapy is a relaxing, compression-based treatment that stimulates lymphatic drainage, reduces water
+          retention, and boosts circulation. Ideal for clients with tired or heavy legs, fluid retention, or cellulite
+          concerns, it leaves the body feeling lighter, detoxified, and refreshed. (35mins)
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
+    <div class="max-w-4xl mx-auto flex flex-wrap gap-6">
+      <a
+        href="/#book"
+        class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
+        >Book Treatment</a
+      >
+      <a
+        href="/assets/body-menu.pdf"
+        target="_blank"
+        class="inline-block border border-pink-400 text-pink-400 font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:bg-pink-400 hover:text-white transition-colors"
+        >Download Menu</a
+      >
+    </div>
+  </section>
+
+  <FaqAccordion
+    heading="Common questions"
+    items={serviceFaqs.body}
+    defaultOpenCount={0}
+    class="bg-[#f8f6f3] !pt-4 sm:!pt-6 lg:!pt-8"
+  />
+</VideoHeroLayout>

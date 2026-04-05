@@ -5,6 +5,13 @@ name = "saramonse"
 main = "worker/index.ts"
 compatibility_date = "2025-04-02"
 
+[vars]
+# Must be an address on your Resend-verified domain (display name optional).
+CONTACT_FROM = "Saramonse Beauty <hi@saramonsebeauty.co.uk>"
+
 [assets]
 directory = "./dist"
 binding = "ASSETS"
+not_found_handling = "404-page"
+# Default is asset-first; POST /api/contact was 405 before the Worker ran. Run Worker first.
+run_worker_first = true

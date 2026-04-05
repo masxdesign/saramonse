@@ -1,13 +1,20 @@
-name: Build
+# Builds the Astro site, then deploys the Worker + dist/ to Cloudflare Workers.
+# Add repo secret CLOUDFLARE_API_TOKEN (Workers Scripts:Edit, plus Account read).
+# Worker secrets (RESEND_API_KEY, CONTACT_TO_EMAIL) are set in Cloudflare, not GitHub.
+
+name: Build and deploy
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,3 +30,9 @@ jobs:
 
       - name: Build site
         run: npm run build
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          wranglerVersion: '4.80.0'

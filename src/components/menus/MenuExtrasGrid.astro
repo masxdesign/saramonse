@@ -1,0 +1,51 @@
+---
+import type { MenuBlock } from '../../data/menus/types';
+import { extrasAmountDisplay } from './menu-format';
+
+interface Props {
+  block: Extract<MenuBlock, { type: 'extrasGrid' }>;
+}
+
+const { block } = Astro.props;
+---
+
+<div class="max-w-3xl mb-10">
+  <div class="grid grid-cols-[1.6fr_1fr_1fr] gap-x-6 gap-y-4 items-baseline">
+    <div />
+    <p class="text-body-intro text-gray-900 font-light tracking-[0.25em] uppercase">{block.columnLabels[0]}</p>
+    <p class="text-body-intro text-gray-900 font-light tracking-[0.25em] uppercase">{block.columnLabels[1]}</p>
+    {
+      block.rows.map((row) => (
+        <>
+          <p class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">{row.name}</p>
+          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
+            {row.hands.mode === 'from' ? (
+              <>
+                <span class="text-sm font-normal">From</span>
+                <span class="text-lg sm:text-xl font-bold tabular-nums">{extrasAmountDisplay(row.hands)}</span>
+              </>
+            ) : (
+              <>
+                <span class:list={['text-sm font-normal', row.hands.mode === 'plain' ? 'opacity-0' : '']}>From</span>
+                <span class="text-lg sm:text-xl font-bold tabular-nums">{extrasAmountDisplay(row.hands)}</span>
+              </>
+            )}
+          </p>
+          <p class="inline-grid grid-cols-[3.25rem_auto] items-baseline font-sans text-gray-900">
+            {row.feet.mode === 'from' ? (
+              <>
+                <span class="text-sm font-normal">From</span>
+                <span class="text-lg sm:text-xl font-bold tabular-nums">{extrasAmountDisplay(row.feet)}</span>
+              </>
+            ) : (
+              <>
+                <span class:list={['text-sm font-normal', row.feet.mode === 'plain' ? 'opacity-0' : '']}>From</span>
+                <span class="text-lg sm:text-xl font-bold tabular-nums">{extrasAmountDisplay(row.feet)}</span>
+              </>
+            )}
+          </p>
+        </>
+      ))
+    }
+  </div>
+</div>

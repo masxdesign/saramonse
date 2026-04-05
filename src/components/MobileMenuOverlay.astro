@@ -1,0 +1,145 @@
+---
+import navigation from '../data/navigation.js';
+import { FRESHA_BOOKING_URL } from '../data/site-urls.js';
+import NavDisabledIconTooltip from './NavDisabledIconTooltip.astro';
+
+const accountDisabledInnerClass =
+  'text-white focus-visible:ring-white focus-visible:ring-offset-2 ring-offset-transparent';
+---
+
+<div
+  id="mobile-menu"
+  class="mobile-menu-overlay fixed inset-0 z-[9999] isolate flex h-full min-h-dvh flex-col overflow-hidden lg:hidden"
+  style="display: none;"
+>
+  <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <img
+      src="/assets/hero.jpg"
+      alt=""
+      width="1920"
+      height="1080"
+      loading="eager"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black/70"></div>
+  </div>
+  <div
+    class="menu-item relative z-10 grid shrink-0 grid-cols-[1fr_auto_1fr] items-center gap-2 px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]"
+    style="animation-delay: 0.18s"
+  >
+    <span class="min-w-0" aria-hidden="true"></span>
+    <a href={navigation.left[0].href} class="flex justify-center">
+      <img
+        src="/assets/logo_256.png"
+        alt="Saramonse Beauty"
+        class="h-28 w-auto sm:h-32"
+        width="256"
+        height="256"
+      />
+    </a>
+    <button
+      type="button"
+      class="mobile-menu-close flex h-11 min-w-[44px] items-center justify-center justify-self-end rounded-full text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+      aria-label="Close menu"
+    >
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <nav
+    class="mobile-menu-primary relative z-10 min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2 font-sans"
+    aria-label="Primary"
+  >
+    <div class="flex min-h-full flex-col items-center justify-center py-6">
+      {navigation.mobilePrimaryItems.map((item, index) => (
+        <div
+          class="menu-item w-full max-w-sm text-center"
+          style={`animation-delay: calc(0.28s + ${index} * 0.08s)`}
+        >
+          {item.kind === 'parent' ? (
+            <span
+              class="block cursor-default select-none py-2.5 text-2xl font-light tracking-[0.2em] text-white/95 uppercase sm:text-3xl"
+              role="presentation"
+            >
+              {item.label}
+            </span>
+          ) : item.kind === 'main' ? (
+            <a
+              href={item.href}
+              class="block py-2.5 text-2xl font-light tracking-[0.2em] text-white/95 uppercase transition-colors hover:text-white sm:text-3xl"
+            >
+              {item.label}
+            </a>
+          ) : item.kind === 'child' ? (
+            <a
+              href={item.href}
+              class="block py-2 text-lg font-light tracking-[0.18em] text-white/55 uppercase transition-colors hover:text-white/85 sm:text-xl"
+            >
+              {item.label}
+            </a>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  </nav>
+  <nav
+    class="mobile-menu-footer relative z-10 shrink-0 overflow-visible border-t border-white/20 bg-white/5 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-sm"
+    aria-label="Book and account"
+  >
+    <div class="mx-auto flex w-full max-w-sm flex-row items-center justify-center gap-3 overflow-visible">
+      <a
+        href={navigation.mobileOverlayFooter.find(i => i.kind === 'cta')?.href || FRESHA_BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex min-w-0 flex-1 items-center justify-center rounded-lg px-6 py-4 text-center font-sans font-semibold tracking-widest uppercase text-sm text-white bg-gradient-to-r from-orange-400 to-pink-500 transition-all hover:shadow-2xl sm:px-10"
+      >
+        {navigation.mobileOverlayFooter.find(i => i.kind === 'cta')?.label || 'Book Now'}
+      </a>
+      <div class="flex shrink-0 items-center gap-1 overflow-visible">
+        {navigation.icons.map((icon) =>
+          icon.disabled && icon.tooltip ? (
+            <div
+              class="inline-flex h-[52px] w-[52px] items-center justify-center overflow-visible rounded-full border border-white/15 text-white/45"
+            >
+              <NavDisabledIconTooltip
+                tooltip={icon.tooltip}
+                label={icon.label}
+                innerClass={accountDisabledInnerClass}
+                placement="above"
+              >
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </NavDisabledIconTooltip>
+            </div>
+          ) : (
+            <a
+              href={icon.href}
+              target={icon.external ? '_blank' : undefined}
+              rel={icon.external ? 'noopener noreferrer' : undefined}
+              class="inline-flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/20 text-white/75 transition-colors hover:border-white/35 hover:bg-white/5 hover:text-white"
+              aria-label={icon.label}
+            >
+              {icon.icon === 'account' ? (
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              ) : icon.icon === 'cart' ? (
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              ) : null}
+            </a>
+          ),
+        )}
+      </div>
+    </div>
+  </nav>
+</div>

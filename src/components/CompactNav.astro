@@ -1,0 +1,210 @@
+---
+import navigation from '../data/navigation.js';
+import NavDisabledIconTooltip from './NavDisabledIconTooltip.astro';
+
+const cartIcon = navigation.icons.find((i) => i.icon === 'cart');
+
+const accountDisabledInnerClass =
+  'text-white opacity-45 focus-visible:ring-white ring-offset-black focus-visible:ring-offset-2';
+
+const linkBase =
+  'inline-flex items-center gap-1 transition-colors text-sm tracking-widest uppercase text-white hover:text-white/80';
+const spanBase =
+  'inline-flex items-center gap-1 text-sm tracking-widest uppercase cursor-default select-none text-white';
+---
+
+<nav
+  id="nav-compact"
+  class="fixed top-0 z-[60] w-full overflow-visible bg-black/80 pb-1.5 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none lg:pb-0"
+>
+  <div
+    class="relative flex min-h-[2.5rem] w-full max-w-[calc(66rem-5px)] mx-auto items-center justify-between px-4 sm:px-6 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] lg:min-h-0 lg:-translate-x-[calc(2em-7px)]"
+  >
+    <button
+      class="mobile-menu-btn relative z-10 shrink-0 lg:hidden flex h-6 w-6 items-center justify-center text-white transition-colors"
+      aria-label="Toggle menu"
+    >
+      <svg class="burger-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          class="burger-bar"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16"
+        />
+        <path
+          class="burger-bar"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 12h16"
+        />
+        <path
+          class="burger-bar"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 18h16"
+        />
+      </svg>
+    </button>
+
+    <!-- Desktop: same layout as Navigation — left group, centered logo, right group + icons -->
+    <ul class="hidden lg:flex flex-1 justify-evenly items-center font-sans lg:gap-x-10 lg:leading-none">
+      <li class="min-w-[30px] lg:min-w-[calc(22px*0.75)]">&nbsp;</li>
+      {
+        navigation.left.map((item) => (
+          <li class:list={['min-w-[90px] text-center lg:min-w-[calc(68px*0.75)]', item.children ? 'relative group' : '']}>
+            {item.children && !item.parentLink ? (
+              <span class:list={[spanBase]}>
+                {item.label}
+                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            ) : (
+              <a href={item.href} class:list={[linkBase]}>
+                {item.label}
+                {item.children ? (
+                  <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                ) : null}
+              </a>
+            )}
+            {item.children ? (
+              <ul class="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block min-w-[160px]">
+                {item.children.map((child) => (
+                  <li class="rounded bg-black/90 backdrop-blur-md">
+                    <a
+                      href={child.href}
+                      class="block px-5 py-3 text-xs tracking-widest uppercase text-white transition-colors hover:text-white/80"
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </li>
+        ))
+      }
+    </ul>
+
+    <a
+      href={navigation.left[0].href}
+      class="pointer-events-auto absolute left-1/2 top-[2px] z-[5] flex-shrink-0 -translate-x-1/2 lg:static lg:left-auto lg:top-auto lg:z-auto lg:mx-[calc(2.25rem*0.75)] lg:translate-x-0 lg:translate-y-0 lg:self-start lg:mt-[2px]"
+    >
+      <img
+        src="/assets/logo_256.png"
+        alt="Saramonse Beauty"
+        class="h-[calc(4rem*0.75)] w-[calc(4rem*0.75)] lg:h-[calc(5rem*0.75)] lg:w-[calc(5rem*0.75)]"
+        width="256"
+        height="256"
+      />
+    </a>
+
+    <div class="hidden lg:flex flex-1 items-center">
+      <ul class="flex flex-1 justify-evenly items-center font-sans lg:leading-none">
+        {
+          navigation.right.map((item) => (
+            <li class:list={['min-w-[90px] text-center lg:min-w-[calc(68px*0.75)]', item.children ? 'relative group' : '']}>
+              {item.children && !item.parentLink ? (
+                <span class:list={[spanBase]}>
+                  {item.label}
+                  <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              ) : (
+                <a
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                  class:list={[linkBase]}
+                >
+                  {item.label}
+                  {item.children ? (
+                    <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  ) : null}
+                </a>
+              )}
+              {item.children ? (
+                <ul class="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block min-w-[160px]">
+                  {item.children.map((child) => (
+                    <li class="rounded bg-black/90 backdrop-blur-md">
+                      <a
+                        href={child.href}
+                        class="block px-5 py-3 text-xs tracking-widest uppercase text-white transition-colors hover:text-white/80"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </li>
+          ))
+        }
+      </ul>
+      <div class="flex w-auto shrink-0 gap-6 lg:gap-[calc(1.5rem*0.75)]">
+        {
+          navigation.icons.map((icon) =>
+            icon.disabled && icon.tooltip ? (
+              <NavDisabledIconTooltip tooltip={icon.tooltip} label={icon.label} innerClass={accountDisabledInnerClass}>
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </NavDisabledIconTooltip>
+            ) : (
+              <a
+                href={icon.href}
+                target={icon.external ? '_blank' : undefined}
+                rel={icon.external ? 'noopener noreferrer' : undefined}
+                class="text-white transition-colors hover:text-white/80"
+              >
+                {icon.icon === 'account' ? (
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                ) : icon.icon === 'cart' ? (
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                    />
+                  </svg>
+                ) : null}
+              </a>
+            ),
+          )
+        }
+      </div>
+    </div>
+
+    <a
+      href={cartIcon?.href ?? '#cart'}
+      target={cartIcon?.external ? '_blank' : undefined}
+      rel={cartIcon?.external ? 'noopener noreferrer' : undefined}
+      class="relative z-10 shrink-0 lg:hidden text-white transition-colors hover:text-white/80"
+    >
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+    </a>
+  </div>
+</nav>

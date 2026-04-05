@@ -1,0 +1,94 @@
+---
+import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import MenuBlocks from '../../components/menus/MenuBlocks.astro';
+import ServiceMenuDownloads from '../../components/ServiceMenuDownloads.astro';
+import { serviceFaqs } from '../../data/faq-content.js';
+import { facialsAddOnBlocks, facialsMainBlocks, facialsMenu } from '../../data/menus/facials';
+import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.js';
+---
+
+<VideoHeroLayout
+  title="Facials | Saramonse Beauty"
+  description="Bespoke facial treatments at Saramonse Beauty - tailored skincare rituals for radiance and renewal"
+  videoWebmSrc="/assets/facials-hero.small.webm?t=1"
+  videoMp4Src="/assets/facials-hero.small.mp4?t=1"
+  videoPoster="/assets/facials-hero-poster.jpg"
+  footerTheme="dark"
+>
+  <!-- Intro -->
+  <section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h2
+        class="text-4xl sm:text-5xl lg:text-6xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
+        style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+      >
+        Facials
+      </h2>
+
+      <p class="text-body-intro text-gray-700 font-sans leading-relaxed max-w-2xl mb-10">
+        Personalised treatments that go beyond skin deep, blending care, artistry, and renewal.
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a
+          href={FRESHA_BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
+          >Book Treatment</a
+        >
+        <a
+          href={FRESHA_GIFT_CARDS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
+          >Buy Gift Vouchers</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- Treatments -->
+  <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
+    <div class="max-w-4xl mx-auto divide-y divide-gray-200">
+      <MenuBlocks blocks={facialsMainBlocks} />
+    </div>
+  </section>
+
+  <!-- Add Ons -->
+  <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
+    <div class="max-w-4xl mx-auto">
+      <h2
+        class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
+        style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+      >
+        Add Ons
+      </h2>
+
+      <div class="divide-y divide-gray-200">
+        <MenuBlocks blocks={facialsAddOnBlocks} />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
+    <ServiceMenuDownloads menu={facialsMenu}>
+      <a
+        href={FRESHA_BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
+        >Book Treatment</a
+      >
+    </ServiceMenuDownloads>
+  </section>
+
+  <FaqAccordion
+    heading="Common questions"
+    items={serviceFaqs.facials}
+    defaultOpenCount={0}
+    class="bg-[#f8f6f3] !pt-4 sm:!pt-6 lg:!pt-8"
+  />
+</VideoHeroLayout>

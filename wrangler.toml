@@ -1,0 +1,10 @@
+# Worker + static assets (not Pages — `_headers` is ignored here).
+# https://developers.cloudflare.com/workers/static-assets/
+
+name = "saramonse"
+main = "worker/index.ts"
+compatibility_date = "2025-04-02"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"

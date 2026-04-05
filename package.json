@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "generate:menus": "tsx scripts/generate-menu-pdfs.ts",
     "build": "npm run generate:menus && astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "deploy": "npm run build && wrangler deploy",
+    "worker:dev": "npm run build && wrangler dev"
   },
   "keywords": [],
   "author": "",

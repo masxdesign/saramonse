@@ -176,38 +176,84 @@ const ftNavChildRule = footerTheme === 'dark' ? 'border-white/15' : 'border-gray
               Receive Updates Via Email
             </h3>
             {footerTheme === 'dark' ? (
-              <form class="flex items-center gap-4 border-b border-white pb-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  class="flex-1 bg-transparent text-white placeholder:text-white/45 text-body font-light italic focus:outline-none"
-                />
-                <button type="submit" class="text-white hover:text-white/70 transition-colors shrink-0" aria-label="Subscribe">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-                    />
-                  </svg>
-                </button>
+              <form
+                class="footer-subscribe-form flex flex-col gap-2"
+                data-subscribe-theme="dark"
+                novalidate
+                aria-busy="false"
+              >
+                <div class="flex items-center gap-4 border-b border-white pb-3">
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                    inputmode="email"
+                    maxlength="254"
+                    placeholder="Enter your email"
+                    aria-describedby="footer-subscribe-status-dark"
+                    class="footer-subscribe-email flex-1 bg-transparent text-white placeholder:text-white/45 text-body font-light italic focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    class="footer-subscribe-submit text-white hover:text-white/70 transition-colors shrink-0 disabled:opacity-50"
+                    aria-label="Subscribe to email updates"
+                  >
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <p
+                  id="footer-subscribe-status-dark"
+                  class="footer-subscribe-status text-xs font-sans min-h-[1.25rem] text-white/60"
+                  role="status"
+                  aria-live="polite"
+                ></p>
               </form>
             ) : (
-              <form class="flex items-center gap-4 border-b border-gray-900 pb-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  class="flex-1 bg-transparent text-gray-900 placeholder:text-gray-500 text-body font-light italic focus:outline-none"
-                />
-                <button type="submit" class="text-gray-900 hover:text-gray-600 transition-colors shrink-0" aria-label="Subscribe">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-                    />
-                  </svg>
-                </button>
+              <form
+                class="footer-subscribe-form flex flex-col gap-2"
+                data-subscribe-theme="light"
+                novalidate
+                aria-busy="false"
+              >
+                <div class="flex items-center gap-4 border-b border-gray-900 pb-3">
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                    inputmode="email"
+                    maxlength="254"
+                    placeholder="Enter your email"
+                    aria-describedby="footer-subscribe-status-light"
+                    class="footer-subscribe-email flex-1 bg-transparent text-gray-900 placeholder:text-gray-500 text-body font-light italic focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    class="footer-subscribe-submit text-gray-900 hover:text-gray-600 transition-colors shrink-0 disabled:opacity-50"
+                    aria-label="Subscribe to email updates"
+                  >
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <p
+                  id="footer-subscribe-status-light"
+                  class="footer-subscribe-status text-xs font-sans min-h-[1.25rem] text-gray-500"
+                  role="status"
+                  aria-live="polite"
+                ></p>
               </form>
             )}
           </div>
@@ -431,5 +477,112 @@ const ftNavChildRule = footerTheme === 'dark' ? 'border-white/15' : 'border-gray
         });
       });
     })();
+  </script>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function () {
+      var forms = document.querySelectorAll('form.footer-subscribe-form');
+      if (!forms.length) return;
+
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      function setStatus(form, statusEl, message, kind) {
+        var theme = form.getAttribute('data-subscribe-theme') || 'light';
+        statusEl.textContent = message || '';
+        statusEl.classList.remove(
+          'text-white/60',
+          'text-white/90',
+          'text-red-300',
+          'text-emerald-300',
+          'text-gray-500',
+          'text-gray-700',
+          'text-red-800',
+          'text-green-800'
+        );
+        if (!message) {
+          statusEl.classList.add(theme === 'dark' ? 'text-white/60' : 'text-gray-500');
+          return;
+        }
+        if (kind === 'ok') {
+          statusEl.classList.add(theme === 'dark' ? 'text-emerald-300' : 'text-green-800');
+        } else if (kind === 'err') {
+          statusEl.classList.add(theme === 'dark' ? 'text-red-300' : 'text-red-800');
+        } else {
+          statusEl.classList.add(theme === 'dark' ? 'text-white/90' : 'text-gray-700');
+        }
+      }
+
+      forms.forEach(function (form) {
+        var input = form.querySelector('input.footer-subscribe-email');
+        var statusEl = form.querySelector('.footer-subscribe-status');
+        var btn = form.querySelector('button.footer-subscribe-submit');
+        if (!input || !statusEl || !(input instanceof HTMLInputElement) || !(btn instanceof HTMLButtonElement)) return;
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var email = input.value.trim();
+          if (!email) {
+            setStatus(form, statusEl, 'Please enter your email address.', 'err');
+            input.focus();
+            return;
+          }
+          if (!EMAIL_RE.test(email)) {
+            setStatus(form, statusEl, 'Please enter a valid email address.', 'err');
+            input.focus();
+            return;
+          }
+
+          form.setAttribute('aria-busy', 'true');
+          btn.disabled = true;
+          setStatus(form, statusEl, '', 'muted');
+
+          fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email }),
+          })
+            .then(function (res) {
+              return res.text().then(function (text) {
+                var data = {};
+                if (text) {
+                  try {
+                    data = JSON.parse(text);
+                  } catch (err) {
+                    data = {};
+                  }
+                }
+                return { res: res, data: data };
+              });
+            })
+            .then(function (ref) {
+              var res = ref.res;
+              var data = ref.data;
+              if (res.ok && data && data.ok === true) {
+                if (data.alreadySubscribed) {
+                  setStatus(form, statusEl, "You're already on the list.", 'ok');
+                } else {
+                  setStatus(form, statusEl, "Thanks — you're subscribed.", 'ok');
+                  input.value = '';
+                }
+              } else {
+                var msg =
+                  data && typeof data.error === 'string'
+                    ? data.error
+                    : res.status === 404
+                      ? 'Signup unavailable. Try again later.'
+                      : 'Something went wrong. Please try again.';
+                setStatus(form, statusEl, msg, 'err');
+              }
+            })
+            .catch(function () {
+              setStatus(form, statusEl, 'Network error. Check your connection and try again.', 'err');
+            })
+            .finally(function () {
+              form.setAttribute('aria-busy', 'false');
+              btn.disabled = false;
+            });
+        });
+      });
+    });
   </script>
 </footer>

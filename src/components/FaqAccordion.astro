@@ -1,0 +1,89 @@
+---
+interface FaqItem {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: FaqItem[];
+  /** How many items are expanded by default (from the top). */
+  defaultOpenCount?: number;
+  heading?: string;
+  intro?: string;
+  moreHref?: string | null;
+  moreLabel?: string;
+  class?: string;
+}
+
+const {
+  items,
+  defaultOpenCount = 0,
+  heading,
+  intro,
+  moreHref = '/faq/',
+  moreLabel = 'View all FAQs',
+  class: className,
+} = Astro.props;
+
+const showMoreLink = moreHref !== null && moreHref !== undefined && moreHref !== '';
+
+/** Match homepage “Reviews & Testimonials” section title; tighter margin when intro follows. */
+const headingMbClass = intro
+  ? 'mb-4 sm:mb-5'
+  : 'mb-12 sm:mb-16 lg:mb-20';
+---
+
+<section class:list={['px-6 sm:px-8 py-16 sm:py-20 lg:py-24 bg-white', className]}>
+  <div class="max-w-3xl mx-auto">
+    {
+      heading ? (
+        <h2
+          class:list={[
+            'text-2xl sm:text-3xl lg:text-4xl text-center text-gray-900 font-light tracking-wide uppercase',
+            headingMbClass,
+          ]}
+          style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+        >
+          {heading}
+        </h2>
+      ) : null
+    }
+    {intro ? <p class="text-body text-gray-600 font-sans text-center mb-10 max-w-2xl mx-auto leading-relaxed">{intro}</p> : null}
+
+    <div class="faq-accordion divide-y divide-gray-200 border-t border-gray-200">
+      {
+        items.map((item, index) => (
+          <details class="group py-6 sm:py-7" open={index < defaultOpenCount ? true : undefined}>
+            <summary class="flex cursor-pointer list-none items-start gap-3 text-left font-sans font-semibold text-gray-900 tracking-wide [&::-webkit-details-marker]:hidden">
+              <span
+                class="faq-chevron mt-1 inline-block h-0 w-0 shrink-0 border-y-[5px] border-l-[6px] border-y-transparent border-l-gray-900 transition-transform duration-200 group-open:rotate-90"
+                aria-hidden="true"
+              />
+              <span>{item.q}</span>
+            </summary>
+            <p class="mt-4 pl-9 text-body text-gray-600 font-sans font-normal leading-relaxed">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+
+    {
+      showMoreLink ? (
+        <p class="mt-10 text-center">
+          <a
+            href={moreHref}
+            class="text-body text-gray-900 font-sans underline underline-offset-4 decoration-gray-400 hover:decoration-gray-900 transition-colors"
+          >
+            {moreLabel}
+          </a>
+        </p>
+      ) : null
+    }
+  </div>
+
+  <style is:global>
+    .faq-accordion details summary::-webkit-details-marker {
+      display: none;
+    }
+  </style>
+</section>

@@ -1,0 +1,221 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import MobileMenuOverlay from '../components/MobileMenuOverlay.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  isHomepage?: boolean;
+}
+
+const {
+  title = 'Saramonse Beauty | Premium Beauty Therapy',
+  description = 'Saramonse Beauty - Premium beauty therapy services',
+  isHomepage = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide-core.min.css" />
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+  </head>
+  <body class="font-serif text-gray-800">
+    <Navigation
+      navTheme="dark"
+      navId="nav-hero"
+      navBg="bg-transparent"
+      navExtraClasses="transition-all duration-500 ease-in-out opacity-100 translate-y-0"
+    />
+
+    <Navigation
+      navTheme="light"
+      navVariant="compact"
+      navId="nav-compact"
+      navBg="nav-fade-light"
+      navExtraClasses="transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none"
+    />
+
+    <slot />
+
+    <Footer isHomepage={isHomepage} />
+
+    <MobileMenuOverlay />
+
+    <script is:inline>
+      const mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const navHero = document.getElementById('nav-hero');
+      const navCompact = document.getElementById('nav-compact');
+      const heroSection = document.getElementById('home');
+
+      const EASE = 'cubic-bezier(0.77, 0, 0.175, 1)';
+
+      function setClipPath(val) {
+        mobileMenu.style.webkitClipPath = val;
+        mobileMenu.style.clipPath = val;
+      }
+
+      function setTransition(duration) {
+        const t = duration
+          ? `-webkit-clip-path ${duration} ${EASE}, clip-path ${duration} ${EASE}`
+          : 'none';
+        mobileMenu.style.webkitTransition = t;
+        mobileMenu.style.transition = t;
+      }
+
+      /** Uses html[data-scroll-restoring] + global.css to beat .scroll-smooth during restore. */
+      function restoreScrollInstantAfterMenuClose(sy) {
+        const root = document.documentElement;
+        root.setAttribute('data-scroll-restoring', 'true');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        const applyScroll = () => {
+          root.scrollTop = sy;
+          if (document.body) document.body.scrollTop = sy;
+          const se = document.scrollingElement || root;
+          se.scrollTop = sy;
+          try {
+            window.scrollTo({ top: sy, left: 0, behavior: 'instant' });
+          } catch {
+            window.scrollTo(0, sy);
+          }
+        };
+        applyScroll();
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            applyScroll();
+            requestAnimationFrame(() => {
+              root.removeAttribute('data-scroll-restoring');
+            });
+          });
+        });
+      }
+
+      function openMenu(btn) {
+        const rect = btn.getBoundingClientRect();
+        const ox = Math.round(rect.left + rect.width / 2);
+        const oy = Math.round(rect.top + rect.height / 2);
+
+        // flex (not block): #mobile-menu is flex-col; block breaks flex-1 + footer layout
+        mobileMenu.style.display = 'flex';
+
+        setTransition(null);
+        setClipPath(`circle(0% at ${ox}px ${oy}px)`);
+
+        mobileMenu.getBoundingClientRect();
+
+        setTransition('0.65s');
+        setClipPath(`circle(150vmax at ${ox}px ${oy}px)`);
+
+        mobileMenu.classList.remove('menu-closing');
+        mobileMenu.classList.add('menu-open');
+        mobileMenuBtns.forEach((b) => b.classList.add('menu-open'));
+
+        const sy = window.scrollY ?? window.pageYOffset;
+        document.body.dataset.menuScrollY = String(sy);
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${sy}px`;
+        document.body.style.width = '100%';
+      }
+
+      function closeMenu() {
+        const cp = mobileMenu.style.clipPath || mobileMenu.style.webkitClipPath || '';
+        const m = cp.match(/at\s+([\d.]+)px\s+([\d.]+)px/);
+        const ox = m ? m[1] : '40';
+        const oy = m ? m[2] : '40';
+
+        mobileMenu.classList.remove('menu-open');
+        mobileMenu.classList.add('menu-closing');
+        mobileMenuBtns.forEach((b) => b.classList.remove('menu-open'));
+
+        setTransition('0.5s');
+        setClipPath(`circle(0% at ${ox}px ${oy}px)`);
+
+        const sy = parseInt(document.body.dataset.menuScrollY || '0', 10);
+        restoreScrollInstantAfterMenuClose(sy);
+
+        const closeTimer = setTimeout(() => {
+          mobileMenu.classList.remove('menu-closing');
+          mobileMenu.style.display = 'none';
+          mobileMenu.removeEventListener('transitionend', onEnd);
+          mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
+        }, 600);
+
+        function onEnd(e) {
+          if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
+            clearTimeout(closeTimer);
+            mobileMenu.classList.remove('menu-closing');
+            mobileMenu.style.display = 'none';
+            mobileMenu.removeEventListener('transitionend', onEnd);
+            mobileMenu.removeEventListener('webkitTransitionEnd', onEnd);
+          }
+        }
+        mobileMenu.addEventListener('transitionend', onEnd);
+        mobileMenu.addEventListener('webkitTransitionEnd', onEnd);
+      }
+
+      mobileMenuBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (mobileMenu.classList.contains('menu-open')) {
+            closeMenu();
+          } else {
+            openMenu(btn);
+          }
+        });
+      });
+
+      mobileMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      const closeBtn = mobileMenu.querySelector('.mobile-menu-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          closeMenu();
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('menu-open')) {
+          closeMenu();
+        }
+      });
+
+      window.addEventListener('scroll', () => {
+        const heroHeight = heroSection.offsetHeight;
+        const scrollY = window.scrollY;
+        const shouldBeCompact = scrollY > heroHeight - 100;
+
+        if (shouldBeCompact) {
+          navHero.classList.remove('opacity-100', 'translate-y-0');
+          navHero.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+
+          navCompact.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+          navCompact.classList.add('opacity-100', 'translate-y-0');
+        } else {
+          navCompact.classList.remove('opacity-100', 'translate-y-0');
+          navCompact.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+
+          navHero.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+          navHero.classList.add('opacity-100', 'translate-y-0');
+        }
+      });
+    </script>
+  </body>
+</html>

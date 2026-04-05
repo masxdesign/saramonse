@@ -1,0 +1,12 @@
+---
+import type { MenuBlock } from '../../data/menus/types';
+import MenuBlockItem from './MenuBlockItem.astro';
+
+interface Props {
+  blocks: MenuBlock[];
+}
+
+const { blocks } = Astro.props;
+---
+
+{blocks.map((block) => <MenuBlockItem block={block} />)}

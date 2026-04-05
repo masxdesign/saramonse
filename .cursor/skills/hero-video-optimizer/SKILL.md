@@ -8,7 +8,7 @@ description: Optimize Astro hero videos into small WebM/MP4 + poster assets and 
 Automates the exact service-page hero workflow used in this project:
 - Generate `*.small.webm`
 - Generate `*.small.mp4`
-- Generate `*-poster.jpg`
+- Generate `*-poster.webp` (via temp JPEG + `cwebp`)
 - Wire `videoWebmSrc`, `videoMp4Src`, and `videoPoster` in Astro pages
 
 ## Defaults (must match existing project pattern)
@@ -17,7 +17,7 @@ Automates the exact service-page hero workflow used in this project:
 - Output naming:
   - `public/assets/<name>.small.webm`
   - `public/assets/<name>.small.mp4`
-  - `public/assets/<name>-poster.jpg`
+  - `public/assets/<name>-poster.webp`
 - Encoding settings:
   - Scale: `1600:-2`
   - FPS: `24`
@@ -31,7 +31,7 @@ Copy this checklist and run in order:
 
 ```md
 - [ ] 1) Confirm source video exists in public/assets
-- [ ] 2) Run optimize script to create .small.webm/.small.mp4/-poster.jpg
+- [ ] 2) Run optimize script to create .small.webm/.small.mp4/-poster.webp
 - [ ] 3) Update target Astro page VideoHeroLayout props
 - [ ] 4) Ensure Services nav includes the page if this is a new service
 - [ ] 5) Run lint/build validation
@@ -64,7 +64,7 @@ python3 .cursor/skills/hero-video-optimizer/scripts/update-videohero-props.py sr
 This updates or inserts:
 - `videoWebmSrc="/assets/<base>.small.webm?t=1"`
 - `videoMp4Src="/assets/<base>.small.mp4?t=1"`
-- `videoPoster="/assets/<base>-poster.jpg"`
+- `videoPoster="/assets/<base>-poster.webp"`
 
 ## Validation
 

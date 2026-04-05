@@ -21,7 +21,8 @@ BASE_NAME="${FILE_NAME%.*}"
 
 WEBM_OUT="${DIR_PATH}/${BASE_NAME}.small.webm"
 MP4_OUT="${DIR_PATH}/${BASE_NAME}.small.mp4"
-POSTER_OUT="${DIR_PATH}/${BASE_NAME}-poster.jpg"
+POSTER_TMP="${DIR_PATH}/${BASE_NAME}-poster.__tmp__.jpg"
+POSTER_OUT="${DIR_PATH}/${BASE_NAME}-poster.webp"
 
 echo "Optimizing: $INPUT_PATH"
 echo " -> $WEBM_OUT"
@@ -40,10 +41,17 @@ ffmpeg -y -i "$INPUT_PATH" \
 
 ffmpeg -y -ss "$POSTER_SEEK" -i "$MP4_OUT" \
   -frames:v 1 -q:v 2 -update 1 \
-  "$POSTER_OUT"
+  "$POSTER_TMP"
+
+if ! command -v cwebp >/dev/null 2>&1; then
+  echo "Error: cwebp not found (install webp tools). Temp poster: $POSTER_TMP"
+  exit 1
+fi
+cwebp -q 88 -mt "$POSTER_TMP" -o "$POSTER_OUT"
+rm -f "$POSTER_TMP"
 
 echo
 echo "Done. Astro props snippet:"
 echo "videoWebmSrc=\"/assets/${BASE_NAME}.small.webm?t=1\""
 echo "videoMp4Src=\"/assets/${BASE_NAME}.small.mp4?t=1\""
-echo "videoPoster=\"/assets/${BASE_NAME}-poster.jpg\""
+echo "videoPoster=\"/assets/${BASE_NAME}-poster.webp\""

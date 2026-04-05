@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found | Saramonse Beauty"
+  description="The page you are looking for could not be found."
+  scrollCompactNav={true}
+>
+  <section class="px-6 sm:px-8 py-24 max-w-2xl mx-auto text-center">
+    <p class="font-sans text-xs tracking-[0.25em] uppercase text-gray-500 mb-4">404</p>
+    <h1 class="font-serif text-3xl sm:text-4xl text-gray-900 mb-6">Page not found</h1>
+    <p class="font-sans text-body text-gray-600 mb-10">
+      The link may be broken or the page may have been removed.
+    </p>
+    <a
+      href="/"
+      class="inline-block bg-gray-900 text-white font-sans text-sm tracking-[0.25em] uppercase px-10 py-4 hover:bg-gray-800 transition-colors"
+    >
+      Back to home
+    </a>
+  </section>
+</BaseLayout>

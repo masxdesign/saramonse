@@ -1,0 +1,10 @@
+{
+  // Cloudflare Workers — static assets from Astro (`npm run build` → ./dist)
+  // https://docs.astro.build/en/guides/deploy/cloudflare/
+  "name": "saramonse",
+  "compatibility_date": "2026-04-05",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

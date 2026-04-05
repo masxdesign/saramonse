@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/* Fixed nav clears anchor targets (#book, #services, …) */
+@layer base {
+  /* Mobile menu close: override scroll-smooth so restore is instant (JS toggles attribute). */
+  html[data-scroll-restoring='true'] {
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-padding-top: calc(6rem + env(safe-area-inset-top, 0px));
+  }
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: calc(7rem + env(safe-area-inset-top, 0px));
+    }
+  }
+}
+
+@layer utilities {
+  /* Body copy: +1pt vs default 1rem (used site-wide for intro + paragraph text) */
+  .text-body {
+    font-size: calc(1rem + 1pt);
+  }
+  .text-body-intro {
+    font-size: calc(1rem + 1pt);
+  }
+  @media (min-width: 640px) {
+    .text-body-intro {
+      font-size: calc(1.125rem + 1pt);
+    }
+  }
+  /* text-sm sm:text-base */
+  .text-body-card {
+    font-size: calc(0.875rem + 1pt);
+  }
+  @media (min-width: 640px) {
+    .text-body-card {
+      font-size: calc(1rem + 1pt);
+    }
+  }
+  /* text-sm md:text-base (hero overlay lines) */
+  .text-body-hero {
+    font-size: calc(0.875rem + 1pt);
+  }
+  @media (min-width: 768px) {
+    .text-body-hero {
+      font-size: calc(1rem + 1pt);
+    }
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  /** Hero headlines on photo/video — lighter than `.text-shadow-lg` */
+  .text-shadow-hero {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.18);
+  }
+
+  .text-shadow-none {
+    text-shadow: none;
+  }
+
+  /** Footer: sans body copy (Jost is loaded in BaseLayout; body defaults to serif) */
+  .footer-font-sans {
+    font-family: 'Jost', sans-serif;
+  }
+}
+
+/* ============================================
+   Light-theme nav gradient
+   Fades from solid white at the top to transparent at the bottom so that
+   content scrolling behind the nav is veiled rather than hard-clipped.
+   ============================================ */
+
+.nav-fade-light {
+  background: linear-gradient(to bottom, white 65%, transparent);
+}
+
+/* ============================================
+   Circle Burst Mobile Menu
+   ============================================ */
+
+/* Animated hamburger (stroke SVG, same 24×24 / stroke-2 as account & cart) → X */
+.mobile-menu-btn .burger-icon .burger-bar {
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s ease;
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+}
+.mobile-menu-btn.menu-open .burger-icon .burger-bar:nth-of-type(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.mobile-menu-btn.menu-open .burger-icon .burger-bar:nth-of-type(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.mobile-menu-btn.menu-open .burger-icon .burger-bar:nth-of-type(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Overlay — hidden by default via clip-path.
+   The burst open/close is driven by JS-set inline transitions so that
+   Safari iOS can interpolate the clip-path correctly (Safari cannot
+   interpolate clip-path when CSS custom properties are used inside
+   @keyframes, causing the animation to flash or not play at all).
+   display:none is used (not visibility:hidden) because Safari does not
+   reliably honour visibility:hidden on position:fixed elements that have
+   clip-path — the background bleeds through GPU compositing layers during
+   scroll. display:none removes the element from the compositing tree entirely
+   so there is nothing to bleed. JS switches to display:block just before the
+   open animation and back to display:none after the close animation. */
+.mobile-menu-overlay {
+  -webkit-clip-path: circle(0% at 40px 40px);
+  clip-path: circle(0% at 40px 40px);
+  pointer-events: none;
+  display: none;
+}
+.mobile-menu-overlay.menu-open {
+  display: flex;
+  pointer-events: auto;
+}
+
+/* Header + primary links only — footer bar stays visible (no .menu-item there) */
+.mobile-menu-overlay .menu-item {
+  opacity: 0;
+}
+.mobile-menu-overlay.menu-open .menu-item {
+  -webkit-animation: menu-item-in 0.45s ease forwards;
+  animation: menu-item-in 0.45s ease forwards;
+  /* animation-delay is set inline by the template */
+}
+
+@-webkit-keyframes menu-item-in {
+  from { opacity: 0; -webkit-transform: translateY(20px); transform: translateY(20px); }
+  to   { opacity: 1; -webkit-transform: translateY(0);    transform: translateY(0); }
+}
+@keyframes menu-item-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Homepage reviews Splide: room for shadow + active slide above neighbours (Splide track clips overflow) */
+#reviews-splide .splide__track {
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+@media (min-width: 640px) {
+  #reviews-splide .splide__track {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+}
+#reviews-splide .splide__slide {
+  overflow: visible !important;
+}
+#reviews-splide .splide__slide.is-active {
+  position: relative;
+  z-index: 2;
+}

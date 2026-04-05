@@ -1,11 +1,11 @@
 # Dependencies
 node_modules/
-package-lock.json
 
 # Build outputs
 dist/
 .astro/
 _site/
+.tmp-svg-venv/
 
 # Environment variables
 .env

@@ -1,0 +1,21 @@
+---
+import type { MenuBlock } from '../../data/menus/types';
+
+interface Props {
+  block: Extract<MenuBlock, { type: 'comingSoon' }>;
+}
+
+const { block } = Astro.props;
+---
+
+<div class="text-center py-12 sm:py-16">
+  <h3 class="text-xl sm:text-2xl text-gray-900 font-semibold font-sans tracking-[0.14em] mb-8">
+    {block.title}
+  </h3>
+  <p
+    class="text-3xl sm:text-4xl text-gray-900 font-light tracking-[0.08em]"
+    style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+  >
+    {block.message}
+  </p>
+</div>

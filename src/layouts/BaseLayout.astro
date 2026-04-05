@@ -1,0 +1,250 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import MobileMenuOverlay from '../components/MobileMenuOverlay.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  scrollCompactNav?: boolean;
+  footerTheme?: 'light' | 'dark';
+  isHomepage?: boolean;
+}
+
+const {
+  title,
+  description = 'Saramonse Beauty',
+  scrollCompactNav = false,
+  footerTheme = 'light',
+  isHomepage = false,
+} = Astro.props;
+
+/** Non-compact top bar when scroll swap (About); compact single bar otherwise. */
+const navMainVariant = scrollCompactNav ? undefined : 'compact';
+const mainTopPadding = scrollCompactNav
+  ? 'pt-[calc(7rem+env(safe-area-inset-top,0px))] lg:pt-[calc(8rem+env(safe-area-inset-top,0px))]'
+  : 'pt-[calc(5rem+env(safe-area-inset-top,0px))] lg:pt-[calc(6rem+env(safe-area-inset-top,0px))]';
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-serif text-gray-800">
+    <Navigation
+      navTheme="light"
+      navVariant={navMainVariant}
+      navId="nav-main"
+      navBg="nav-fade-light"
+      navExtraClasses="transition-all duration-500 ease-in-out opacity-100 translate-y-0"
+    />
+
+    {
+      scrollCompactNav ? (
+        <Navigation
+          navTheme="light"
+          navVariant="compact"
+          navId="nav-compact"
+          navBg="nav-fade-light"
+          navExtraClasses="transition-all duration-500 ease-in-out opacity-0 -translate-y-full pointer-events-none"
+        />
+      ) : null
+    }
+
+    <main class:list={[mainTopPadding]}>
+      <slot />
+    </main>
+
+    <Footer footerTheme={footerTheme} isHomepage={isHomepage} />
+
+    <MobileMenuOverlay />
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function () {
+        var mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');
+        var overlay = document.getElementById('mobile-menu');
+        if (!overlay) return;
+
+        var EASE = 'cubic-bezier(0.77, 0, 0.175, 1)';
+
+        function setClipPath(val) {
+          overlay.style.webkitClipPath = val;
+          overlay.style.clipPath = val;
+        }
+
+        function setTransition(duration) {
+          var t = duration
+            ? '-webkit-clip-path ' + duration + ' ' + EASE + ', clip-path ' + duration + ' ' + EASE
+            : 'none';
+          overlay.style.webkitTransition = t;
+          overlay.style.transition = t;
+        }
+
+        /** Uses html[data-scroll-restoring] + global.css to beat .scroll-smooth during restore. */
+        function restoreScrollInstantAfterMenuClose(sy) {
+          var root = document.documentElement;
+          root.setAttribute('data-scroll-restoring', 'true');
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.width = '';
+          function applyScroll() {
+            root.scrollTop = sy;
+            if (document.body) document.body.scrollTop = sy;
+            var se = document.scrollingElement || root;
+            se.scrollTop = sy;
+            if (window.scrollTo) {
+              try {
+                window.scrollTo({ top: sy, left: 0, behavior: 'instant' });
+              } catch (e1) {
+                window.scrollTo(0, sy);
+              }
+            }
+          }
+          applyScroll();
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              applyScroll();
+              requestAnimationFrame(function () {
+                root.removeAttribute('data-scroll-restoring');
+              });
+            });
+          });
+        }
+
+        function openMenu(btn) {
+          var rect = btn.getBoundingClientRect();
+          var ox = Math.round(rect.left + rect.width / 2);
+          var oy = Math.round(rect.top + rect.height / 2);
+
+          // flex (not block): #mobile-menu is flex-col; block breaks flex-1 + footer layout
+          overlay.style.display = 'flex';
+
+          setTransition(null);
+          setClipPath('circle(0% at ' + ox + 'px ' + oy + 'px)');
+
+          overlay.getBoundingClientRect();
+
+          setTransition('0.65s');
+          setClipPath('circle(150vmax at ' + ox + 'px ' + oy + 'px)');
+
+          overlay.classList.remove('menu-closing');
+          overlay.classList.add('menu-open');
+          mobileMenuBtns.forEach(function (b) {
+            b.classList.add('menu-open');
+          });
+
+          var sy = window.scrollY !== undefined ? window.scrollY : window.pageYOffset;
+          document.body.dataset.menuScrollY = sy;
+          document.body.style.position = 'fixed';
+          document.body.style.top = '-' + sy + 'px';
+          document.body.style.width = '100%';
+        }
+
+        function closeMenu() {
+          var cp = overlay.style.clipPath || overlay.style.webkitClipPath || '';
+          var m = cp.match(/at\s+([\d.]+)px\s+([\d.]+)px/);
+          var ox = m ? m[1] : '40';
+          var oy = m ? m[2] : '40';
+
+          overlay.classList.remove('menu-open');
+          overlay.classList.add('menu-closing');
+          mobileMenuBtns.forEach(function (b) {
+            b.classList.remove('menu-open');
+          });
+
+          setTransition('0.5s');
+          setClipPath('circle(0% at ' + ox + 'px ' + oy + 'px)');
+
+          var sy = parseInt(document.body.dataset.menuScrollY || '0', 10);
+          restoreScrollInstantAfterMenuClose(sy);
+
+          var closeTimer = setTimeout(function () {
+            overlay.classList.remove('menu-closing');
+            overlay.style.display = 'none';
+            overlay.removeEventListener('transitionend', onEnd);
+            overlay.removeEventListener('webkitTransitionEnd', onEnd);
+          }, 600);
+
+          function onEnd(e) {
+            if (e.propertyName === 'clip-path' || e.propertyName === '-webkit-clip-path') {
+              clearTimeout(closeTimer);
+              overlay.classList.remove('menu-closing');
+              overlay.style.display = 'none';
+              overlay.removeEventListener('transitionend', onEnd);
+              overlay.removeEventListener('webkitTransitionEnd', onEnd);
+            }
+          }
+          overlay.addEventListener('transitionend', onEnd);
+          overlay.addEventListener('webkitTransitionEnd', onEnd);
+        }
+
+        mobileMenuBtns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            if (overlay.classList.contains('menu-open')) {
+              closeMenu();
+            } else {
+              openMenu(btn);
+            }
+          });
+        });
+
+        overlay.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', closeMenu);
+        });
+
+        var closeBtn = overlay.querySelector('.mobile-menu-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeMenu();
+          });
+        }
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && overlay.classList.contains('menu-open')) {
+            closeMenu();
+          }
+        });
+      });
+    </script>
+
+    {
+      scrollCompactNav ? (
+        <script is:inline>
+          (function () {
+            var navMain = document.getElementById('nav-main');
+            var navCompact = document.getElementById('nav-compact');
+            var THRESHOLD = 80;
+
+            window.addEventListener('scroll', function () {
+              if (window.scrollY > THRESHOLD) {
+                navMain.classList.remove('opacity-100', 'translate-y-0');
+                navMain.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+
+                navCompact.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+                navCompact.classList.add('opacity-100', 'translate-y-0');
+              } else {
+                navCompact.classList.remove('opacity-100', 'translate-y-0');
+                navCompact.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+
+                navMain.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+                navMain.classList.add('opacity-100', 'translate-y-0');
+              }
+            });
+          })();
+        </script>
+      ) : null
+    }
+  </body>
+</html>

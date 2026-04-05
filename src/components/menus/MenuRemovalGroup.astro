@@ -1,0 +1,26 @@
+---
+import type { MenuBlock } from '../../data/menus/types';
+import { formatPounds } from './menu-format';
+
+interface Props {
+  block: Extract<MenuBlock, { type: 'removalGroup' }>;
+}
+
+const { block } = Astro.props;
+---
+
+<div class="max-w-3xl">
+  <div>
+    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans mb-3">{block.groupTitle}</h3>
+    <div class="space-y-3 pl-6 sm:pl-8">
+      {
+        block.items.map((item) => (
+          <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline max-w-md">
+            <p class="text-lg sm:text-xl text-gray-900 font-sans">{item.label}</p>
+            <p class="text-lg sm:text-xl text-gray-900 font-sans">{formatPounds(item.amount)}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

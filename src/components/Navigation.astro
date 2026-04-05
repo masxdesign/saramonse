@@ -1,0 +1,285 @@
+---
+import navigation from '../data/navigation.js';
+import NavDisabledIconTooltip from './NavDisabledIconTooltip.astro';
+
+interface Props {
+  navTheme?: 'dark' | 'light';
+  navVariant?: 'compact';
+  navId?: string;
+  navBg?: string;
+  navExtraClasses?: string;
+}
+
+const {
+  navTheme = 'light',
+  navVariant,
+  navId,
+  navBg = 'bg-white',
+  navExtraClasses = '',
+} = Astro.props;
+
+const textColor = navTheme === 'dark' ? 'text-white' : 'text-gray-900';
+const textHover = navTheme === 'dark' ? 'hover:text-white/80' : 'hover:text-gray-500';
+const textExtra = navTheme === 'dark' ? 'text-shadow' : '';
+const dropdownBg =
+  navTheme === 'dark' ? 'bg-black/90 backdrop-blur-md' : 'bg-white shadow-lg';
+const dropdownText =
+  navTheme === 'dark'
+    ? 'text-white hover:text-white/80'
+    : 'text-gray-700 hover:text-gray-900';
+const navPy =
+  navVariant === 'compact'
+    ? 'pb-3 pt-[calc(0.75rem+env(safe-area-inset-top,0px))]'
+    : 'pb-6 pt-[calc(1.5rem+env(safe-area-inset-top,0px))]';
+const logoSize =
+  navVariant === 'compact'
+    ? 'w-[calc(4rem*0.75)] h-[calc(4rem*0.75)] lg:w-[calc(5rem*0.75)] lg:h-[calc(5rem*0.75)]'
+    : 'w-16 h-16 lg:w-20 lg:h-20';
+
+const cartIcon = navigation.icons.find((i) => i.icon === 'cart');
+
+const accountDisabledInnerClass = [
+  textColor,
+  textExtra,
+  'opacity-45',
+  navTheme === 'dark' ? 'focus-visible:ring-white ring-offset-black' : 'focus-visible:ring-gray-900 ring-offset-white',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<nav
+  id={navId}
+  class:list={[
+    'fixed top-0 w-full z-[60]',
+    navBg,
+    navPy,
+    navExtraClasses,
+  ]}
+>
+  <div
+    class:list={[
+      'relative flex w-full max-w-[calc(66rem-5px)] mx-auto items-center justify-between px-4 sm:px-6 lg:px-6 lg:-translate-x-[calc(2em-7px)]',
+      'pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]',
+    ]}
+  >
+    <button
+      class:list={[
+        'mobile-menu-btn relative z-10 shrink-0 lg:hidden transition-colors flex items-center justify-center w-6 h-6',
+        textColor,
+      ]}
+      aria-label="Toggle menu"
+    >
+      <svg class="burger-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          class="burger-bar"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16"
+        />
+        <path
+          class="burger-bar"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 12h16"
+        />
+        <path
+          class="burger-bar"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 18h16"
+        />
+      </svg>
+    </button>
+
+    <ul class="hidden lg:flex font-sans flex-1 justify-evenly items-center lg:gap-x-12 lg:leading-none">
+      <li class="min-w-[30px]">&nbsp;</li>
+      {
+        navigation.left.map((item) => (
+          <li
+            class:list={[
+              'min-w-[90px] text-center',
+              item.children ? 'relative group' : '',
+            ]}
+          >
+            {item.children && !item.parentLink ? (
+              <span
+                class:list={[
+                  'inline-flex items-center gap-1 text-sm tracking-widest uppercase cursor-default select-none',
+                  textColor,
+                  textExtra,
+                ]}
+              >
+                {item.label}
+                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            ) : (
+              <a
+                href={item.href}
+                class:list={[
+                  'inline-flex items-center gap-1 transition-colors text-sm tracking-widest uppercase',
+                  textColor,
+                  textHover,
+                  textExtra,
+                ]}
+              >
+                {item.label}
+                {item.children ? (
+                  <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                ) : null}
+              </a>
+            )}
+            {item.children ? (
+              <ul class="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block min-w-[160px]">
+                {item.children.map((child) => (
+                  <li class:list={[dropdownBg, 'first:rounded-t last:rounded-b']}>
+                    <a
+                      href={child.href}
+                      class:list={[dropdownText, 'block px-5 py-3 text-xs tracking-widest uppercase transition-colors']}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </li>
+        ))
+      }
+    </ul>
+
+    <a
+      href={navigation.left[0].href}
+      class:list={[
+        'flex-shrink-0',
+        'mx-0 max-lg:absolute max-lg:left-1/2 max-lg:top-1/2 max-lg:z-[5] max-lg:-translate-x-1/2 max-lg:-translate-y-1/2',
+        'lg:static lg:z-auto lg:mx-12 lg:translate-x-0 lg:translate-y-0',
+      ]}
+    >
+      <img src="/assets/logo_256.png" alt="Saramonse Beauty" class={logoSize} />
+    </a>
+
+    <div class="hidden lg:flex flex-1 items-center justify-end">
+      <div class="flex items-center gap-x-8">
+        <ul class="flex font-sans items-center gap-x-8 lg:leading-none">
+        {
+          navigation.right.map((item) => (
+            <li class:list={[item.children ? 'relative group' : '']}>
+              {item.children && !item.parentLink ? (
+                <span
+                  class:list={[
+                    'inline-flex items-center gap-1 text-sm tracking-widest uppercase cursor-default select-none',
+                    textColor,
+                    textExtra,
+                  ]}
+                >
+                  {item.label}
+                  <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              ) : (
+                <a
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                  class:list={[
+                    'inline-flex items-center gap-1 transition-colors text-sm tracking-widest uppercase',
+                    textColor,
+                    textHover,
+                    textExtra,
+                  ]}
+                >
+                  {item.label}
+                  {item.children ? (
+                    <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  ) : null}
+                </a>
+              )}
+              {item.children ? (
+                <ul class="absolute left-1/2 -translate-x-1/2 top-full pt-2 hidden group-hover:block min-w-[160px]">
+                  {item.children.map((child) => (
+                    <li class:list={[dropdownBg, 'first:rounded-t last:rounded-b']}>
+                      <a
+                        href={child.href}
+                        class:list={[dropdownText, 'block px-5 py-3 text-xs tracking-widest uppercase transition-colors']}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </li>
+          ))
+        }
+        </ul>
+        <div class="flex items-center gap-x-8 shrink-0">
+        {
+          navigation.icons.map((icon) =>
+            icon.disabled && icon.tooltip ? (
+              <NavDisabledIconTooltip tooltip={icon.tooltip} label={icon.label} innerClass={accountDisabledInnerClass}>
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </NavDisabledIconTooltip>
+            ) : (
+              <a
+                href={icon.href}
+                target={icon.external ? '_blank' : undefined}
+                rel={icon.external ? 'noopener noreferrer' : undefined}
+                class:list={[textColor, textHover, 'transition-colors', textExtra]}
+              >
+                {icon.icon === 'account' ? (
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                ) : icon.icon === 'cart' ? (
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                    />
+                  </svg>
+                ) : null}
+              </a>
+            ),
+          )
+        }
+        </div>
+      </div>
+    </div>
+
+    <a
+      href={cartIcon?.href ?? '#cart'}
+      target={cartIcon?.external ? '_blank' : undefined}
+      rel={cartIcon?.external ? 'noopener noreferrer' : undefined}
+      class:list={['relative z-10 shrink-0 lg:hidden transition-colors', textColor, textHover]}
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+    </a>
+  </div>
+</nav>

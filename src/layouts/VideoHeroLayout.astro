@@ -12,6 +12,8 @@ interface Props {
   videoMp4Src?: string;
   videoPoster?: string;
   footerTheme?: 'light' | 'dark';
+  /** When true, hero video uses object-center at all breakpoints (default: left mobile, center md+). */
+  videoObjectCenter?: boolean;
 }
 
 const {
@@ -22,9 +24,13 @@ const {
   videoMp4Src = '',
   videoPoster = '',
   footerTheme = 'light',
+  videoObjectCenter = false,
 } = Astro.props;
 
 const resolvedMp4Src = videoMp4Src || videoSrc;
+const heroVideoObjectClass = videoObjectCenter
+  ? 'object-center'
+  : 'object-left md:object-center';
 ---
 
 <!doctype html>
@@ -63,7 +69,7 @@ const resolvedMp4Src = videoMp4Src || videoSrc;
       class="relative w-full aspect-[21/7] max-md:aspect-[3/2] overflow-hidden bg-black"
     >
       <video
-        class="absolute inset-0 h-full w-full object-cover object-left md:object-center"
+        class:list={['absolute inset-0 h-full w-full object-cover', heroVideoObjectClass]}
         autoplay
         muted
         loop

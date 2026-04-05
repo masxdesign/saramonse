@@ -65,6 +65,11 @@
   .text-shadow-none {
     text-shadow: none;
   }
+
+  /** Footer: sans body copy (Jost is loaded in BaseLayout; body defaults to serif) */
+  .footer-font-sans {
+    font-family: 'Jost', sans-serif;
+  }
 }
 
 /* ============================================

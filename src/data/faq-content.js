@@ -2,6 +2,8 @@
  * FAQ content — single source for full FAQ page, homepage teaser, and per-service sections.
  */
 
+import contact from './contact.json';
+
 /** Full list for /faq/ (policies, operations, and general). */
 export const allFaqItems = [
   {
@@ -70,11 +72,11 @@ export const allFaqItems = [
 export const homeFaqItems = [
   {
     q: 'What is Sara Monse Beauty?',
-    a: 'Sara Monse Beauty is a family-led beauty therapy studio in Bermondsey, SE1, with over 18 years of experience. We offer bespoke facials, relaxing massages, expert nails, eye treatments, and specialist injectables — all in a calm, personal setting.',
+    a: `Sara Monse Beauty is a family-led beauty therapy studio in ${contact.location.faqArea}, with over 18 years of experience. We offer bespoke facials, relaxing massages, expert nails, eye treatments, and specialist injectables — all in a calm, personal setting.`,
   },
   {
     q: 'Where are you based and how do I get there?',
-    a: 'We’re in Bermondsey, London (SE1). When you book, we’ll share the exact address and can suggest the best transport and parking options for your visit.',
+    a: `We're in ${contact.location.short}. When you book, we'll share the exact address and can suggest the best transport and parking options for your visit.`,
   },
   {
     q: 'What does “home-based salon” mean for my visit?',

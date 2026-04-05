@@ -1,5 +1,6 @@
 import React from 'react';
 import { Document, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import contact from '../data/contact.json';
 import type { MenuBlock, Price, ServiceMenu } from '../data/menus/types';
 import { LOGO_PNG_PATH } from './paths';
 
@@ -618,9 +619,7 @@ function CoverPage({
           {displayName}
         </Text>
         <Text style={[styles.coverSubtitle, ...(master ? [styles.coverMasterSubtitle] : [])]}>{subtitle}</Text>
-        <Text style={styles.coverTagline}>
-          Bespoke beauty in the heart of Bermondsey — care, artistry, and renewal.
-        </Text>
+        <Text style={styles.coverTagline}>{contact.location.coverTagline}</Text>
       </View>
       {master ? (
         <View style={styles.coverMasterRibbon}>
@@ -630,8 +629,10 @@ function CoverPage({
         </View>
       ) : null}
       <View style={styles.coverFooter}>
-        <Text style={styles.coverFooterBrand}>Saramonse Beauty</Text>
-        <Text style={styles.coverFooterMeta}>Bermondsey, London (SE1) · 0777 388 1815</Text>
+        <Text style={styles.coverFooterBrand}>{contact.businessName}</Text>
+        <Text style={styles.coverFooterMeta}>
+          {contact.location.short} · {contact.phone.display}
+        </Text>
       </View>
     </View>
   );
@@ -685,7 +686,7 @@ function InnerPages({ menu }: { menu: ServiceMenu }) {
       <View style={styles.headerRow} fixed>
         <Image src={LOGO_PNG_PATH} style={styles.headerLogo} />
         <View style={styles.headerTextCol}>
-          <Text style={styles.headerBrand}>Saramonse Beauty</Text>
+          <Text style={styles.headerBrand}>{contact.businessName}</Text>
           <Text style={styles.headerService}>{menu.displayName}</Text>
         </View>
       </View>
@@ -705,7 +706,7 @@ function InnerPages({ menu }: { menu: ServiceMenu }) {
 
 export function MenuDocument({ menu }: { menu: ServiceMenu }) {
   return (
-    <Document title={`${menu.displayName} — Menu`} language="en" creator="Saramonse Beauty">
+    <Document title={`${menu.displayName} — Menu`} language="en" creator={contact.businessName}>
       <CoverPage displayName={menu.displayName} />
       <InnerPages menu={menu} />
     </Document>
@@ -736,7 +737,7 @@ export function AllServicesMenuDocument({
     );
   }
   return (
-    <Document title="Saramonse Beauty — Full menu" language="en" creator="Saramonse Beauty">
+    <Document title={`${contact.businessName} — Full menu`} language="en" creator={contact.businessName}>
       {pages}
     </Document>
   );

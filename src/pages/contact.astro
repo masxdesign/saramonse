@@ -1,15 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import contact from '../data/contact.json';
 
-const hours = [
-  { day: 'Mon', time: '10am - 7pm' },
-  { day: 'Tues', time: '10am - 7pm' },
-  { day: 'Wed', time: '10am - 7pm' },
-  { day: 'Thur', time: '10am - 7pm' },
-  { day: 'Fri', time: '10am - 7pm' },
-  { day: 'Sat', time: '10am - 6pm' },
-  { day: 'Sun', time: 'Closed' },
-];
+const { businessName, location, phone, email, hours, map } = contact;
+const mailtoHref = `mailto:${email}`;
+const telHref = `tel:${phone.telHref}`;
 ---
 
 <BaseLayout
@@ -93,7 +88,7 @@ const hours = [
             </svg>
           </div>
           <p class="text-body pt-2 leading-relaxed">
-            Bermondsey, London (SE1)
+            {location.short}
           </p>
         </div>
 
@@ -104,7 +99,7 @@ const hours = [
             </svg>
           </div>
           <p class="text-body pt-2">
-            <a href="tel:+447773881815" class="hover:underline">0777 388 1815</a>
+            <a href={telHref} class="hover:underline">{phone.display}</a>
           </p>
         </div>
 
@@ -115,7 +110,7 @@ const hours = [
             </svg>
           </div>
           <p class="text-body pt-2 break-all">
-            <a href="mailto:Saramonsebeauty@gmail.com" class="hover:underline">Saramonsebeauty@gmail.com</a>
+            <a href={mailtoHref} class="hover:underline">{email}</a>
           </p>
         </div>
 
@@ -126,9 +121,9 @@ const hours = [
             </svg>
           </div>
           <div class="min-w-0 flex-1">
-            <p class="text-xs font-sans tracking-wide text-gray-900 mb-3">Business hours</p>
+            <p class="text-xs font-sans tracking-wide text-gray-900 mb-3">{hours.heading}</p>
             <div class="grid grid-cols-[auto_1fr] gap-x-8 gap-y-2 text-body text-gray-900">
-              {hours.map((row) => (
+              {hours.contactGrid.map((row) => (
                 <>
                   <span class="tabular-nums">{row.day}</span>
                   <span>{row.time}</span>
@@ -147,26 +142,37 @@ const hours = [
   </section>
 
   <script is:inline src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-  <script is:inline>
+  <script
+    define:vars={{
+      mapLat: map.lat,
+      mapLng: map.lng,
+      mapJitterRadiusM: map.jitterRadiusM,
+      contactEmail: email,
+      contactBusinessName: businessName,
+      contactLocationShort: location.short,
+    }}
+  >
     document.addEventListener('DOMContentLoaded', function () {
       var form = document.getElementById('contact-form');
       if (form) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
           var name = document.getElementById('contact-name');
-          var email = document.getElementById('contact-email');
+          var emailEl = document.getElementById('contact-email');
           var message = document.getElementById('contact-message');
-          if (!name || !email || !message) return;
+          if (!name || !emailEl || !message) return;
           var body =
             'Name: ' +
             name.value +
             '\n' +
             'Email: ' +
-            email.value +
+            emailEl.value +
             '\n\n' +
             message.value;
           window.location.href =
-            'mailto:Saramonsebeauty@gmail.com?subject=' +
+            'mailto:' +
+            contactEmail +
+            '?subject=' +
             encodeURIComponent('Contact from ' + (name.value || 'website')) +
             '&body=' +
             encodeURIComponent(body);
@@ -177,9 +183,8 @@ const hours = [
       var el = document.getElementById('map');
       if (!el) return;
 
-      // SE1 area — map centroid (OpenStreetMap Nominatim). Marker is jittered for privacy.
-      var lat = 51.49594;
-      var lng = -0.07714;
+      var lat = mapLat;
+      var lng = mapLng;
 
       /** Uniform random point within `radiusM` metres of (lat, lng); pin does not show exact address. */
       function jitterLatLng(lat0, lng0, radiusM) {
@@ -196,10 +201,10 @@ const hours = [
         };
       }
 
-      var pin = jitterLatLng(lat, lng, 100);
+      var pin = jitterLatLng(lat, lng, mapJitterRadiusM);
 
       // CARTO Voyager — more saturated colours than Positron; full street + POI detail (OSM via CARTO)
-      var map = new maplibregl.Map({
+      var mapInstance = new maplibregl.Map({
         container: 'map',
         style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
         center: [lng, lat],
@@ -207,12 +212,12 @@ const hours = [
         attributionControl: true,
       });
 
-      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      mapInstance.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
 
       var markerEl = document.createElement('div');
       markerEl.className = 'map-custom-marker';
       markerEl.setAttribute('role', 'img');
-      markerEl.setAttribute('aria-label', 'Saramonse Beauty salon location');
+      markerEl.setAttribute('aria-label', contactBusinessName + ' salon location');
       markerEl.innerHTML = [
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 34" width="66" height="93" class="block" style="filter:drop-shadow(0 2px 5px rgba(0,0,0,.4))" aria-hidden="true">',
         '<defs>',
@@ -235,10 +240,10 @@ const hours = [
         .setLngLat([pin.lng, pin.lat])
         .setPopup(
           new maplibregl.Popup({ offset: 50 }).setHTML(
-            '<strong>Saramonse Beauty</strong><br />Bermondsey, London (SE1)'
+            '<strong>' + contactBusinessName + '</strong><br />' + contactLocationShort
           )
         )
-        .addTo(map);
+        .addTo(mapInstance);
     });
   </script>
 </BaseLayout>

@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import contact from '../data/contact.json';
+
+const { email } = contact;
+const mailtoHref = `mailto:${email}`;
 ---
 
 <BaseLayout
@@ -214,9 +218,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="text-body text-gray-700 font-sans leading-relaxed mb-4">For privacy-related requests, please contact us at:</p>
           <p class="text-body text-gray-700 font-sans leading-relaxed">
             <a
-              href="mailto:Saramonsebeauty@gmail.com"
+              href={mailtoHref}
               class="text-gray-900 underline underline-offset-4 decoration-gray-400 transition-opacity hover:opacity-80"
-              >Saramonsebeauty@gmail.com</a
+              >{email}</a
             >
           </p>
           <p class="text-body text-gray-700 font-sans leading-relaxed mt-6">We aim to respond to all requests within 30 days.</p>

@@ -4,7 +4,10 @@ import GiftVouchersSection from '../components/GiftVouchersSection.astro';
 import InstagramSection from '../components/InstagramSection.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { homeFaqItems } from '../data/faq-content.js';
+import contact from '../data/contact.json';
 import { FRESHA_BOOKING_URL } from '../data/site-urls.js';
+
+const { location } = contact;
 ---
 <HeroLayout
   title="Saramonse Beauty | Premium Beauty Therapy"
@@ -16,7 +19,7 @@ import { FRESHA_BOOKING_URL } from '../data/site-urls.js';
     <!-- Background Video with Dark Overlay -->
     <div class="absolute inset-0 z-0">
         <video
-            class="w-full h-full object-cover object-center"
+            class="w-full h-full object-cover object-left md:object-center"
             autoplay
             muted
             loop
@@ -31,7 +34,7 @@ import { FRESHA_BOOKING_URL } from '../data/site-urls.js';
         <div class="absolute inset-0 bg-black/20"></div>
         <!-- Mobile-only: extra gradient so hero copy reads clearly over the video -->
         <div
-          class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/60 via-black/30 to-transparent md:hidden"
+          class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/65 via-black/40 to-transparent md:hidden"
           aria-hidden="true"
         >
         </div>
@@ -81,11 +84,11 @@ import { FRESHA_BOOKING_URL } from '../data/site-urls.js';
 
             <div class="space-y-6">
                 <p class="text-body text-gray-700 font-sans leading-relaxed">
-                    Located in the heart of Bermondsey, SE1 London, Sara Monsé Beauty is a family-led home-based salon with over 18 years of experience in the beauty industry. We specialise in bespoke facials, relaxing massages, expert nail treatments, and specialist skin and wellness injections.
+                    {location.indexParagraph1}
                 </p>
 
                 <p class="text-body text-gray-700 font-sans leading-relaxed">
-                    Combining professional expertise with a warm, welcoming atmosphere, our mission is to create a sanctuary where clients across Bermondsey and surrounding London areas can unwind, renew, and feel truly cared for.
+                    {location.indexParagraph2}
                 </p>
             </div>
 

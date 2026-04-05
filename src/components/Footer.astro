@@ -10,9 +10,11 @@ const telHref = `tel:${phone.telHref}`;
 interface Props {
   footerTheme?: 'light' | 'dark';
   isHomepage?: boolean;
+  /** Footer link to reopen the cookie banner. */
+  showCookiePreferences?: boolean;
 }
 
-const { footerTheme = 'light', isHomepage = false } = Astro.props;
+const { footerTheme = 'light', isHomepage = false, showCookiePreferences = true } = Astro.props;
 
 const currentYear = new Date().getFullYear();
 
@@ -376,6 +378,21 @@ const ftNavChildRule = footerTheme === 'dark' ? 'border-white/15' : 'border-gray
                   Privacy Policy
                 </a>
               </li>
+              {showCookiePreferences ? (
+                <li>
+                  <button
+                    type="button"
+                    data-spm-cookie-prefs
+                    class:list={[
+                      ftTextMuted,
+                      ftTextHover,
+                      'cursor-pointer border-0 bg-transparent p-0 text-left transition-colors text-sm',
+                    ]}
+                  >
+                    Cookie preferences
+                  </button>
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>

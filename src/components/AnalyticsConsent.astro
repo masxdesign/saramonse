@@ -1,0 +1,188 @@
+---
+/**
+ * Cookie consent: after “Accept analytics”, loads Google Tag Manager only (PUBLIC_GTM_CONTAINER_ID).
+ * GA4, Clarity, and any other tags are configured inside GTM — not in this repo.
+ */
+const gtmId = (import.meta.env.PUBLIC_GTM_CONTAINER_ID ?? '').trim();
+const analyticsOffered = Boolean(gtmId);
+---
+
+<div id="spm-analytics-config" data-gtm={gtmId} hidden aria-hidden="true" />
+<div
+  id="spm-cookie-banner"
+  class="fixed inset-x-0 bottom-0 z-[100000] hidden font-sans"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="spm-cookie-title"
+  aria-describedby="spm-cookie-desc"
+>
+  <div class="border-t border-gray-200 bg-white/95 px-5 py-5 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] backdrop-blur-md sm:px-8 sm:py-6">
+    <div class="mx-auto flex max-w-4xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+      <div class="min-w-0 flex-1">
+        <p
+          id="spm-cookie-title"
+          class="text-sm font-medium tracking-[0.2em] uppercase text-gray-900"
+        >
+          Cookies &amp; privacy
+        </p>
+        <p id="spm-cookie-desc" class="text-body mt-2 text-gray-600 leading-relaxed">
+          {
+            analyticsOffered ? (
+              <>
+                We use optional analytics to improve our site. Choose whether to allow those tools. Essential
+                cookies are needed for the site to work. See our{' '}
+                <a
+                  href="/privacy-policy"
+                  class="text-gray-900 underline underline-offset-4 decoration-gray-400 hover:opacity-80"
+                >
+                  Privacy Policy
+                </a>
+                .
+              </>
+            ) : (
+              <>
+                We use essential cookies so the site works as expected. When analytics are enabled, you can choose
+                whether to allow them here. See our{' '}
+                <a
+                  href="/privacy-policy"
+                  class="text-gray-900 underline underline-offset-4 decoration-gray-400 hover:opacity-80"
+                >
+                  Privacy Policy
+                </a>
+                .
+              </>
+            )
+          }
+        </p>
+      </div>
+      <div class="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center">
+        {
+          analyticsOffered ? (
+            <>
+              <button
+                type="button"
+                id="spm-cookie-essential"
+                class="order-2 border border-gray-300 bg-white px-5 py-3 text-center text-xs font-medium tracking-[0.2em] uppercase text-gray-800 transition-colors hover:bg-gray-50 sm:order-1 sm:min-w-[11rem]"
+              >
+                Essential only
+              </button>
+              <button
+                type="button"
+                id="spm-cookie-accept"
+                class="order-1 bg-gray-900 px-5 py-3 text-center text-xs font-medium tracking-[0.2em] uppercase text-white transition-colors hover:bg-gray-800 sm:order-2 sm:min-w-[11rem]"
+              >
+                Accept analytics
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              id="spm-cookie-essential"
+              class="w-full border border-gray-300 bg-white px-5 py-3 text-center text-xs font-medium tracking-[0.2em] uppercase text-gray-800 transition-colors hover:bg-gray-50 sm:min-w-[11rem] sm:w-auto"
+            >
+              Continue
+            </button>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var cfg = document.getElementById('spm-analytics-config');
+    if (!cfg) return;
+    var gtmId = (cfg.getAttribute('data-gtm') || '').trim();
+
+    var STORAGE_KEY = 'spm_analytics_consent';
+    var banner = document.getElementById('spm-cookie-banner');
+
+    function loadAnalytics() {
+      if (window.__spmAnalyticsLoaded) return;
+      window.__spmAnalyticsLoaded = true;
+
+      window.dataLayer = window.dataLayer || [];
+
+      if (gtmId) {
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0];
+          var j = d.createElement(s);
+          var dl = l !== 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', gtmId);
+
+        var ns = document.createElement('noscript');
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://www.googletagmanager.com/ns.html?id=' + encodeURIComponent(gtmId);
+        iframe.height = '0';
+        iframe.width = '0';
+        iframe.style.display = 'none';
+        iframe.style.visibility = 'hidden';
+        ns.appendChild(iframe);
+        document.body.insertBefore(ns, document.body.firstChild);
+      }
+    }
+
+    function hideBanner() {
+      if (banner) {
+        banner.classList.add('hidden');
+        banner.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function showBanner() {
+      if (banner) {
+        banner.classList.remove('hidden');
+        banner.removeAttribute('aria-hidden');
+      }
+    }
+
+    function setConsent(value) {
+      var prev = null;
+      try {
+        prev = localStorage.getItem(STORAGE_KEY);
+        localStorage.setItem(STORAGE_KEY, value);
+      } catch (e) {}
+
+      if (prev === 'granted' && value === 'essential') {
+        window.location.reload();
+        return;
+      }
+
+      if (value === 'granted') loadAnalytics();
+      hideBanner();
+    }
+
+    var existing = null;
+    try {
+      existing = localStorage.getItem(STORAGE_KEY);
+    } catch (e) {}
+
+    if (existing === 'granted') {
+      loadAnalytics();
+      hideBanner();
+    } else if (existing === 'essential') {
+      hideBanner();
+    } else {
+      showBanner();
+    }
+
+    var acceptBtn = document.getElementById('spm-cookie-accept');
+    var essentialBtn = document.getElementById('spm-cookie-essential');
+    if (acceptBtn) acceptBtn.addEventListener('click', function () { setConsent('granted'); });
+    if (essentialBtn) essentialBtn.addEventListener('click', function () { setConsent('essential'); });
+
+    document.addEventListener('click', function (e) {
+      var el = e.target;
+      if (el && el.closest && el.closest('[data-spm-cookie-prefs]')) {
+        e.preventDefault();
+        showBanner();
+      }
+    });
+  })();
+</script>

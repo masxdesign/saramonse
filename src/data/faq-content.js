@@ -54,7 +54,7 @@ export const allFaqItems = [
   },
   {
     q: 'Disabilities',
-    a: 'We want everyone to feel welcome. If you have accessibility needs — step-free access, extra time, or anything else — please let us know when you book and we’ll do our best to accommodate you.',
+    a: 'Our salon is in a flat and there are stairs to reach it. If you have mobility or accessibility needs, please tell us when you book so we can discuss whether the space is suitable for you and how we might help — we want everyone to feel welcome where we can safely accommodate you.',
   },
   {
     q: 'PR, Press & Partnerships',
@@ -62,7 +62,7 @@ export const allFaqItems = [
   },
   {
     q: 'Parking & Transport',
-    a: 'Ask us for the latest local parking options and public transport links when you book — we’re happy to point you to the most convenient choices near the salon.',
+    a: 'Bus routes 1 and 78 are about 3 minutes away. Ask us for the latest local parking options and other public transport links when you book — we’re happy to point you to the most convenient choices near the salon.',
   },
 ];
 

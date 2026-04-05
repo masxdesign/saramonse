@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { FRESHA_BOOKING_URL } from '../data/site-urls.js';
 ---
 
 <BaseLayout
@@ -100,46 +101,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 lg:gap-16">
         <div class="flex flex-col items-center text-center">
-          <div
-            class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72"
+          <a
+            href="/services/nails/"
+            class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72 block shrink-0 transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 rounded-sm"
             style="background: url('/assets/what-we-do-sprite.png') -12.35% center / 400% auto no-repeat;"
-            role="img"
-            aria-label="Nails"
+            aria-label="Nails — view treatments"
           >
-          </div>
+          </a>
           <span class="text-body-intro text-gray-900 font-sans">Nails</span>
         </div>
 
         <div class="flex flex-col items-center text-center">
-          <div
-            class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72"
+          <a
+            href="/services/facials/"
+            class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72 block shrink-0 transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 rounded-sm"
             style="background: url('/assets/what-we-do-sprite.png') 29.41% center / 400% auto no-repeat;"
-            role="img"
-            aria-label="Facials"
+            aria-label="Facials — view treatments"
           >
-          </div>
+          </a>
           <span class="text-body-intro text-gray-900 font-sans">Facials</span>
         </div>
 
         <div class="flex flex-col items-center text-center">
-          <div
-            class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72"
+          <a
+            href="/services/body/"
+            class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72 block shrink-0 transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 rounded-sm"
             style="background: url('/assets/what-we-do-sprite.png') 71.06% center / 400% auto no-repeat;"
-            role="img"
-            aria-label="Massages"
+            aria-label="Massages and body treatments — view treatments"
           >
-          </div>
+          </a>
           <span class="text-body-intro text-gray-900 font-sans">Massages</span>
         </div>
 
         <div class="flex flex-col items-center text-center">
-          <div
-            class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72"
+          <a
+            href="/services/injectables/"
+            class="aspect-square w-full max-w-[15rem] sm:max-w-none sm:w-60 sm:h-60 sm:aspect-auto lg:w-72 lg:h-72 block shrink-0 transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 rounded-sm"
             style="background: url('/assets/what-we-do-sprite.png') 113.04% center / 400% auto no-repeat;"
-            role="img"
-            aria-label="Injectables"
+            aria-label="Injectables — view treatments"
           >
-          </div>
+          </a>
           <span class="text-body-intro text-gray-900 font-sans">Injectables</span>
         </div>
       </div>
@@ -203,7 +204,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <a
-        href="/#book"
+        href={FRESHA_BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
         >Book a Treatment</a
       >

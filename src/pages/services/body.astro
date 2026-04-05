@@ -5,6 +5,7 @@ import MenuBlocks from '../../components/menus/MenuBlocks.astro';
 import ServiceMenuDownloads from '../../components/ServiceMenuDownloads.astro';
 import { serviceFaqs } from '../../data/faq-content.js';
 import { bodyMenu } from '../../data/menus/body';
+import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.js';
 ---
 
 <VideoHeroLayout
@@ -32,13 +33,17 @@ import { bodyMenu } from '../../data/menus/body';
 
       <div class="flex flex-wrap gap-4">
         <a
-          href="/#book"
+          href={FRESHA_BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
           >Book Treatment</a
         >
         <a
-          href="#gift-vouchers"
-          class="inline-block border border-pink-400 text-pink-400 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-pink-400 hover:text-white transition-colors"
+          href={FRESHA_GIFT_CARDS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
           >Buy Gift Vouchers</a
         >
       </div>
@@ -56,7 +61,9 @@ import { bodyMenu } from '../../data/menus/body';
   <section class="pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
     <ServiceMenuDownloads menu={bodyMenu}>
       <a
-        href="/#book"
+        href={FRESHA_BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
         >Book Treatment</a
       >

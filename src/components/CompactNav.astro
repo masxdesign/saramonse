@@ -1,5 +1,11 @@
 ---
 import navigation from '../data/navigation.js';
+import NavDisabledIconTooltip from './NavDisabledIconTooltip.astro';
+
+const cartIcon = navigation.icons.find((i) => i.icon === 'cart');
+
+const accountDisabledInnerClass =
+  'text-white opacity-45 focus-visible:ring-white ring-offset-black focus-visible:ring-offset-2';
 
 const linkBase =
   'inline-flex items-center gap-1 transition-colors text-sm tracking-widest uppercase text-white hover:text-white/80';
@@ -111,7 +117,12 @@ const spanBase =
                   </svg>
                 </span>
               ) : (
-                <a href={item.href} class:list={[linkBase]}>
+                <a
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                  class:list={[linkBase]}
+                >
                   {item.label}
                   {item.children ? (
                     <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,10 +151,10 @@ const spanBase =
       </ul>
       <div class="flex w-auto shrink-0 gap-6 lg:gap-[calc(1.5rem*0.75)]">
         {
-          navigation.icons.map((icon) => (
-            <a href={icon.href} class="text-white transition-colors hover:text-white/80">
-              {icon.icon === 'account' ? (
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          navigation.icons.map((icon) =>
+            icon.disabled && icon.tooltip ? (
+              <NavDisabledIconTooltip tooltip={icon.tooltip} label={icon.label} innerClass={accountDisabledInnerClass}>
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -151,23 +162,46 @@ const spanBase =
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                   />
                 </svg>
-              ) : icon.icon === 'cart' ? (
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
-              ) : null}
-            </a>
-          ))
+              </NavDisabledIconTooltip>
+            ) : (
+              <a
+                href={icon.href}
+                target={icon.external ? '_blank' : undefined}
+                rel={icon.external ? 'noopener noreferrer' : undefined}
+                class="text-white transition-colors hover:text-white/80"
+              >
+                {icon.icon === 'account' ? (
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                ) : icon.icon === 'cart' ? (
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                    />
+                  </svg>
+                ) : null}
+              </a>
+            ),
+          )
         }
       </div>
     </div>
 
-    <a href="#cart" class="relative z-10 shrink-0 lg:hidden text-white transition-colors hover:text-white/80">
+    <a
+      href={cartIcon?.href ?? '#cart'}
+      target={cartIcon?.external ? '_blank' : undefined}
+      rel={cartIcon?.external ? 'noopener noreferrer' : undefined}
+      class="relative z-10 shrink-0 lg:hidden text-white transition-colors hover:text-white/80"
+    >
       <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
       </svg>

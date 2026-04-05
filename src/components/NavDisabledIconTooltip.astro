@@ -1,0 +1,45 @@
+---
+/**
+ * Muted nav icon with hover/focus tooltip (e.g. Account — coming soon).
+ * Does not navigate; use for placeholder features.
+ */
+interface Props {
+  tooltip: string;
+  label: string;
+  /** Classes for the icon wrapper (colour theme + opacity) */
+  innerClass?: string;
+  /**
+   * `above` — tooltip sits above the icon (e.g. bottom bar on mobile so it isn’t clipped).
+   * `below` — default; tooltip under the icon (header nav).
+   */
+  placement?: 'above' | 'below';
+}
+
+const { tooltip, label, innerClass = '', placement = 'below' } = Astro.props;
+
+/** `above`: pin to trigger’s right edge so the bubble grows left (avoids clipping off the right on mobile). */
+const tooltipPositionClass =
+  placement === 'above'
+    ? 'bottom-full mb-2 right-0 left-auto translate-x-0'
+    : 'top-full mt-2 left-1/2 -translate-x-1/2 max-sm:left-0 max-sm:translate-x-0';
+---
+
+<span class="group relative inline-flex shrink-0 items-center justify-center overflow-visible">
+  <span
+    class:list={['inline-flex cursor-not-allowed outline-none focus-visible:ring-2 focus-visible:ring-offset-2', innerClass]}
+    aria-disabled="true"
+    tabindex="0"
+    aria-label={`${label} — ${tooltip}`}
+  >
+    <slot />
+  </span>
+  <span
+    role="tooltip"
+    class:list={[
+      'pointer-events-none invisible absolute z-[100] w-max max-w-[min(18rem,calc(100vw-1.5rem))] rounded-md bg-gray-900 px-4 py-3 text-left text-base font-sans font-normal leading-relaxed text-white opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 break-words sm:px-3 sm:py-2 sm:text-sm sm:leading-snug',
+      tooltipPositionClass,
+    ]}
+  >
+    {tooltip}
+  </span>
+</span>

@@ -4,6 +4,7 @@ import GiftVouchersSection from '../components/GiftVouchersSection.astro';
 import InstagramSection from '../components/InstagramSection.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { allFaqItems } from '../data/faq-content.js';
+import { FRESHA_BOOKING_URL } from '../data/site-urls.js';
 ---
 
 <BaseLayout
@@ -38,7 +39,9 @@ import { allFaqItems } from '../data/faq-content.js';
   <section class="pt-6 sm:pt-8 lg:pt-10 pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
     <div class="max-w-4xl mx-auto flex flex-wrap gap-6 justify-center">
       <a
-        href="/#book"
+        href={FRESHA_BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
         >Book Treatment</a
       >
@@ -46,7 +49,7 @@ import { allFaqItems } from '../data/faq-content.js';
         href="/assets/all-services-menu.pdf"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-block border border-pink-400 text-pink-400 font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:bg-pink-400 hover:text-white transition-colors"
+        class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:bg-gray-900 hover:text-white transition-colors"
         >Full salon menu (PDF)</a
       >
     </div>

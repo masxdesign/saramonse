@@ -14,10 +14,14 @@
  *  parentLink — (optional) set true to keep the parent label as a clickable
  *               link even when it has children; omit/false for a non-clickable
  *               label that only opens the dropdown (e.g. Services)
+ *  disabled  — (optional) icon-only: show muted, no navigation; use with `tooltip`
+ *  tooltip   — (optional) shown on hover/focus when `disabled` is true
  *
  * To add a menu item or sub-item, edit this file only.
  * The navigation template reads this data and renders everything automatically.
  */
+
+import { FRESHA_BOOKING_URL, FRESHA_STORE_URL } from './site-urls.js';
 
 const nav = {
   left: [
@@ -44,7 +48,8 @@ const nav = {
   right: [
     {
       label: "Book Now",
-      href: "/#book"
+      href: FRESHA_BOOKING_URL,
+      external: true,
     },
     {
       label: "Contact",
@@ -57,14 +62,21 @@ const nav = {
   ],
 
   icons: [
-    { label: "Account", href: "#account", icon: "account" },
-    { label: "Cart",    href: "#cart",    icon: "cart"    }
-  ]
+    {
+      label: "Account",
+      href: "#account",
+      icon: "account",
+      disabled: true,
+      tooltip:
+        "Coming soon — your member sign-in for our in-house shop will live here. For now, you can browse our store on Fresha by clicking the basket icon beside this.",
+    },
+    { label: "Shop", href: FRESHA_STORE_URL, icon: "cart", external: true },
+  ],
 };
 
-// Mobile overlay: scrollable links, then a bottom bar (CTA + Account). Book Now is matched by href `/#book`.
-const rightWithoutCta = nav.right.filter((item) => item.href !== '/#book');
-const bookNowItem = nav.right.find((item) => item.href === '/#book');
+// Mobile overlay: scrollable links, then a bottom bar (CTA + Account). Book Now is excluded from the scroll list.
+const rightWithoutCta = nav.right.filter((item) => item.label !== 'Book Now');
+const bookNowItem = nav.right.find((item) => item.label === 'Book Now');
 const accountItem = nav.icons.find((icon) => icon.icon === 'account');
 
 nav.mobilePrimaryItems = [

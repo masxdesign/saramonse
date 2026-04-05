@@ -36,44 +36,68 @@ const telHref = `tel:${phone.telHref}`;
     <div class="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 lg:items-start">
       <!-- Contact form -->
       <div>
-        <form id="contact-form" class="space-y-10 max-w-md" novalidate>
-          <div>
-            <label for="contact-name" class="block text-xs font-sans font-normal tracking-wide text-gray-900 mb-2">Name</label>
+        <form id="contact-form" class="space-y-4 max-w-md" novalidate aria-busy="false">
+          <div class="space-y-0.5">
+            <label for="contact-name" class="block text-xs font-sans font-normal tracking-wide text-gray-900 mb-1">Name</label>
             <input
               id="contact-name"
               name="name"
               type="text"
               autocomplete="name"
               required
-              class="w-full bg-transparent border-0 border-b border-gray-900 pb-2 text-body text-gray-900 font-sans focus:outline-none focus:border-gray-600"
+              maxlength="200"
+              aria-describedby="contact-name-error"
+              aria-invalid="false"
+              class="contact-field w-full bg-transparent border-0 border-b border-gray-900 pb-1.5 text-body text-gray-900 font-sans focus:outline-none focus:border-gray-600 aria-invalid:border-red-800 aria-invalid:focus:border-red-800"
             />
+            <p id="contact-name-error" class="font-sans text-xs text-red-800 min-h-[1.125rem]" role="alert"></p>
           </div>
-          <div>
-            <label for="contact-email" class="block text-xs font-sans font-normal tracking-wide text-gray-900 mb-2">Email</label>
+          <div class="space-y-0.5">
+            <label for="contact-email" class="block text-xs font-sans font-normal tracking-wide text-gray-900 mb-1">Email</label>
             <input
               id="contact-email"
               name="email"
               type="email"
+              inputmode="email"
               autocomplete="email"
               required
-              class="w-full bg-transparent border-0 border-b border-gray-900 pb-2 text-body text-gray-900 font-sans focus:outline-none focus:border-gray-600"
+              maxlength="254"
+              aria-describedby="contact-email-error"
+              aria-invalid="false"
+              class="contact-field w-full bg-transparent border-0 border-b border-gray-900 pb-1.5 text-body text-gray-900 font-sans focus:outline-none focus:border-gray-600 aria-invalid:border-red-800 aria-invalid:focus:border-red-800"
             />
+            <p id="contact-email-error" class="font-sans text-xs text-red-800 min-h-[1.125rem]" role="alert"></p>
           </div>
-          <div>
-            <label for="contact-message" class="block text-xs font-sans font-normal tracking-wide text-gray-900 mb-2">Message</label>
+          <div class="space-y-0.5">
+            <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+              <label for="contact-message" class="block text-xs font-sans font-normal tracking-wide text-gray-900">Message</label>
+              <span id="contact-message-hint" class="font-sans text-xs tabular-nums text-gray-500">0 / 8000</span>
+            </div>
             <textarea
               id="contact-message"
               name="message"
               rows="6"
               required
-              class="w-full border border-gray-900 px-3 py-2 text-body text-gray-900 font-sans focus:outline-none focus:ring-1 focus:ring-gray-900 resize-y min-h-[10rem]"
+              maxlength="8000"
+              aria-describedby="contact-message-hint contact-message-error"
+              aria-invalid="false"
+              class="contact-field w-full border border-gray-900 px-3 py-1.5 text-body text-gray-900 font-sans focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 resize-y min-h-[9rem] aria-invalid:border-red-800 aria-invalid:focus:ring-red-800"
             ></textarea>
+            <p id="contact-message-error" class="font-sans text-xs text-red-800 min-h-[1.125rem]" role="alert"></p>
           </div>
+          <p
+            id="contact-form-status"
+            class="font-sans text-body text-sm min-h-[1.25rem] text-gray-700 empty:hidden"
+            role="status"
+            aria-live="polite"
+          ></p>
           <button
+            id="contact-submit"
             type="submit"
-            class="inline-block bg-gray-900 text-white font-sans text-sm tracking-[0.25em] uppercase px-10 py-4 hover:bg-gray-800 transition-colors"
+            class="inline-flex items-center justify-center gap-2 min-w-[10.5rem] bg-gray-900 text-white font-sans text-sm tracking-[0.25em] uppercase px-10 py-4 hover:bg-gray-800 transition-colors disabled:opacity-60 disabled:pointer-events-none"
           >
-            Submit
+            <span id="contact-submit-label">Submit</span>
+            <span id="contact-submit-spinner" class="hidden size-4 shrink-0 border-2 border-white/30 border-t-white rounded-full animate-spin" aria-hidden="true"></span>
           </button>
         </form>
       </div>
@@ -147,35 +171,224 @@ const telHref = `tel:${phone.telHref}`;
       mapLat: map.lat,
       mapLng: map.lng,
       mapJitterRadiusM: map.jitterRadiusM,
-      contactEmail: email,
       contactBusinessName: businessName,
       contactLocationShort: location.short,
     }}
   >
     document.addEventListener('DOMContentLoaded', function () {
       var form = document.getElementById('contact-form');
-      if (form) {
+      var statusEl = document.getElementById('contact-form-status');
+      var submitBtn = document.getElementById('contact-submit');
+      var submitLabel = document.getElementById('contact-submit-label');
+      var submitSpinner = document.getElementById('contact-submit-spinner');
+      var messageHint = document.getElementById('contact-message-hint');
+
+      var MAX_NAME = 200;
+      var MAX_EMAIL = 254;
+      var MAX_MESSAGE = 8000;
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      function fieldRefs() {
+        var name = document.getElementById('contact-name');
+        var emailEl = document.getElementById('contact-email');
+        var messageEl = document.getElementById('contact-message');
+        if (!name || !emailEl || !messageEl) return null;
+        if (!(name instanceof HTMLInputElement) || !(emailEl instanceof HTMLInputElement) || !(messageEl instanceof HTMLTextAreaElement)) return null;
+        return {
+          name: name,
+          email: emailEl,
+          message: messageEl,
+          nameErr: document.getElementById('contact-name-error'),
+          emailErr: document.getElementById('contact-email-error'),
+          messageErr: document.getElementById('contact-message-error'),
+        };
+      }
+
+      function clearFieldError(input, errEl) {
+        input.setAttribute('aria-invalid', 'false');
+        if (errEl) errEl.textContent = '';
+      }
+
+      function setFieldError(input, errEl, msg) {
+        input.setAttribute('aria-invalid', 'true');
+        if (errEl) errEl.textContent = msg;
+      }
+
+      function clearAllFieldErrors(f) {
+        if (!f) return;
+        clearFieldError(f.name, f.nameErr);
+        clearFieldError(f.email, f.emailErr);
+        clearFieldError(f.message, f.messageErr);
+      }
+
+      function updateMessageCount(f) {
+        if (!messageHint || !f) return;
+        var n = f.message.value.length;
+        messageHint.textContent = n + ' / ' + MAX_MESSAGE;
+        if (n >= MAX_MESSAGE) {
+          messageHint.classList.add('text-red-800');
+          messageHint.classList.remove('text-gray-500');
+        } else {
+          messageHint.classList.remove('text-red-800');
+          messageHint.classList.add('text-gray-500');
+        }
+      }
+
+      function validateClient(f) {
+        clearAllFieldErrors(f);
+        var ok = true;
+        var firstBad = null;
+
+        var nameV = f.name.value.trim();
+        if (!nameV) {
+          setFieldError(f.name, f.nameErr, 'Please enter your name.');
+          ok = false;
+          firstBad = firstBad || f.name;
+        } else if (nameV.length > MAX_NAME) {
+          setFieldError(f.name, f.nameErr, 'Name is too long (max ' + MAX_NAME + ' characters).');
+          ok = false;
+          firstBad = firstBad || f.name;
+        }
+
+        var emailV = f.email.value.trim();
+        if (!emailV) {
+          setFieldError(f.email, f.emailErr, 'Please enter your email address.');
+          ok = false;
+          firstBad = firstBad || f.email;
+        } else if (emailV.length > MAX_EMAIL) {
+          setFieldError(f.email, f.emailErr, 'Email is too long.');
+          ok = false;
+          firstBad = firstBad || f.email;
+        } else if (!EMAIL_RE.test(emailV)) {
+          setFieldError(f.email, f.emailErr, 'Please enter a valid email address.');
+          ok = false;
+          firstBad = firstBad || f.email;
+        }
+
+        var msgV = f.message.value.trim();
+        if (!msgV) {
+          setFieldError(f.message, f.messageErr, 'Please enter a message.');
+          ok = false;
+          firstBad = firstBad || f.message;
+        } else if (f.message.value.length > MAX_MESSAGE) {
+          setFieldError(f.message, f.messageErr, 'Message is too long (max ' + MAX_MESSAGE + ' characters).');
+          ok = false;
+          firstBad = firstBad || f.message;
+        }
+
+        if (firstBad) firstBad.focus();
+        return ok;
+      }
+
+      function setSending(sending) {
+        if (!form || !submitBtn || !submitLabel || !submitSpinner) return;
+        form.setAttribute('aria-busy', sending ? 'true' : 'false');
+        submitBtn.disabled = sending;
+        submitLabel.textContent = sending ? 'Sending…' : 'Submit';
+        submitSpinner.classList.toggle('hidden', !sending);
+      }
+
+      if (form && statusEl && submitBtn && submitBtn instanceof HTMLButtonElement) {
+        var f0 = fieldRefs();
+        if (f0) {
+          f0.message.addEventListener('input', function () {
+            updateMessageCount(f0);
+            if (f0.message.getAttribute('aria-invalid') === 'true') clearFieldError(f0.message, f0.messageErr);
+          });
+          ['name', 'email'].forEach(function (key) {
+            f0[key].addEventListener('input', function () {
+              if (f0[key].getAttribute('aria-invalid') === 'true') clearFieldError(f0[key], f0[key + 'Err']);
+            });
+            f0[key].addEventListener('blur', function () {
+              var refs = fieldRefs();
+              if (!refs) return;
+              if (key === 'name') {
+                var v = refs.name.value.trim();
+                if (v && v.length > MAX_NAME) setFieldError(refs.name, refs.nameErr, 'Name is too long (max ' + MAX_NAME + ' characters).');
+              }
+              if (key === 'email') {
+                var ev = refs.email.value.trim();
+                if (ev && !EMAIL_RE.test(ev)) setFieldError(refs.email, refs.emailErr, 'Please enter a valid email address.');
+              }
+            });
+          });
+          updateMessageCount(f0);
+        }
+
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          var name = document.getElementById('contact-name');
-          var emailEl = document.getElementById('contact-email');
-          var message = document.getElementById('contact-message');
-          if (!name || !emailEl || !message) return;
-          var body =
-            'Name: ' +
-            name.value +
-            '\n' +
-            'Email: ' +
-            emailEl.value +
-            '\n\n' +
-            message.value;
-          window.location.href =
-            'mailto:' +
-            contactEmail +
-            '?subject=' +
-            encodeURIComponent('Contact from ' + (name.value || 'website')) +
-            '&body=' +
-            encodeURIComponent(body);
+          var f = fieldRefs();
+          if (!f) return;
+
+          statusEl.textContent = '';
+          statusEl.classList.remove('text-red-800', 'text-green-900');
+          statusEl.classList.add('text-gray-700');
+
+          if (!validateClient(f)) {
+            statusEl.textContent = 'Please correct the fields above.';
+            statusEl.classList.remove('text-gray-700');
+            statusEl.classList.add('text-red-800');
+            return;
+          }
+
+          setSending(true);
+
+          fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: f.name.value.trim(),
+              email: f.email.value.trim(),
+              message: f.message.value.trim(),
+            }),
+          })
+            .then(function (res) {
+              return res.text().then(function (text) {
+                var data = {};
+                if (text) {
+                  try {
+                    data = JSON.parse(text);
+                  } catch (parseErr) {
+                    data = {};
+                  }
+                }
+                return { res: res, data: data };
+              });
+            })
+            .then(function (_ref) {
+              var res = _ref.res;
+              var data = _ref.data;
+              if (res.ok && data && data.ok === true) {
+                clearAllFieldErrors(f);
+                statusEl.textContent = 'Thank you — your message has been sent. We will get back to you soon.';
+                statusEl.classList.remove('text-red-800');
+                statusEl.classList.add('text-green-900');
+                form.reset();
+                updateMessageCount(fieldRefs() || f);
+              } else {
+                var msg =
+                  data && typeof data.error === 'string'
+                    ? data.error
+                    : res.status === 404
+                      ? 'Form endpoint not found. If you are testing locally, run wrangler dev (with Astro proxy) or npm run worker:dev.'
+                      : 'Something went wrong. Please try again or email us directly.';
+                statusEl.textContent = msg;
+                statusEl.classList.remove('text-gray-700', 'text-green-900');
+                statusEl.classList.add('text-red-800');
+                if (res.status === 400 && msg.indexOf('email') !== -1) {
+                  setFieldError(f.email, f.emailErr, msg);
+                  f.email.focus();
+                }
+              }
+            })
+            .catch(function () {
+              statusEl.textContent = 'Network error. Check your connection and try again.';
+              statusEl.classList.remove('text-gray-700', 'text-green-900');
+              statusEl.classList.add('text-red-800');
+            })
+            .finally(function () {
+              setSending(false);
+            });
         });
       }
 

@@ -284,66 +284,70 @@ const { location } = contact;
         </div>
     </div>
 
-    <script is:inline>
-        // Capture original slide inner cards before Splide mounts and adds clones
-        var reviewInnerCards = document.querySelectorAll('.review-card-inner');
-        var reviewIndicators = document.querySelectorAll('.indicator');
+    <script>
+      import Splide from '@splidejs/splide';
+      import '@splidejs/splide/dist/css/splide-core.min.css';
 
-        var reviewsSplide = new Splide('#reviews-splide', {
-            type       : 'loop',
-            perPage    : 3,
-            perMove    : 1,
-            arrows     : false,
-            pagination : false,
-            speed      : 500,
-            easing     : 'ease-in-out',
-            drag       : true,
-            breakpoints: {
-                1023: { perPage: 2 },
-                639 : { perPage: 1 }
-            }
+      const reviewInnerCards = document.querySelectorAll('.review-card-inner');
+      const reviewIndicators = document.querySelectorAll('.indicator');
+
+      const reviewsSplide = new Splide('#reviews-splide', {
+        type: 'loop',
+        perPage: 3,
+        perMove: 1,
+        arrows: false,
+        pagination: false,
+        speed: 500,
+        easing: 'ease-in-out',
+        drag: true,
+        breakpoints: {
+          1023: { perPage: 2 },
+          639: { perPage: 1 },
+        },
+      });
+
+      function updateActive(index: number) {
+        reviewInnerCards.forEach((card, i) => {
+          if (i === index) {
+            (card as HTMLElement).style.border = '2px solid transparent';
+            (card as HTMLElement).style.borderImage =
+              'linear-gradient(to bottom right, #fb923c, #ec4899) 1';
+            (card as HTMLElement).style.boxShadow =
+              '0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.1)';
+          } else {
+            (card as HTMLElement).style.border = '';
+            (card as HTMLElement).style.borderImage = '';
+            (card as HTMLElement).style.boxShadow = '';
+          }
         });
 
-        function updateActive(index) {
-            reviewInnerCards.forEach(function(card, i) {
-                if (i === index) {
-                    card.style.border      = '2px solid transparent';
-                    card.style.borderImage = 'linear-gradient(to bottom right, #fb923c, #ec4899) 1';
-                    card.style.boxShadow   =
-                      '0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.1)';
-                } else {
-                    card.style.border      = '';
-                    card.style.borderImage = '';
-                    card.style.boxShadow   = '';
-                }
-            });
-
-            reviewIndicators.forEach(function(dot, i) {
-                dot.classList.toggle('bg-gray-900', i === index);
-                dot.classList.toggle('bg-gray-300', i !== index);
-            });
-        }
-
-        reviewsSplide.on('moved', function(newIndex) {
-            updateActive(newIndex);
+        reviewIndicators.forEach((dot, i) => {
+          dot.classList.toggle('bg-gray-900', i === index);
+          dot.classList.toggle('bg-gray-300', i !== index);
         });
+      }
 
-        reviewsSplide.mount();
-        updateActive(0);
+      reviewsSplide.on('moved', (newIndex: number) => {
+        updateActive(newIndex);
+      });
 
-        document.getElementById('prev-btn').addEventListener('click', function() {
-            reviewsSplide.go('<');
+      reviewsSplide.mount();
+      updateActive(0);
+
+      document.getElementById('prev-btn')?.addEventListener('click', () => {
+        reviewsSplide.go('<');
+      });
+
+      document.getElementById('next-btn')?.addEventListener('click', () => {
+        reviewsSplide.go('>');
+      });
+
+      reviewIndicators.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const idx = dot.dataset.index;
+          if (idx !== undefined) reviewsSplide.go(parseInt(idx, 10));
         });
-
-        document.getElementById('next-btn').addEventListener('click', function() {
-            reviewsSplide.go('>');
-        });
-
-        reviewIndicators.forEach(function(dot) {
-            dot.addEventListener('click', function() {
-                reviewsSplide.go(parseInt(dot.dataset.index));
-            });
-        });
+      });
     </script>
 </section>
 

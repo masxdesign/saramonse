@@ -7,7 +7,7 @@ const gtmId = (import.meta.env.PUBLIC_GTM_CONTAINER_ID ?? '').trim();
 const analyticsOffered = Boolean(gtmId);
 ---
 
-<div id="spm-analytics-config" data-gtm={gtmId} hidden aria-hidden="true" />
+<div id="spm-analytics-config" data-gtm={gtmId || undefined} hidden aria-hidden="true" />
 <div
   id="spm-cookie-banner"
   class="fixed inset-x-0 bottom-0 z-[100000] hidden font-sans"

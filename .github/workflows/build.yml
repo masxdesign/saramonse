@@ -1,6 +1,9 @@
 # Builds the Astro site, then deploys the Worker + dist/ to Cloudflare Workers.
-# Add repo secret CLOUDFLARE_API_TOKEN (Workers Scripts:Edit, plus Account read).
-# Worker secrets (RESEND_API_KEY, CONTACT_TO_EMAIL) are set in Cloudflare, not GitHub.
+# Repo secrets:
+#   CLOUDFLARE_API_TOKEN — API token with Workers Scripts:Edit + Account read (see Cloudflare Workers CI docs).
+#   CLOUDFLARE_ACCOUNT_ID — required if wrangler.toml has no account_id (fixes "No account id found" on deploy).
+#   PUBLIC_GTM_CONTAINER_ID — optional; baked into the static site at build time.
+# Worker secrets (RESEND_API_KEY, CONTACT_TO_EMAIL) are set in Cloudflare dashboard, not GitHub.
 
 name: Build and deploy
 
@@ -38,4 +41,5 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: '4.80.0'

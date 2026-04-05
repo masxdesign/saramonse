@@ -1,9 +1,11 @@
 ---
 import '../styles/global.css';
+import Favicon from '../components/Favicon.astro';
 import GoogleFonts from '../components/GoogleFonts.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import MobileMenuOverlay from '../components/MobileMenuOverlay.astro';
+import AnalyticsConsent from '../components/AnalyticsConsent.astro';
 
 interface Props {
   title: string;
@@ -35,6 +37,7 @@ const mainTopPadding = scrollCompactNav
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <Favicon />
     <GoogleFonts variant="full" />
   </head>
   <body class="font-serif text-gray-800">
@@ -65,6 +68,8 @@ const mainTopPadding = scrollCompactNav
     <Footer footerTheme={footerTheme} isHomepage={isHomepage} />
 
     <MobileMenuOverlay />
+
+    <AnalyticsConsent />
 
     <script is:inline>
       document.addEventListener('DOMContentLoaded', function () {

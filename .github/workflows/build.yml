@@ -28,7 +28,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Bakes PUBLIC_GTM_CONTAINER_ID into the static build (GA4, Clarity, etc. are tags inside GTM).
       - name: Build site
+        env:
+          PUBLIC_GTM_CONTAINER_ID: ${{ secrets.PUBLIC_GTM_CONTAINER_ID }}
         run: npm run build
 
       - name: Deploy to Cloudflare Workers

@@ -2,7 +2,11 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
+// Used for canonical URLs, JSON-LD, and OG tags. Override in CI with PUBLIC_SITE_URL if needed.
+const site = process.env.PUBLIC_SITE_URL || 'https://www.saramonsebeauty.co.uk';
+
 export default defineConfig({
+  site,
   output: 'static',
   vite: {
     plugins: [tailwindcss()],

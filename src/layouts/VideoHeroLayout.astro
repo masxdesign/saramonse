@@ -6,6 +6,7 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import MobileMenuOverlay from '../components/MobileMenuOverlay.astro';
 import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+import SeoMeta from '../components/SeoMeta.astro';
 
 interface Props {
   title: string;
@@ -21,7 +22,7 @@ interface Props {
 
 const {
   title,
-  description = 'Saramonse Beauty',
+  description = 'Beauty treatments at Saramonse Beauty — Bermondsey, London SE1. Expert care in a welcoming salon. View our menu and book online.',
   videoSrc = '/assets/hero-video.mp4',
   videoWebmSrc = '',
   videoMp4Src = '',
@@ -35,6 +36,8 @@ const heroVideoObjectClass = videoObjectCenter
   ? 'object-center'
   : 'object-left md:object-center';
 
+const pathname = Astro.url.pathname;
+
 ---
 
 <!doctype html>
@@ -44,6 +47,7 @@ const heroVideoObjectClass = videoObjectCenter
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <SeoMeta title={title} description={description} pathname={pathname} />
     <Favicon />
     <GoogleFonts variant="full" />
   </head>

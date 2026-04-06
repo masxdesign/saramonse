@@ -32,9 +32,11 @@ jobs:
         run: npm ci
 
       # Bakes PUBLIC_GTM_CONTAINER_ID into the static build (GA4, Clarity, etc. are tags inside GTM).
+      # Optional: PUBLIC_SITE_URL (e.g. https://yourdomain.com) for canonical URLs, JSON-LD, and OG tags; defaults in astro.config.mjs.
       - name: Build site
         env:
           PUBLIC_GTM_CONTAINER_ID: ${{ secrets.PUBLIC_GTM_CONTAINER_ID }}
+          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
         run: npm run build
 
       - name: Deploy to Cloudflare Workers

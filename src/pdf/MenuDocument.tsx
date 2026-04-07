@@ -590,7 +590,7 @@ function BlockView({ block }: { block: MenuBlock }) {
 }
 
 function extrasCellPdf(cell: import('../data/menus/types').ExtrasCell): string {
-  if (cell.mode === 'dash') return '—';
+  if (cell.mode === 'dash') return '';
   if (cell.amount) return pounds(cell.amount);
   return '';
 }

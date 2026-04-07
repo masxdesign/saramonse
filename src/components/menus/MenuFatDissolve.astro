@@ -22,11 +22,14 @@ const { block } = Astro.props;
   <div class="space-y-6 sm:space-y-7">
     {
       block.rows.map((row) => (
-        <div class="flex justify-between items-baseline gap-x-6">
-          <p class="text-body text-gray-900 font-sans font-normal leading-relaxed min-w-0 flex-1 pr-2">
-            <span class="font-bold">{row.bold}</span> - {row.detail}
+        <div class="flex flex-col gap-3 md:flex-row md:justify-between md:items-baseline md:gap-x-6">
+          <p class="font-sans leading-relaxed min-w-0 md:flex-1 md:pr-2">
+            <span class="font-bold text-body text-gray-900">{row.bold}</span>
+            <span class="text-body text-gray-900 font-normal">
+              {' '}- {row.detail}
+            </span>
           </p>
-          <div class="shrink-0 w-44 flex justify-end">
+          <div class="flex w-full shrink-0 justify-end md:w-44">
             <span class="inline-flex items-baseline gap-1.5 font-sans text-gray-900">
               <span class="text-sm font-normal">From</span>
               <span class="text-lg sm:text-xl font-bold tabular-nums">{formatPounds(row.fromAmount)}</span>
@@ -36,7 +39,9 @@ const { block } = Astro.props;
       ))
     }
   </div>
-  <p class="text-body text-gray-900 font-sans font-normal leading-relaxed mt-14 sm:mt-16 lg:mt-20 max-w-3xl">
+  <p
+    class="text-sm sm:text-body text-gray-600 font-sans font-normal leading-relaxed mt-14 sm:mt-16 lg:mt-20 max-w-3xl"
+  >
     {block.footerNote}
   </p>
 </div>

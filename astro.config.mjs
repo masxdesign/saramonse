@@ -4,7 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 // Used for canonical URLs, JSON-LD, and OG tags. Override in CI with PUBLIC_SITE_URL if needed.
-const site = process.env.PUBLIC_SITE_URL || 'https://www.saramonsebeauty.co.uk';
+// Production redirects www → apex; keep default origin aligned with live URLs and sitemaps.
+const site = process.env.PUBLIC_SITE_URL || 'https://saramonsebeauty.co.uk';
 
 export default defineConfig({
   site,

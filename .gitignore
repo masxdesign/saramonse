@@ -33,3 +33,6 @@ yarn-error.log*
 # Temporary files
 *.tmp
 .cache/
+
+# Google GitHub Actions auth (never commit)
+gha-creds-*.json

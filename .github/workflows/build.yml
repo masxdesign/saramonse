@@ -3,13 +3,15 @@
 #   CLOUDFLARE_API_TOKEN — API token with Workers Scripts:Edit + Account read (see Cloudflare Workers CI docs).
 #   CLOUDFLARE_ACCOUNT_ID — required if wrangler.toml has no account_id (fixes "No account id found" on deploy).
 #   PUBLIC_GTM_CONTAINER_ID — optional; baked into the static site at build time.
-#   PUBLIC_SITE_URL — optional; canonical URL (should match your Search Console URL-prefix property, e.g. https://www.example.com/).
+#   PUBLIC_SITE_URL — optional; canonical https URL for Astro (e.g. https://www.example.com/).
 #   GSC_SERVICE_ACCOUNT_JSON — optional; GCP service account key JSON for Search Console API (minified single line).
 #     Enable "Google Search Console API" in the GCP project; add the SA email in GSC (Users and permissions) for the property.
 # Worker secrets (RESEND_API_KEY, CONTACT_TO_EMAIL) are set in Cloudflare dashboard, not GitHub.
 #
-# Repository variable (Settings → Secrets and variables → Actions → Variables):
-#   GSC_SITEMAP_SUBMIT — set to true to run the post-deploy job that calls sitemaps.submit for PUBLIC_SITE_URL + /sitemap-index.xml
+# Repository variables (Settings → Secrets and variables → Actions → Variables):
+#   GSC_SITEMAP_SUBMIT — set to true to run the post-deploy job that calls sitemaps.submit.
+#   GSC_SITE_PROPERTY — optional; Webmasters API "site" id if your GSC property is a Domain property: sc-domain:example.com
+#     (must match Search Console). If unset, the job uses PUBLIC_SITE_URL (URL-prefix style) for the API site parameter.
 
 name: Build and deploy
 
@@ -73,13 +75,21 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ steps.auth-google.outputs.access_token }}
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+          GSC_SITE_PROPERTY: ${{ vars.GSC_SITE_PROPERTY }}
         run: |
           set -euo pipefail
-          SITE="${PUBLIC_SITE_URL:-https://www.saramonsebeauty.co.uk}"
-          SITE="${SITE%/}/"
-          SM="${SITE}sitemap-index.xml"
-          export SITE SM
-          API_URL=$(python3 -c "import os, urllib.parse; site=os.environ['SITE']; sm=os.environ['SM']; print('https://www.googleapis.com/webmasters/v3/sites/' + urllib.parse.quote(site, safe='') + '/sitemaps/' + urllib.parse.quote(sm, safe=''))")
+          BASE="${PUBLIC_SITE_URL:-https://www.saramonsebeauty.co.uk}"
+          BASE="${BASE%/}/"
+          SM="${BASE}sitemap-index.xml"
+          # Domain properties use sc-domain:example.com; URL-prefix properties use https://www.example.com/
+          if [[ -n "${GSC_SITE_PROPERTY:-}" ]]; then
+            SITE_API="${GSC_SITE_PROPERTY}"
+          else
+            SITE_API="$BASE"
+          fi
+          export SITE_API SM
+          API_URL=$(python3 -c "import os, urllib.parse; site=os.environ['SITE_API']; sm=os.environ['SM']; print('https://www.googleapis.com/webmasters/v3/sites/' + urllib.parse.quote(site, safe='') + '/sitemaps/' + urllib.parse.quote(sm, safe=''))")
+          echo "Search Console site id: $SITE_API"
           echo "Submitting sitemap via Webmasters API: $SM"
           HTTP=$(curl -sS -o /tmp/gsc_err_body -w "%{http_code}" -X PUT \
             -H "Authorization: Bearer ${ACCESS_TOKEN}" \

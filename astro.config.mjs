@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
@@ -8,6 +9,12 @@ const site = process.env.PUBLIC_SITE_URL || 'https://www.saramonsebeauty.co.uk';
 export default defineConfig({
   site,
   output: 'static',
+  integrations: [
+    sitemap({
+      // Exclude error page from discovery URLs
+      filter: (page) => !page.endsWith('/404'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
     server: {

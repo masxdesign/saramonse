@@ -40,7 +40,7 @@ const accountDisabledInnerClass =
     </a>
     <button
       type="button"
-      class="mobile-menu-close flex h-11 min-w-[44px] items-center justify-center justify-self-end rounded-full text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+      class="mobile-menu-close flex h-11 min-w-[44px] items-center justify-center justify-self-end rounded-full text-white transition-colors hover:bg-white/10 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70"
       aria-label="Close menu"
     >
       <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -85,7 +85,7 @@ const accountDisabledInnerClass =
     </div>
   </nav>
   <nav
-    class="mobile-menu-footer relative z-10 shrink-0 overflow-visible border-t border-white/20 bg-white/5 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-sm"
+    class="mobile-menu-footer relative z-10 shrink-0 overflow-visible border-t border-white/20 bg-white/5 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-xs"
     aria-label="Book and account"
   >
     <div class="mx-auto flex w-full max-w-sm flex-row items-center justify-center gap-3 overflow-visible">
@@ -93,7 +93,7 @@ const accountDisabledInnerClass =
         href={navigation.mobileOverlayFooter.find(i => i.kind === 'cta')?.href || FRESHA_BOOKING_URL}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex min-w-0 flex-1 items-center justify-center rounded-lg px-6 py-4 text-center font-sans font-semibold tracking-widest uppercase text-sm text-white bg-gradient-to-r from-orange-400 to-pink-500 transition-all hover:shadow-2xl sm:px-10"
+        class="inline-flex min-w-0 flex-1 items-center justify-center rounded-lg px-6 py-4 text-center font-sans font-semibold tracking-widest uppercase text-sm text-white bg-linear-to-r from-orange-400 to-pink-500 transition-all hover:shadow-2xl sm:px-10"
       >
         {navigation.mobileOverlayFooter.find(i => i.kind === 'cta')?.label || 'Book Now'}
       </a>

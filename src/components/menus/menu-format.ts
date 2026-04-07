@@ -18,9 +18,9 @@ export function priceDisplayParts(price: Price): {
   return { mode: 'single', amount: price.amount };
 }
 
-/** Amount line for Extras grid (bold span); use with separate "From" label when mode is from. */
+/** Amount line for Extras grid (bold span); use with separate "From" label when mode is from. Dash columns are omitted in the grid. */
 export function extrasAmountDisplay(cell: ExtrasCell): string {
-  if (cell.mode === 'dash') return '—';
+  if (cell.mode === 'dash') return '';
   if (cell.amount) return `£${cell.amount}`;
   return '';
 }

@@ -10,8 +10,9 @@
 #
 # Repository variables (Settings → Secrets and variables → Actions → Variables):
 #   GSC_SITEMAP_SUBMIT — set to true to run the post-deploy job that calls sitemaps.submit.
-#   GSC_SITE_PROPERTY — optional; Webmasters API "site" id if your GSC property is a Domain property: sc-domain:example.com
-#     (must match Search Console). If unset, the job uses PUBLIC_SITE_URL (URL-prefix style) for the API site parameter.
+#   GSC_SITE_PROPERTY — optional; Webmasters API "site" id for a Domain property: sc-domain:example.com (no trailing slash).
+#     Must match the property in Search Console. If unset, the job uses PUBLIC_SITE_URL (URL-prefix style).
+#     If you still get HTTP 403 here: GSC → Settings → Users and permissions → add the service account email with Full (not Restricted).
 
 name: Build and deploy
 
@@ -78,12 +79,15 @@ jobs:
           GSC_SITE_PROPERTY: ${{ vars.GSC_SITE_PROPERTY }}
         run: |
           set -euo pipefail
-          BASE="${PUBLIC_SITE_URL:-https://www.saramonsebeauty.co.uk}"
+          BASE="${PUBLIC_SITE_URL:-https://saramonsebeauty.co.uk}"
           BASE="${BASE%/}/"
           SM="${BASE}sitemap-index.xml"
           # Domain properties use sc-domain:example.com; URL-prefix properties use https://www.example.com/
           if [[ -n "${GSC_SITE_PROPERTY:-}" ]]; then
-            SITE_API="${GSC_SITE_PROPERTY}"
+            SITE_API="$(printf '%s' "$GSC_SITE_PROPERTY" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+            if [[ "$SITE_API" == sc-domain:* ]]; then
+              SITE_API="${SITE_API%/}"
+            fi
           else
             SITE_API="$BASE"
           fi

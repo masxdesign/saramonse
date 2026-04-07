@@ -13,7 +13,7 @@ export type RichContent =
   | { kind: 'ul'; items: string[] };
 
 export type ExtrasCell = {
-  /** 'from' shows From £x; 'plain' shows £x only; 'dash' shows — */
+  /** 'from' shows From £x; 'plain' shows £x only; 'dash' omits that column in the extras grid */
   mode: 'from' | 'plain' | 'dash';
   amount?: string;
 };

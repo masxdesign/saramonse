@@ -10,7 +10,7 @@ const SERVICE_SEGMENTS: Record<string, string> = {
 };
 
 export function normalizeSiteUrl(site: string | undefined): string {
-  return (site ?? 'https://www.saramonsebeauty.co.uk').replace(/\/$/, '');
+  return (site ?? 'https://saramonsebeauty.co.uk').replace(/\/$/, '');
 }
 
 /** Stable canonical URL for the current path (trailing slash, no query). */

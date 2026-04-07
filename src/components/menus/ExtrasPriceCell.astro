@@ -1,0 +1,26 @@
+---
+import type { ExtrasCell } from '../../data/menus/types';
+import { extrasAmountDisplay } from './menu-format';
+
+interface Props {
+  cell: ExtrasCell;
+}
+
+const { cell } = Astro.props;
+---
+
+<span class="inline-flex items-baseline gap-1.5 font-sans text-gray-900 tabular-nums">
+  {
+    cell.mode === 'from' ? (
+      <>
+        <span class="text-sm font-normal">From</span>
+        <span class="text-lg sm:text-xl font-bold tabular-nums">{extrasAmountDisplay(cell)}</span>
+      </>
+    ) : (
+      <>
+        <span class:list={['text-sm font-normal', cell.mode === 'plain' ? 'opacity-0' : '']}>From</span>
+        <span class="text-lg sm:text-xl font-bold tabular-nums">{extrasAmountDisplay(cell)}</span>
+      </>
+    )
+  }
+</span>

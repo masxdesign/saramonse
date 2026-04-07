@@ -7,7 +7,7 @@ compatibility_date = "2025-04-02"
 
 [vars]
 # Must be an address on your Resend-verified domain (display name optional).
-CONTACT_FROM = "Saramonse Beauty <hi@saramonsebeauty.co.uk>"
+CONTACT_FROM = "Sara Monse Beauty <hi@saramonsebeauty.co.uk>"
 # Footer newsletter — Resend Segments: https://resend.com/dashboard/segments (copy Segment ID)
 RESEND_SEGMENT_ID = "4fc3550d-74c5-4c36-8518-44a9e35a81d9"
 

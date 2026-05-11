@@ -6,9 +6,8 @@ import MenuBlocks from '../../components/menus/MenuBlocks.astro';
 import MenuProse from '../../components/menus/MenuProse.astro';
 import { serviceFaqs } from '../../data/faq-content.js';
 import {
-  nailsExtrasBlocks,
-  nailsFeetBlocks,
-  nailsHandsBlocks,
+  nailsFeetSectionBlocks,
+  nailsHandsSectionBlocks,
   nailsMenu,
   nailsNailArtColLeft,
   nailsNailArtColRight,
@@ -19,11 +18,11 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
 ---
 
 <VideoHeroLayout
-  title="Nails | Saramonse Beauty"
-  description="Nail treatments at Saramonse Beauty - manicures, pedicures, and tailored nail artistry"
+  title="Nail treatments & nail art | Sara Monse Beauty"
+  description="Manicures, pedicures and nail art in Bermondsey, London SE1. Expert nails at Sara Monse Beauty — gel, extensions and bespoke designs. Book online."
   videoWebmSrc="/assets/nails-hero.small.webm?t=1"
   videoMp4Src="/assets/nails-hero.small.mp4?t=1"
-  videoPoster="/assets/nails-hero-poster.jpg"
+  videoPoster="/assets/nails-hero-poster.webp"
   footerTheme="dark"
 >
   <!-- Intro -->
@@ -46,7 +45,7 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
           href={FRESHA_BOOKING_URL}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
+          class="inline-block bg-linear-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
           >Book Treatment</a
         >
         <a
@@ -61,7 +60,7 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
   </section>
 
   <!-- Treatments -->
-  <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
+  <section class="px-6 sm:px-8 pt-12 sm:pt-16 lg:pt-20 pb-20 sm:pb-24 lg:pb-28">
     <div class="max-w-4xl mx-auto">
       <h2
         class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
@@ -71,31 +70,22 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
       </h2>
 
       <div class="divide-y divide-gray-200">
-        <MenuBlocks blocks={nailsHandsBlocks} />
+        <MenuBlocks blocks={nailsHandsSectionBlocks} />
       </div>
 
       <h2
-        class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mt-8 mb-6"
+        class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mt-16 sm:mt-20 lg:mt-24 mb-6"
         style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
       >
         Feet
       </h2>
 
       <div class="divide-y divide-gray-200">
-        <MenuBlocks blocks={nailsFeetBlocks} />
+        <MenuBlocks blocks={nailsFeetSectionBlocks} />
       </div>
 
       <h2
-        class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mt-8 mb-6"
-        style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
-      >
-        Extras
-      </h2>
-
-      <MenuBlocks blocks={nailsExtrasBlocks} />
-
-      <h2
-        class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mt-20 sm:mt-24 lg:mt-28 mb-10 sm:mb-12"
+        class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mt-24 sm:mt-28 lg:mt-32 mb-10 sm:mb-12"
         style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
       >
         Removal
@@ -108,7 +98,7 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
   </section>
 
   <!-- Nail Art -->
-  <section class="pt-12 sm:pt-16 lg:pt-20 pb-20 sm:pb-24 lg:pb-32 px-6 sm:px-8">
+  <section class="pt-20 sm:pt-24 lg:pt-28 pb-20 sm:pb-24 lg:pb-32 px-6 sm:px-8">
     <div class="max-w-6xl mx-auto">
       <h2
         class="text-3xl sm:text-4xl lg:text-5xl text-gray-900 font-light tracking-[0.2em] text-center mb-10 sm:mb-12 max-w-4xl mx-auto"
@@ -131,7 +121,7 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
   </section>
 
   <!-- SM Collection Gallery -->
-  <section class="pb-20 sm:pb-24 lg:pb-28 px-6 sm:px-8">
+  <section class="pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-24 lg:pb-28 px-6 sm:px-8">
     <div class="max-w-[90rem] mx-auto">
       <div
         class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-6 sm:gap-8 mb-12 sm:mb-14 text-center"
@@ -152,36 +142,48 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-12 lg:gap-16 xl:gap-20">
         <figure class="w-full max-w-[17rem] sm:max-w-[18rem] lg:max-w-[19rem] flex flex-col items-center">
           <div class="w-full aspect-square overflow-hidden bg-white">
-            <img src="/assets/nails-art-ref-1.jpg" alt="Stylish nails design" class="w-full h-full object-cover" />
+            <img
+              src="/assets/nails-art-ref-1.jpg"
+              alt="Refined French nail art — tortoise shell and French tip in rich brown tones"
+              class="w-full h-full object-cover"
+            />
           </div>
-          <figcaption class="mt-6 text-xl text-gray-900 font-semibold font-sans tracking-wide">Stylish</figcaption>
+          <figcaption class="mt-6 text-xl text-gray-900 font-semibold font-sans tracking-wide">Refined French</figcaption>
         </figure>
 
         <figure class="w-full max-w-[17rem] sm:max-w-[18rem] lg:max-w-[19rem] flex flex-col items-center">
           <div class="w-full aspect-square overflow-hidden bg-white">
-            <img src="/assets/nails-art-ref-2.jpg" alt="Minimal nails design" class="w-full h-full object-cover" />
+            <img
+              src="/assets/nails-art-ref-2.jpg"
+              alt="Minimal nail art — sheer nude base with a fine gold accent at the cuticle"
+              class="w-full h-full object-cover"
+            />
           </div>
           <figcaption class="mt-6 text-xl text-gray-900 font-semibold font-sans tracking-wide">Minimal</figcaption>
         </figure>
 
         <figure class="w-full max-w-[17rem] sm:max-w-[18rem] lg:max-w-[19rem] flex flex-col items-center">
           <div class="w-full aspect-square overflow-hidden bg-white">
-            <img src="/assets/nails-art-ref-3.jpg" alt="Funky nails design" class="w-full h-full object-cover" />
+            <img
+              src="/assets/nails-art-ref-3.jpg"
+              alt="Soft Art nail art — hand-painted colour, swirls and floral details on a nude base"
+              class="w-full h-full object-cover"
+            />
           </div>
-          <figcaption class="mt-6 text-xl text-gray-900 font-semibold font-sans tracking-wide">Funky</figcaption>
+          <figcaption class="mt-6 text-xl text-gray-900 font-semibold font-sans tracking-wide">Soft Art</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
+  <section class="pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
     <ServiceMenuDownloads menu={nailsMenu} primaryRowClass="justify-center" centerDownloads={true}>
       <a
         href={FRESHA_BOOKING_URL}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
+        class="inline-block bg-linear-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
         >Book Treatment</a
       >
     </ServiceMenuDownloads>

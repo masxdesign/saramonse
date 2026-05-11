@@ -1,8 +1,12 @@
 ---
 import '../styles/global.css';
+import Favicon from '../components/Favicon.astro';
+import GoogleFonts from '../components/GoogleFonts.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import MobileMenuOverlay from '../components/MobileMenuOverlay.astro';
+import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+import SeoMeta from '../components/SeoMeta.astro';
 
 interface Props {
   title: string;
@@ -12,19 +16,28 @@ interface Props {
   videoMp4Src?: string;
   videoPoster?: string;
   footerTheme?: 'light' | 'dark';
+  /** When true, hero video uses object-center at all breakpoints (default: left mobile, center md+). */
+  videoObjectCenter?: boolean;
 }
 
 const {
   title,
-  description = 'Saramonse Beauty',
+  description = 'Beauty treatments at Sara Monse Beauty — Bermondsey, London SE1. Expert care in a welcoming salon. View our menu and book online.',
   videoSrc = '/assets/hero-video.mp4',
   videoWebmSrc = '',
   videoMp4Src = '',
   videoPoster = '',
   footerTheme = 'light',
+  videoObjectCenter = false,
 } = Astro.props;
 
 const resolvedMp4Src = videoMp4Src || videoSrc;
+const heroVideoObjectClass = videoObjectCenter
+  ? 'object-center'
+  : 'object-left md:object-center';
+
+const pathname = Astro.url.pathname;
+
 ---
 
 <!doctype html>
@@ -34,12 +47,9 @@ const resolvedMp4Src = videoMp4Src || videoSrc;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
+    <SeoMeta title={title} description={description} pathname={pathname} />
+    <Favicon />
+    <GoogleFonts variant="full" />
   </head>
   <body class="font-serif text-gray-800">
     <Navigation
@@ -63,7 +73,7 @@ const resolvedMp4Src = videoMp4Src || videoSrc;
       class="relative w-full aspect-[21/7] max-md:aspect-[3/2] overflow-hidden bg-black"
     >
       <video
-        class="absolute inset-0 h-full w-full object-cover object-left md:object-center"
+        class:list={['absolute inset-0 h-full w-full object-cover', heroVideoObjectClass]}
         autoplay
         muted
         loop
@@ -74,7 +84,7 @@ const resolvedMp4Src = videoMp4Src || videoSrc;
         {videoWebmSrc ? <source src={videoWebmSrc} type="video/webm" /> : null}
         <source src={resolvedMp4Src} type="video/mp4" />
       </video>
-      <div class="absolute inset-y-0 -inset-x-40 bg-gradient-to-b from-black/55 to-black/16 z-10"></div>
+      <div class="absolute inset-y-0 -inset-x-40 bg-linear-to-b from-black/55 to-black/16 z-10"></div>
     </div>
 
     <script is:inline>
@@ -128,6 +138,8 @@ const resolvedMp4Src = videoMp4Src || videoSrc;
     <Footer footerTheme={footerTheme} />
 
     <MobileMenuOverlay />
+
+    <AnalyticsConsent />
 
     <script is:inline>
       const mobileMenuBtns = document.querySelectorAll('.mobile-menu-btn');

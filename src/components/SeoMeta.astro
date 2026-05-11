@@ -1,0 +1,57 @@
+---
+/**
+ * Canonical URL, Open Graph / Twitter cards, and JSON-LD (@graph: BeautySalon, WebSite on home, WebPage, BreadcrumbList).
+ */
+import { buildJsonLdGraph, canonicalFromPath, normalizeSiteUrl } from '../lib/jsonld';
+import contact from '../data/contact.json';
+
+interface Props {
+  title: string;
+  description: string;
+  pathname: string;
+  /** Error pages: noindex and skip canonical / structured data / social previews. */
+  isErrorPage?: boolean;
+}
+
+const { title, description, pathname, isErrorPage = false } = Astro.props;
+
+const site = normalizeSiteUrl(import.meta.env.SITE);
+const canonicalUrl = canonicalFromPath(site, pathname);
+const ogImage = `${site}/assets/logo_256.png`;
+
+const jsonLd =
+  !isErrorPage && site
+    ? JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': buildJsonLdGraph({
+          site,
+          pathname,
+          pageTitle: title,
+          pageDescription: description,
+        }),
+      })
+    : null;
+---
+
+{isErrorPage ? <meta name="robots" content="noindex, follow" /> : null}
+
+{
+  !isErrorPage ? (
+    <>
+      <link rel="canonical" href={canonicalUrl} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content={contact.businessName} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:locale" content="en_GB" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={ogImage} />
+    </>
+  ) : null
+}
+
+{jsonLd ? <script type="application/ld+json" set:html={jsonLd} /> : null}

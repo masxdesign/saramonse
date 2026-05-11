@@ -12,11 +12,12 @@ export type RichContent =
   | { kind: 'h4'; text: string }
   | { kind: 'ul'; items: string[] };
 
-export type ExtrasCell = {
-  /** 'from' shows From £x; 'plain' shows £x only; 'dash' shows — */
-  mode: 'from' | 'plain' | 'dash';
-  amount?: string;
-};
+/** Extras grid cell: price column(s). `literal` shows text as-is (e.g. a range). */
+export type ExtrasCell =
+  | { mode: 'from'; amount: string }
+  | { mode: 'plain'; amount: string }
+  | { mode: 'dash' }
+  | { mode: 'literal'; text: string };
 
 export type MenuBlock =
   | { type: 'section'; title: string }
@@ -57,10 +58,18 @@ export type MenuBlock =
       type: 'extrasGrid';
       columnLabels: [string, string];
       rows: { name: string; hands: ExtrasCell; feet: ExtrasCell }[];
+      /** Optional heading above the grid (e.g. “Add on hands”). */
+      title?: string;
+      /** When true, only the first price column is shown (hands); feet column is omitted. */
+      singleColumn?: boolean;
+      /** Optional note below the grid (e.g. booking instructions). */
+      footerNote?: string;
     }
   | {
       type: 'removalGroup';
       groupTitle: string;
+      /** Optional paragraphs above the priced options */
+      intro?: RichContent[];
       items: { label: string; amount: string }[];
     }
   | { type: 'prose'; variant: 'quote'; text: string };

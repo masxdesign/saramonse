@@ -9,11 +9,11 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
 ---
 
 <VideoHeroLayout
-  title="Body | Saramonse Beauty"
-  description="Body treatments at Saramonse Beauty - massage and body rituals to ease tension and restore balance"
+  title="Body massage & treatments | Sara Monse Beauty"
+  description="Relaxing massage and body treatments in Bermondsey, SE1. Ease tension and restore balance at Sara Monse Beauty, London — book your body ritual online."
   videoWebmSrc="/assets/body-hero.small.webm?t=1"
   videoMp4Src="/assets/body-hero.small.mp4?t=1"
-  videoPoster="/assets/body-hero-poster.jpg"
+  videoPoster="/assets/body-hero-poster.webp"
   footerTheme="dark"
 >
   <!-- Intro -->
@@ -36,7 +36,7 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
           href={FRESHA_BOOKING_URL}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
+          class="inline-block bg-linear-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
           >Book Treatment</a
         >
         <a
@@ -51,20 +51,20 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
   </section>
 
   <!-- Treatments -->
-  <section class="px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24">
+  <section class="px-6 sm:px-8 pt-12 sm:pt-16 lg:pt-20 pb-20 sm:pb-24 lg:pb-28">
     <div class="max-w-4xl mx-auto divide-y divide-gray-200">
       <MenuBlocks blocks={bodyMenu.blocks} />
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
+  <section class="pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-8">
     <ServiceMenuDownloads menu={bodyMenu}>
       <a
         href={FRESHA_BOOKING_URL}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-block bg-gradient-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
+        class="inline-block bg-linear-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
         >Book Treatment</a
       >
     </ServiceMenuDownloads>

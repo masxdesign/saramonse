@@ -43,7 +43,7 @@ def main() -> int:
     block = match.group(0)
     block = upsert_prop(block, "videoWebmSrc", f"/assets/{base_name}.small.webm?t=1")
     block = upsert_prop(block, "videoMp4Src", f"/assets/{base_name}.small.mp4?t=1")
-    block = upsert_prop(block, "videoPoster", f"/assets/{base_name}-poster.jpg")
+    block = upsert_prop(block, "videoPoster", f"/assets/{base_name}-poster.webp")
 
     updated = content[: match.start()] + block + content[match.end() :]
     astro_path.write_text(updated, encoding="utf-8")
@@ -51,7 +51,7 @@ def main() -> int:
     print(f"Updated {astro_path}")
     print(f'videoWebmSrc="/assets/{base_name}.small.webm?t=1"')
     print(f'videoMp4Src="/assets/{base_name}.small.mp4?t=1"')
-    print(f'videoPoster="/assets/{base_name}-poster.jpg"')
+    print(f'videoPoster="/assets/{base_name}-poster.webp"')
     return 0
 
 

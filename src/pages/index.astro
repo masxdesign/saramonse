@@ -10,8 +10,8 @@ import { FRESHA_BOOKING_URL } from '../data/site-urls.js';
 const { location } = contact;
 ---
 <HeroLayout
-  title="Saramonse Beauty | Premium Beauty Therapy"
-  description="Saramonse Beauty - Premium beauty therapy services"
+  title="Sara Monse Beauty | Beauty salon in Bermondsey, London SE1"
+  description="Bespoke facials, massage, nails and injectables in Bermondsey, London SE1. Family-run beauty salon with 20+ years’ experience — book treatments at Sara Monse Beauty."
   isHomepage={true}
 >
 <!-- Hero Section -->
@@ -19,14 +19,14 @@ const { location } = contact;
     <!-- Background Video with Dark Overlay -->
     <div class="absolute inset-0 z-0">
         <video
-            class="w-full h-full object-cover object-left md:object-center"
+            class="w-full h-full object-cover object-center"
             autoplay
             muted
             loop
             playsinline
             preload="metadata"
-            poster="/assets/home4-hero-poster.jpg"
-            aria-label="Saramonse Beauty - Beauty therapy hero video"
+            poster="/assets/home4-hero-poster.webp"
+            aria-label="Sara Monse Beauty - Beauty therapy hero video"
         >
             <source src="/assets/home4-hero.small.webm" type="video/webm" />
             <source src="/assets/home4-hero.small.mp4" type="video/mp4" />
@@ -34,7 +34,7 @@ const { location } = contact;
         <div class="absolute inset-0 bg-black/20"></div>
         <!-- Mobile-only: extra gradient so hero copy reads clearly over the video -->
         <div
-          class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/65 via-black/40 to-transparent md:hidden"
+          class="pointer-events-none absolute inset-0 z-[1] bg-linear-to-t from-black/65 via-black/40 to-transparent md:hidden"
           aria-hidden="true"
         >
         </div>
@@ -45,14 +45,14 @@ const { location } = contact;
         <div class="max-w-xl px-8 max-md:translate-y-[8vh] md:translate-y-0 md:pl-16 lg:pl-24">
             <h1 class="text-4xl md:text-5xl text-white mb-4 leading-tight tracking-wide uppercase font-light text-shadow-hero" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Facials Designed<br>To Refresh &<br>Renew</h1>
             <div class="mb-8">
-                <p class="text-body-hero text-white/90 font-sans font-light leading-relaxed mb-2">Get glowing with our tailored Facials at Sara Monse. Designed for instant and long-lasting results.</p>
+                <p class="text-body-hero text-white/90 font-sans font-light leading-relaxed mb-2">Get glowing with our tailored Facials at Sara Monse Beauty. Designed for instant and long-lasting results.</p>
                 <p class="text-body-hero text-pink-400 font-sans italic">Book your glow-up today!</p>
             </div>
             <a
               href={FRESHA_BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-block px-10 py-4 bg-gradient-to-r from-orange-400 to-pink-500 text-white font-sans font-semibold tracking-widest uppercase text-sm hover:shadow-2xl transition-all w-fit">Book Now</a>
+              class="inline-block px-10 py-4 bg-linear-to-r from-orange-400 to-pink-500 text-white font-sans font-semibold tracking-widest uppercase text-sm hover:shadow-2xl transition-all w-fit">Book Now</a>
         </div>
     </div>
 </section>
@@ -64,15 +64,15 @@ const { location } = contact;
         <div class="grid grid-cols-2 gap-4">
             <!-- Large Image - Spans 2 rows -->
             <div class="col-span-2 w-full h-96 bg-beauty-light overflow-hidden">
-                <img src="/assets/main-treatment.png" alt="Facial treatment at Saramonse Beauty" class="w-full h-full object-cover">
+                <img src="/assets/main-treatment.webp" alt="Facial treatment at Sara Monse Beauty" class="w-full h-full object-cover">
             </div>
             <!-- Small Image 1 -->
             <div class="w-full h-48 bg-beauty-light overflow-hidden">
-                <img src="/assets/salon-room.png" alt="Saramonse Beauty salon interior" class="w-full h-full object-cover">
+                <img src="/assets/salon-room.webp" alt="Sara Monse Beauty salon interior" class="w-full h-full object-cover">
             </div>
             <!-- Small Image 2 -->
             <div class="w-full h-48 bg-beauty-light overflow-hidden">
-                <img src="/assets/massage.png" alt="Massage treatment at Saramonse Beauty" class="w-full h-full object-cover">
+                <img src="/assets/massage.webp" alt="Massage treatment at Sara Monse Beauty" class="w-full h-full object-cover">
             </div>
         </div>
 
@@ -96,7 +96,7 @@ const { location } = contact;
               href={FRESHA_BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-block px-10 py-4 bg-gradient-to-r from-orange-400 to-pink-500 text-white font-sans font-semibold tracking-widest uppercase text-sm hover:shadow-2xl transition-all">
+              class="inline-block px-10 py-4 bg-linear-to-r from-orange-400 to-pink-500 text-white font-sans font-semibold tracking-widest uppercase text-sm hover:shadow-2xl transition-all">
                 Book Now
             </a>
         </div>
@@ -109,7 +109,7 @@ const { location } = contact;
     <div class="flex flex-col lg:flex-row">
         <!-- Image -->
         <div class="w-full lg:w-1/2 h-80 sm:h-96 lg:h-auto bg-beauty-light overflow-hidden order-1">
-            <img src="/assets/facials-service.png" alt="Facial treatment" class="w-full h-full object-cover">
+            <img src="/assets/facials-service.webp" alt="Facial treatment" class="w-full h-full object-cover">
         </div>
         <!-- Content -->
         <div class="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12 sm:p-12 lg:p-16 bg-[#f8f6f3] order-2">
@@ -127,7 +127,7 @@ const { location } = contact;
     <div class="flex flex-col lg:flex-row-reverse">
         <!-- Image -->
         <div class="w-full lg:w-1/2 h-80 sm:h-96 lg:h-auto bg-beauty-light overflow-hidden order-1">
-            <img src="/assets/body-service.png" alt="Body massage treatment" class="w-full h-full object-cover">
+            <img src="/assets/body-service.webp" alt="Body massage treatment" class="w-full h-full object-cover">
         </div>
         <!-- Content -->
         <div class="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12 sm:p-12 lg:p-16 bg-white order-2">
@@ -150,11 +150,11 @@ const { location } = contact;
             <div class="flex flex-col">
                 <!-- Image -->
                 <div class="w-full h-64 sm:h-72 lg:h-80 bg-beauty-light overflow-hidden mb-6">
-                    <img src="/assets/injectables-service.png" alt="Injectable treatments" class="w-full h-full object-cover">
+                    <img src="/assets/injectables-service.webp" alt="Injectable treatments" class="w-full h-full object-cover">
                 </div>
                 <!-- Content -->
                 <h3 class="text-2xl sm:text-3xl text-gray-900 font-light mb-4" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Injectables</h3>
-                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
+                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 grow">
                     Advanced treatments designed to revitalise, refine, and restore confidence.
                 </p>
                 <a href="/services/injectables/" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
@@ -166,11 +166,11 @@ const { location } = contact;
             <div class="flex flex-col">
                 <!-- Image -->
                 <div class="w-full h-64 sm:h-72 lg:h-80 bg-beauty-light overflow-hidden mb-6">
-                    <img src="/assets/eyes-service.png" alt="Eye treatments" class="w-full h-full object-cover">
+                    <img src="/assets/eyes-service.webp" alt="Eye treatments" class="w-full h-full object-cover">
                 </div>
                 <!-- Content -->
                 <h3 class="text-2xl sm:text-3xl text-gray-900 font-light mb-4" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Eyes</h3>
-                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
+                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 grow">
                     Frame your beauty with expert shaping that brings depth and definition to your gaze.
                 </p>
                 <a href="/services/eyes/" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
@@ -182,11 +182,11 @@ const { location } = contact;
             <div class="flex flex-col">
                 <!-- Image -->
                 <div class="w-full h-64 sm:h-72 lg:h-80 bg-beauty-light overflow-hidden mb-6">
-                    <img src="/assets/nails-service.png" alt="Nail treatments" class="w-full h-full object-cover">
+                    <img src="/assets/nails-service.webp" alt="Nail treatments" class="w-full h-full object-cover">
                 </div>
                 <!-- Content -->
                 <h3 class="text-2xl sm:text-3xl text-gray-900 font-light mb-4" style="font-family: 'Cormorant Garamond', 'Georgia', serif;">Nails</h3>
-                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 flex-grow">
+                <p class="text-body-card text-gray-700 font-sans leading-relaxed mb-6 grow">
                     From timeless elegance to modern artistry, every manicure is a statement of care and style.
                 </p>
                 <a href="/services/nails/" class="inline-block px-8 sm:px-10 py-3 border-2 border-gray-900 text-gray-900 font-sans text-xs sm:text-sm tracking-wider uppercase hover:bg-gray-900 hover:text-white transition-all w-fit">
@@ -214,7 +214,7 @@ const { location } = contact;
                         <!-- Review Card 1 -->
                         <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
                             <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
-                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Alejandra Espinosa</h3>
+                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Ariady A</h3>
                                 <div class="flex gap-1 mb-4">
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
@@ -223,14 +223,14 @@ const { location } = contact;
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                 </div>
                                 <p class="text-body text-gray-700 font-sans leading-relaxed">
-                                    I recently purchased the wireless earbuds from this store, and they exceeded all my expectations with their superb sound quality and comfortable fit. The customer service was also outstanding, making my shopping experience truly enjoyable.
+                                    The best place in Southwark to feel cared for and renewed with good products and excellent service attendant. Always recommend 10/10.
                                 </p>
                             </div>
                         </li>
                         <!-- Review Card 2 -->
                         <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
                             <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
-                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Fabiola Mendoza</h3>
+                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Aimee C</h3>
                                 <div class="flex gap-1 mb-4">
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
@@ -239,14 +239,14 @@ const { location } = contact;
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                 </div>
                                 <p class="text-body text-gray-700 font-sans leading-relaxed">
-                                    I recently purchased the wireless earbuds from this store, and they exceeded all my expectations with their superb sound quality and comfortable fit. The customer service was also outstanding, making my shopping experience truly enjoyable.
+                                    Amazing! Monica was so welcoming and lovely, can't wait to come back for another treatment. Thank you.
                                 </p>
                             </div>
                         </li>
                         <!-- Review Card 3 -->
                         <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
                             <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
-                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Glenda Quintero</h3>
+                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Petra A</h3>
                                 <div class="flex gap-1 mb-4">
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
@@ -255,7 +255,55 @@ const { location } = contact;
                                     <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                                 </div>
                                 <p class="text-body text-gray-700 font-sans leading-relaxed">
-                                    I recently purchased the wireless earbuds from this store, and they exceeded all my expectations with their superb sound quality and comfortable fit. The customer service was also outstanding, making my shopping experience truly enjoyable.
+                                    The care is excellent. I'm very happy to continue with my treatment.
+                                </p>
+                            </div>
+                        </li>
+                        <!-- Review Card 4 -->
+                        <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
+                            <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
+                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Gabriela L</h3>
+                                <div class="flex gap-1 mb-4">
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                </div>
+                                <p class="text-body text-gray-700 font-sans leading-relaxed">
+                                    Monica is the best of the best! She helped me in my weight loss journey I lost over 10kg, she encouraged me and never let me fail, thank you Monica! I 100% recommend her to everyone! Monica has also become a friend she is so kind, caring and lovely.
+                                </p>
+                            </div>
+                        </li>
+                        <!-- Review Card 5 -->
+                        <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
+                            <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
+                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Maria E</h3>
+                                <div class="flex gap-1 mb-4">
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                </div>
+                                <p class="text-body text-gray-700 font-sans leading-relaxed">
+                                    Great experience! Good quality facial, each step of the entire process was explained. Would definitely recommend and will be coming back again. Thank you Sara Monse for an exceptional service.
+                                </p>
+                            </div>
+                        </li>
+                        <!-- Review Card 6 -->
+                        <li class="splide__slide py-3 px-5 sm:px-8 sm:py-4">
+                            <div class="review-card-inner bg-white p-8 sm:p-10 h-full flex flex-col">
+                                <h3 class="text-body font-medium text-gray-900 mb-3 font-sans">Alejandra Serrano</h3>
+                                <div class="flex gap-1 mb-4">
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                </div>
+                                <p class="text-body text-gray-700 font-sans leading-relaxed">
+                                    I've been going to Monica for over 4 years and I couldn't be happier with the care I've received over the past years. When I first visited her I was suffering from acne which affected my confidence as well. Monica took the time to understand my concerns and created a plan for me that worked wonders! She's not just a skilled dermatologist but also incredibly kind and attentive, always making me feel comfortable during appointments. I can't recommend her enough to anyone seeking exceptional dermatological care!
                                 </p>
                             </div>
                         </li>
@@ -277,73 +325,80 @@ const { location } = contact;
         </div>
 
         <!-- Carousel Indicators (square dots) -->
-        <div class="flex justify-center gap-3 mt-8 sm:mt-10">
-            <button class="indicator w-3 h-3 bg-gray-900 hover:bg-gray-700 transition-colors" data-index="0"></button>
-            <button class="indicator w-3 h-3 bg-gray-300 hover:bg-gray-400 transition-colors" data-index="1"></button>
-            <button class="indicator w-3 h-3 bg-gray-300 hover:bg-gray-400 transition-colors" data-index="2"></button>
+        <div class="flex flex-wrap justify-center gap-3 mt-8 sm:mt-10">
+            <button type="button" class="indicator w-3 h-3 bg-gray-900 hover:bg-gray-700 transition-colors" data-index="0" aria-label="Show testimonial 1"></button>
+            <button type="button" class="indicator w-3 h-3 bg-gray-300 hover:bg-gray-400 transition-colors" data-index="1" aria-label="Show testimonial 2"></button>
+            <button type="button" class="indicator w-3 h-3 bg-gray-300 hover:bg-gray-400 transition-colors" data-index="2" aria-label="Show testimonial 3"></button>
+            <button type="button" class="indicator w-3 h-3 bg-gray-300 hover:bg-gray-400 transition-colors" data-index="3" aria-label="Show testimonial 4"></button>
+            <button type="button" class="indicator w-3 h-3 bg-gray-300 hover:bg-gray-400 transition-colors" data-index="4" aria-label="Show testimonial 5"></button>
+            <button type="button" class="indicator w-3 h-3 bg-gray-300 hover:bg-gray-400 transition-colors" data-index="5" aria-label="Show testimonial 6"></button>
         </div>
     </div>
 
-    <script is:inline>
-        // Capture original slide inner cards before Splide mounts and adds clones
-        var reviewInnerCards = document.querySelectorAll('.review-card-inner');
-        var reviewIndicators = document.querySelectorAll('.indicator');
+    <script>
+      import Splide from '@splidejs/splide';
+      import '@splidejs/splide/dist/css/splide-core.min.css';
 
-        var reviewsSplide = new Splide('#reviews-splide', {
-            type       : 'loop',
-            perPage    : 3,
-            perMove    : 1,
-            arrows     : false,
-            pagination : false,
-            speed      : 500,
-            easing     : 'ease-in-out',
-            drag       : true,
-            breakpoints: {
-                1023: { perPage: 2 },
-                639 : { perPage: 1 }
-            }
+      const reviewInnerCards = document.querySelectorAll('.review-card-inner');
+      const reviewIndicators = document.querySelectorAll('.indicator');
+
+      const reviewsSplide = new Splide('#reviews-splide', {
+        type: 'loop',
+        perPage: 3,
+        perMove: 1,
+        arrows: false,
+        pagination: false,
+        speed: 500,
+        easing: 'ease-in-out',
+        drag: true,
+        breakpoints: {
+          1023: { perPage: 2 },
+          639: { perPage: 1 },
+        },
+      });
+
+      function updateActive(index: number) {
+        reviewInnerCards.forEach((card, i) => {
+          if (i === index) {
+            (card as HTMLElement).style.border = '2px solid transparent';
+            (card as HTMLElement).style.borderImage =
+              'linear-gradient(to bottom right, #fb923c, #ec4899) 1';
+            (card as HTMLElement).style.boxShadow =
+              '0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.1)';
+          } else {
+            (card as HTMLElement).style.border = '';
+            (card as HTMLElement).style.borderImage = '';
+            (card as HTMLElement).style.boxShadow = '';
+          }
         });
 
-        function updateActive(index) {
-            reviewInnerCards.forEach(function(card, i) {
-                if (i === index) {
-                    card.style.border      = '2px solid transparent';
-                    card.style.borderImage = 'linear-gradient(to bottom right, #fb923c, #ec4899) 1';
-                    card.style.boxShadow   =
-                      '0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.1)';
-                } else {
-                    card.style.border      = '';
-                    card.style.borderImage = '';
-                    card.style.boxShadow   = '';
-                }
-            });
-
-            reviewIndicators.forEach(function(dot, i) {
-                dot.classList.toggle('bg-gray-900', i === index);
-                dot.classList.toggle('bg-gray-300', i !== index);
-            });
-        }
-
-        reviewsSplide.on('moved', function(newIndex) {
-            updateActive(newIndex);
+        reviewIndicators.forEach((dot, i) => {
+          dot.classList.toggle('bg-gray-900', i === index);
+          dot.classList.toggle('bg-gray-300', i !== index);
         });
+      }
 
-        reviewsSplide.mount();
-        updateActive(0);
+      reviewsSplide.on('moved', (newIndex: number) => {
+        updateActive(newIndex);
+      });
 
-        document.getElementById('prev-btn').addEventListener('click', function() {
-            reviewsSplide.go('<');
+      reviewsSplide.mount();
+      updateActive(0);
+
+      document.getElementById('prev-btn')?.addEventListener('click', () => {
+        reviewsSplide.go('<');
+      });
+
+      document.getElementById('next-btn')?.addEventListener('click', () => {
+        reviewsSplide.go('>');
+      });
+
+      reviewIndicators.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const idx = dot.dataset.index;
+          if (idx !== undefined) reviewsSplide.go(parseInt(idx, 10));
         });
-
-        document.getElementById('next-btn').addEventListener('click', function() {
-            reviewsSplide.go('>');
-        });
-
-        reviewIndicators.forEach(function(dot) {
-            dot.addEventListener('click', function() {
-                reviewsSplide.go(parseInt(dot.dataset.index));
-            });
-        });
+      });
     </script>
 </section>
 

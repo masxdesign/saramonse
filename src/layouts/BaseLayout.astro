@@ -1,8 +1,12 @@
 ---
 import '../styles/global.css';
+import Favicon from '../components/Favicon.astro';
+import GoogleFonts from '../components/GoogleFonts.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import MobileMenuOverlay from '../components/MobileMenuOverlay.astro';
+import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+import SeoMeta from '../components/SeoMeta.astro';
 
 interface Props {
   title: string;
@@ -10,15 +14,20 @@ interface Props {
   scrollCompactNav?: boolean;
   footerTheme?: 'light' | 'dark';
   isHomepage?: boolean;
+  /** 404 and similar: noindex, no canonical / JSON-LD / OG. */
+  isErrorPage?: boolean;
 }
 
 const {
   title,
-  description = 'Saramonse Beauty',
+  description = 'Sara Monse Beauty — Bermondsey, London SE1 beauty salon. Facials, massage, nails, injectables and brows. Book treatments online.',
   scrollCompactNav = false,
   footerTheme = 'light',
   isHomepage = false,
+  isErrorPage = false,
 } = Astro.props;
+
+const pathname = Astro.url.pathname;
 
 /** Non-compact top bar when scroll swap (About); compact single bar otherwise. */
 const navMainVariant = scrollCompactNav ? undefined : 'compact';
@@ -34,12 +43,9 @@ const mainTopPadding = scrollCompactNav
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
+    <SeoMeta title={title} description={description} pathname={pathname} isErrorPage={isErrorPage} />
+    <Favicon />
+    <GoogleFonts variant="full" />
   </head>
   <body class="font-serif text-gray-800">
     <Navigation
@@ -69,6 +75,8 @@ const mainTopPadding = scrollCompactNav
     <Footer footerTheme={footerTheme} isHomepage={isHomepage} />
 
     <MobileMenuOverlay />
+
+    <AnalyticsConsent />
 
     <script is:inline>
       document.addEventListener('DOMContentLoaded', function () {

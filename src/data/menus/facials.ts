@@ -112,7 +112,14 @@ export const facialsAddOnBlocks: MenuBlock[] = [
       price: { kind: 'single', amount: '20' },
       description:
         'Target specific skin concerns with soothing LED light therapy. Red light stimulates collagen and calms inflammation, while blue light helps reduce bacteria and blemishes, leaving skin balanced and rejuvenated. Can be added to: Dermaplaning Facial, HydroFacial, Vitamin Infusion Facial, Microdermabrasion, Collagen Lift.',
-  },
+    },
+    {
+      type: 'simpleRow',
+      title: 'Lymphatic Drainage Massage Facial (Face)',
+      price: { kind: 'single', amount: '20' },
+      description:
+        'A gentle, rhythmic facial massage designed to stimulate the lymphatic system, helping to reduce puffiness, improve circulation, and support natural detoxification. This treatment leaves the skin looking brighter, more sculpted, and refreshed, while promoting a deep sense of relaxation. Perfect as an add-on to enhance your facial or as a moment of calm within your treatment.',
+    },
 ];
 
 export const facialsMenu: ServiceMenu = {

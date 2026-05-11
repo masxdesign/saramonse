@@ -12,12 +12,37 @@ const { block } = Astro.props;
 <div class="max-w-3xl">
   <div>
     <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans mb-3">{block.groupTitle}</h3>
+    {
+      block.intro?.length ? (
+        <div class="mb-6 space-y-1">
+          {block.intro.map((seg) => {
+            if (seg.kind === 'p') {
+              return (
+                <p class="text-body text-gray-700 font-sans leading-relaxed">{seg.text}</p>
+              );
+            }
+            if (seg.kind === 'h4') {
+              return (
+                <p class="text-body text-gray-700 font-sans leading-relaxed underline">{seg.text}</p>
+              );
+            }
+            return (
+              <ul class="list-disc list-inside text-body text-gray-700 font-sans leading-relaxed space-y-1">
+                {seg.items.map((li) => (
+                  <li>{li}</li>
+                ))}
+              </ul>
+            );
+          })}
+        </div>
+      ) : null
+    }
     <div class="space-y-3 pl-6 sm:pl-8">
       {
         block.items.map((item) => (
           <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline max-w-md">
             <p class="text-lg sm:text-xl text-gray-900 font-sans">{item.label}</p>
-            <p class="text-lg sm:text-xl text-gray-900 font-sans">{formatPounds(item.amount)}</p>
+            <p class="text-lg sm:text-xl text-gray-900 font-sans tabular-nums">{formatPounds(item.amount)}</p>
           </div>
         ))
       }

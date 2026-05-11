@@ -15,17 +15,18 @@
   "hours": {
     "heading": "Business hours",
     "footerLines": [
-      "Mon–Fri 10am–7pm",
-      "Sat 10am–6pm",
+      "Mon–Wed & Fri 10am–7pm",
+      "Thu 10am–5pm",
+      "Sat 10am–6:30pm",
       "Sun closed"
     ],
     "contactGrid": [
       { "day": "Mon", "time": "10am - 7pm" },
       { "day": "Tues", "time": "10am - 7pm" },
       { "day": "Wed", "time": "10am - 7pm" },
-      { "day": "Thur", "time": "10am - 7pm" },
+      { "day": "Thur", "time": "10am - 5pm" },
       { "day": "Fri", "time": "10am - 7pm" },
-      { "day": "Sat", "time": "10am - 6pm" },
+      { "day": "Sat", "time": "10am - 6:30pm" },
       { "day": "Sun", "time": "Closed" }
     ]
   },

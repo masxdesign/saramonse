@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   extrasColName: { width: '52%', fontSize: 8, fontWeight: 700 },
-  extrasColH: { width: '24%', fontSize: 8, textAlign: 'right', color: brand.muted },
+  extrasColH: { width: '24%', fontSize: 8, textAlign: 'left', color: brand.muted },
   extrasRow: {
     flexDirection: 'row',
     marginBottom: 5,
@@ -477,7 +477,7 @@ function BlockView({ block }: { block: MenuBlock }) {
             ) : null}
           </View>
         </View>
-        <Text style={styles.body}>{block.description}</Text>
+        {block.description.trim() ? <Text style={styles.body}>{block.description}</Text> : null}
         <View style={styles.divider} />
       </View>
     );
@@ -542,24 +542,37 @@ function BlockView({ block }: { block: MenuBlock }) {
   }
 
   if (block.type === 'extrasGrid') {
+    const single = Boolean(block.singleColumn);
     return (
       <View style={{ marginBottom: 12 }}>
+        {block.title ? (
+          <Text style={[styles.sectionTitle, { fontSize: 10, marginBottom: 8 }]}>{block.title}</Text>
+        ) : null}
         <View style={styles.extrasHeader}>
-          <Text style={styles.extrasColName} />
-          <Text style={styles.extrasColH}>{block.columnLabels[0]}</Text>
-          <Text style={styles.extrasColH}>{block.columnLabels[1]}</Text>
+          <Text style={single ? { width: '62%', fontSize: 8 } : styles.extrasColName} />
+          {single && !block.columnLabels[0].trim() ? (
+            <Text style={[styles.extrasColH, { width: '38%' }]}> </Text>
+          ) : (
+            <Text style={[styles.extrasColH, single ? { width: '38%' } : {}]}>{block.columnLabels[0]}</Text>
+          )}
+          {!single ? <Text style={styles.extrasColH}>{block.columnLabels[1]}</Text> : null}
         </View>
         {block.rows.map((row, i) => (
           <View key={i} style={styles.extrasRow}>
-            <Text style={[styles.extrasColName, { fontWeight: 700 }]}>{row.name}</Text>
-            <Text style={styles.extrasColH}>
-              {row.hands.mode === 'from' ? `From ${pounds(row.hands.amount!)}` : extrasCellPdf(row.hands)}
+            <Text style={[styles.extrasColName, single ? { width: '62%', fontSize: 9 } : {}]}>{row.name}</Text>
+            <Text style={[styles.extrasColH, single ? { width: '38%' } : {}]}>
+              {row.hands.mode === 'from' ? `From ${pounds(row.hands.amount)}` : extrasCellPdf(row.hands)}
             </Text>
-            <Text style={styles.extrasColH}>
-              {row.feet.mode === 'from' ? `From ${pounds(row.feet.amount!)}` : extrasCellPdf(row.feet)}
-            </Text>
+            {!single ? (
+              <Text style={styles.extrasColH}>
+                {row.feet.mode === 'from' ? `From ${pounds(row.feet.amount)}` : extrasCellPdf(row.feet)}
+              </Text>
+            ) : null}
           </View>
         ))}
+        {block.footerNote ? (
+          <Text style={[styles.body, { marginTop: 10, maxWidth: 420 }]}>{block.footerNote}</Text>
+        ) : null}
       </View>
     );
   }
@@ -568,6 +581,7 @@ function BlockView({ block }: { block: MenuBlock }) {
     return (
       <View style={{ marginBottom: 12 }}>
         <Text style={styles.removalGroupTitle}>{block.groupTitle}</Text>
+        {block.intro?.length ? <RichBody body={block.intro} /> : null}
         {block.items.map((item, i) => (
           <View key={i} style={styles.removalRow}>
             <Text style={{ flex: 1 }}>{item.label}</Text>
@@ -591,8 +605,8 @@ function BlockView({ block }: { block: MenuBlock }) {
 
 function extrasCellPdf(cell: import('../data/menus/types').ExtrasCell): string {
   if (cell.mode === 'dash') return '';
-  if (cell.amount) return pounds(cell.amount);
-  return '';
+  if (cell.mode === 'literal') return cell.text;
+  return pounds(cell.amount);
 }
 
 function CoverPage({

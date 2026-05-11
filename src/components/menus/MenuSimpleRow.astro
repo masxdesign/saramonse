@@ -9,9 +9,10 @@ interface Props {
 const { block } = Astro.props;
 const pd = priceDisplayParts(block.price);
 const intro = block.priceStyle === 'intro';
+const compact = !block.description.trim();
 ---
 
-<div class="py-10 sm:py-12">
+<div class:list={[compact ? 'py-5 sm:py-6' : 'py-10 sm:py-12']}>
   <div class="flex justify-between items-baseline mb-4">
     <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">{block.title}</h3>
     {
@@ -39,5 +40,7 @@ const intro = block.priceStyle === 'intro';
       )
     }
   </div>
-  <p class="text-body text-gray-700 font-sans leading-relaxed">{block.description}</p>
+  {block.description.trim() ? (
+    <p class="text-body text-gray-700 font-sans leading-relaxed">{block.description}</p>
+  ) : null}
 </div>

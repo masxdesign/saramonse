@@ -3,9 +3,12 @@ import { eyesMenu } from './eyes';
 import { facialsAddOnBlocks, facialsMainBlocks, facialsMenu } from './facials';
 import { injectablesFatDissolveBlock, injectablesMenu, injectablesRestBlocks } from './injectables';
 import {
-  nailsExtrasBlocks,
+  nailsAddOnFeetGridBlock,
+  nailsAddOnHandsGridBlock,
   nailsFeetBlocks,
+  nailsFeetSectionBlocks,
   nailsHandsBlocks,
+  nailsHandsSectionBlocks,
   nailsMenu,
   nailsNailArtColLeft,
   nailsNailArtColRight,
@@ -25,9 +28,12 @@ export {
   injectablesFatDissolveBlock,
   injectablesMenu,
   injectablesRestBlocks,
-  nailsExtrasBlocks,
+  nailsAddOnFeetGridBlock,
+  nailsAddOnHandsGridBlock,
   nailsFeetBlocks,
+  nailsFeetSectionBlocks,
   nailsHandsBlocks,
+  nailsHandsSectionBlocks,
   nailsMenu,
   nailsNailArtColLeft,
   nailsNailArtColRight,

@@ -72,7 +72,7 @@ export const allFaqItems = [
 export const homeFaqItems = [
   {
     q: 'What is Sara Monse Beauty?',
-    a: `Sara Monse Beauty is a family-led beauty therapy studio in ${contact.location.faqArea}, with over 18 years of experience. We offer bespoke facials, relaxing massages, expert nails, eye treatments, and specialist injectables — all in a calm, personal setting.`,
+    a: `Sara Monse Beauty is a family-led beauty therapy studio in ${contact.location.faqArea}, with over 20 years of experience. We offer bespoke facials, relaxing massages, expert nails, eye treatments, and specialist injectables — all in a calm, personal setting.`,
   },
   {
     q: 'Where are you based and how do I get there?',

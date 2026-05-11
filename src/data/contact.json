@@ -3,7 +3,7 @@
   "location": {
     "short": "Bermondsey, London (SE1)",
     "faqArea": "Bermondsey, SE1",
-    "indexParagraph1": "Located in the heart of Bermondsey, SE1 London, Sara Monse Beauty is a family-led home-based salon with over 18 years of experience in the beauty industry. We specialise in bespoke facials, relaxing massages, expert nail treatments, and specialist skin and wellness injections.",
+    "indexParagraph1": "Located in the heart of Bermondsey, SE1 London, Sara Monse Beauty is a family-led home-based salon with over 20 years of experience in the beauty industry. We specialise in bespoke facials, relaxing massages, expert nail treatments, and specialist skin and wellness injections.",
     "indexParagraph2": "Combining professional expertise with a warm, welcoming atmosphere, our mission is to create a sanctuary where clients across Bermondsey and surrounding London areas can unwind, renew, and feel truly cared for.",
     "coverTagline": "Bespoke beauty in the heart of Bermondsey — care, artistry, and renewal."
   },
@@ -15,17 +15,18 @@
   "hours": {
     "heading": "Business hours",
     "footerLines": [
-      "Mon–Fri 10am–7pm",
-      "Sat 10am–6pm",
+      "Mon–Wed & Fri 10am–7pm",
+      "Thu 10am–5pm",
+      "Sat 10am–6:30pm",
       "Sun closed"
     ],
     "contactGrid": [
       { "day": "Mon", "time": "10am - 7pm" },
       { "day": "Tues", "time": "10am - 7pm" },
       { "day": "Wed", "time": "10am - 7pm" },
-      { "day": "Thur", "time": "10am - 7pm" },
+      { "day": "Thur", "time": "10am - 5pm" },
       { "day": "Fri", "time": "10am - 7pm" },
-      { "day": "Sat", "time": "10am - 6pm" },
+      { "day": "Sat", "time": "10am - 6:30pm" },
       { "day": "Sun", "time": "Closed" }
     ]
   },

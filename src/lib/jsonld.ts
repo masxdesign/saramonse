@@ -25,7 +25,19 @@ function openingHoursSpecification() {
   return [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday'],
+      opens: '10:00',
+      closes: '19:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Thursday',
+      opens: '10:00',
+      closes: '17:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Friday',
       opens: '10:00',
       closes: '19:00',
     },
@@ -33,7 +45,7 @@ function openingHoursSpecification() {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: 'Saturday',
       opens: '10:00',
-      closes: '18:00',
+      closes: '18:30',
     },
   ];
 }

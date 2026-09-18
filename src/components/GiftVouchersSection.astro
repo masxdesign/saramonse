@@ -1,0 +1,44 @@
+---
+import { FRESHA_GIFT_CARDS_URL } from '../data/site-urls.js';
+
+interface Props {
+  /** Gift cards purchase URL (Fresha) */
+  bookHref?: string;
+}
+
+const { bookHref = FRESHA_GIFT_CARDS_URL } = Astro.props;
+---
+
+<section class="bg-[#f8f6f3]">
+  <div class="flex flex-col lg:flex-row">
+    <div class="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12 sm:p-12 lg:p-16 order-2 lg:order-1">
+      <h2
+        class="text-3xl sm:text-4xl lg:text-5xl text-gray-900 font-light mb-6 sm:mb-8 tracking-wide uppercase"
+        style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+      >
+        Gift Vouchers
+      </h2>
+      <p class="text-body-intro text-gray-700 font-sans leading-relaxed mb-8 sm:mb-10">
+        Give the gift of self-care with our beauty salon gift vouchers, the perfect treat for glowing skin and pampered nails.
+      </p>
+      <a
+        href={bookHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block px-10 py-4 bg-gray-900 text-white font-sans font-semibold tracking-widest uppercase text-sm hover:bg-gray-800 transition-all w-fit"
+      >
+        Buy Now
+      </a>
+    </div>
+
+    <div class="w-full lg:w-1/2 h-80 sm:h-96 lg:h-auto bg-beauty-light overflow-hidden order-1 lg:order-2">
+      <img
+        src="/assets/gift-voucher.png"
+        alt="Gift voucher with black bow"
+        class="w-full h-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+</section>

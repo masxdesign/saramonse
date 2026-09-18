@@ -1,16 +1,17 @@
 # Dependencies
 node_modules/
-package-lock.json
 
 # Build outputs
 dist/
 .astro/
 _site/
+.tmp-svg-venv/
 
 # Environment variables
 .env
 .env.local
 .env.production
+.dev.vars
 
 # Secrets / credentials
 sftp-masx.txt
@@ -35,3 +36,6 @@ yarn-error.log*
 # Temporary files
 *.tmp
 .cache/
+
+# Google GitHub Actions auth (never commit)
+gha-creds-*.json

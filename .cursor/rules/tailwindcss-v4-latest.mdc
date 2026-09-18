@@ -1,0 +1,20 @@
+---
+description: Tailwind CSS v4 — use current official docs and v4 APIs only
+globs: "**/*.astro,**/*.css"
+alwaysApply: false
+---
+
+# Tailwind CSS — current docs and v4
+
+This project uses **Tailwind CSS v4** (`tailwindcss` / `@tailwindcss/vite` in `package.json`). Any Tailwind utilities, `@theme`, `@import "tailwindcss"`, or `@apply` usage must match **current v4** behavior, not legacy v3 habits or outdated training data.
+
+## Required behavior
+
+1. **Prefer official sources** for class names, syntax, and breaking changes: [tailwindcss.com/docs](https://tailwindcss.com/docs) and the [v4 upgrade guide](https://tailwindcss.com/docs/upgrade-guide) (renamed utilities, gradients, Preflight, etc.).
+2. **If unsure** whether a utility or pattern exists in v4, **look it up** (e.g. Context7 / docs MCP / official docs) instead of guessing from memory.
+3. **Use v4 idioms** where they differ from v3 — for example linear gradient direction: `bg-linear-to-r` (and other `bg-linear-to-*`), not `bg-gradient-to-r`. Follow the upgrade guide’s rename tables for shadows, blur, radius, outline, ring defaults, etc.
+4. **Do not** introduce v3-only patterns that v4 removed or replaced (see upgrade guide “Removed deprecated utilities” and “Renamed utilities”).
+
+## When editing existing markup
+
+- Prefer **updating** old class names to their v4 equivalents when touching that code, rather than mixing obsolete and new names in the same component without reason.

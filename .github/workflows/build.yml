@@ -1,0 +1,107 @@
+# Builds the Astro site, then deploys the Worker + dist/ to Cloudflare Workers.
+# Repo secrets:
+#   CLOUDFLARE_API_TOKEN — API token with Workers Scripts:Edit + Account read (see Cloudflare Workers CI docs).
+#   CLOUDFLARE_ACCOUNT_ID — required if wrangler.toml has no account_id (fixes "No account id found" on deploy).
+#   PUBLIC_GTM_CONTAINER_ID — optional; baked into the static site at build time.
+#   PUBLIC_SITE_URL — optional; canonical https URL for Astro (e.g. https://www.example.com/).
+#   GSC_SERVICE_ACCOUNT_JSON — optional; GCP service account key JSON for Search Console API (minified single line).
+#     Enable "Google Search Console API" in the GCP project; add the SA email in GSC (Users and permissions) for the property.
+# Worker secrets (RESEND_API_KEY, CONTACT_TO_EMAIL) are set in Cloudflare dashboard, not GitHub.
+#
+# Repository variables (Settings → Secrets and variables → Actions → Variables):
+#   GSC_SITEMAP_SUBMIT — set to true to run the post-deploy job that calls sitemaps.submit.
+#   GSC_SITE_PROPERTY — optional; Webmasters API "site" id for a Domain property: sc-domain:example.com (no trailing slash).
+#     Must match the property in Search Console. If unset, the job uses PUBLIC_SITE_URL (URL-prefix style).
+#     If you still get HTTP 403 here: GSC → Settings → Users and permissions → add the service account email with Full (not Restricted).
+
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Bakes PUBLIC_GTM_CONTAINER_ID into the static build (GA4, Clarity, etc. are tags inside GTM).
+      # Optional: PUBLIC_SITE_URL (e.g. https://yourdomain.com) for canonical URLs, JSON-LD, and OG tags; defaults in astro.config.mjs.
+      - name: Build site
+        env:
+          PUBLIC_GTM_CONTAINER_ID: ${{ secrets.PUBLIC_GTM_CONTAINER_ID }}
+          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+        run: npm run build
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4.80.0'
+
+  submit-sitemap-gsc:
+    name: Submit sitemap to Google Search Console
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    if: ${{ needs.build-and-deploy.result == 'success' && vars.GSC_SITEMAP_SUBMIT == 'true' }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth-google
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/webmasters
+
+      - name: PUT sitemap to Search Console API
+        env:
+          ACCESS_TOKEN: ${{ steps.auth-google.outputs.access_token }}
+          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+          GSC_SITE_PROPERTY: ${{ vars.GSC_SITE_PROPERTY }}
+        run: |
+          set -euo pipefail
+          BASE="${PUBLIC_SITE_URL:-https://saramonsebeauty.co.uk}"
+          BASE="${BASE%/}/"
+          SM="${BASE}sitemap-index.xml"
+          # Domain properties use sc-domain:example.com; URL-prefix properties use https://www.example.com/
+          if [[ -n "${GSC_SITE_PROPERTY:-}" ]]; then
+            SITE_API="$(printf '%s' "$GSC_SITE_PROPERTY" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+            if [[ "$SITE_API" == sc-domain:* ]]; then
+              SITE_API="${SITE_API%/}"
+            fi
+          else
+            SITE_API="$BASE"
+          fi
+          export SITE_API SM
+          API_URL=$(python3 -c "import os, urllib.parse; site=os.environ['SITE_API']; sm=os.environ['SM']; print('https://www.googleapis.com/webmasters/v3/sites/' + urllib.parse.quote(site, safe='') + '/sitemaps/' + urllib.parse.quote(sm, safe=''))")
+          echo "Search Console site id: $SITE_API"
+          echo "Submitting sitemap via Webmasters API: $SM"
+          HTTP=$(curl -sS -o /tmp/gsc_err_body -w "%{http_code}" -X PUT \
+            -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+            -H "Content-Length: 0" \
+            "$API_URL") || true
+          if [[ "$HTTP" != "200" && "$HTTP" != "204" ]]; then
+            echo "Search Console sitemap submit failed (HTTP $HTTP)"
+            cat /tmp/gsc_err_body 2>/dev/null || true
+            exit 1
+          fi
+          echo "Search Console sitemap submit OK (HTTP $HTTP)"

@@ -1,0 +1,26 @@
+---
+import type { MenuBlock } from '../../data/menus/types';
+import { formatPounds } from './menu-format';
+
+interface Props {
+  block: Extract<MenuBlock, { type: 'slotRow' }>;
+}
+
+const { block } = Astro.props;
+---
+
+<div class="py-10 sm:py-12">
+  <div class="flex flex-wrap items-baseline justify-between gap-4 mb-4">
+    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">{block.title}</h3>
+    <div class="flex items-baseline gap-6 sm:gap-12">
+      {
+        block.slots.map((s) => (
+          <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0">
+            {s.label} | {formatPounds(s.amount)}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+  <p class="text-body text-gray-700 font-sans leading-relaxed">{block.description}</p>
+</div>

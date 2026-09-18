@@ -1,0 +1,37 @@
+---
+import type { MenuBlock } from '../../data/menus/types';
+import { formatPounds, priceDisplayParts } from './menu-format';
+
+interface Props {
+  block: Extract<MenuBlock, { type: 'richRow' }>;
+}
+
+const { block } = Astro.props;
+const pd = priceDisplayParts(block.price);
+---
+
+<div class="py-10 sm:py-12">
+  <div class="flex justify-between items-baseline mb-4">
+    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 font-sans">{block.title}</h3>
+    {pd.mode === 'single' && (
+      <span class="text-lg sm:text-xl text-gray-900 font-sans shrink-0 ml-4">{formatPounds(pd.amount!)}</span>
+    )}
+  </div>
+  {
+    block.body.map((seg) => {
+      if (seg.kind === 'p') {
+        return <p class="text-body text-gray-700 font-sans leading-relaxed mb-4">{seg.text}</p>;
+      }
+      if (seg.kind === 'h4') {
+        return <p class="text-body text-gray-700 font-sans leading-relaxed underline mb-2">{seg.text}</p>;
+      }
+      return (
+        <ul class="list-disc list-inside text-body text-gray-700 font-sans leading-relaxed mb-4 space-y-1">
+          {seg.items.map((li) => (
+            <li>{li}</li>
+          ))}
+        </ul>
+      );
+    })
+  }
+</div>

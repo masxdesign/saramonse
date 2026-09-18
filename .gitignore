@@ -12,6 +12,9 @@ _site/
 .env.local
 .env.production
 
+# Secrets / credentials
+sftp-masx.txt
+
 # IDE
 .vscode/
 .idea/

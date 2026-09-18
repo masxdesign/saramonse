@@ -13,9 +13,6 @@ _site/
 .env.production
 .dev.vars
 
-# Secrets / credentials
-sftp-masx.txt
-
 # IDE
 .vscode/
 .idea/

@@ -1,0 +1,139 @@
+---
+/**
+ * Service page intro under the video hero.
+ * - layout1: title + intro + Book / Gift CTAs
+ * - layout2: title, then image | intro (slot or description) + CTAs in right column
+ */
+import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../data/site-urls.js';
+
+interface Props {
+  title: string;
+  /** Plain intro for layout1 (and layout2 fallback if no slot). */
+  description?: string;
+  variant?: 'layout1' | 'layout2';
+  /** Max-width utility on the intro paragraph (layout1). */
+  descriptionMaxWidth?: 'max-w-2xl' | 'max-w-3xl';
+  /** Optional image for layout2 (left column). Omit for a placeholder. */
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+const {
+  title,
+  description = '',
+  variant = 'layout1',
+  descriptionMaxWidth = 'max-w-3xl',
+  imageSrc,
+  imageAlt = '',
+} = Astro.props;
+---
+
+{
+  variant === 'layout1' && (
+    <section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8">
+      <div class="max-w-4xl mx-auto">
+        <h2
+          class="text-4xl sm:text-5xl lg:text-6xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
+          style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+        >
+          {title}
+        </h2>
+
+        <p
+          class:list={[
+            'text-body-intro text-gray-700 font-sans leading-relaxed mb-10',
+            descriptionMaxWidth,
+          ]}
+        >
+          {description}
+        </p>
+
+        <div class="flex flex-wrap justify-start gap-4">
+          <a
+            href={FRESHA_BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-linear-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
+            >Book Treatment</a
+          >
+          <a
+            href={FRESHA_GIFT_CARDS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
+            >Buy Gift Vouchers</a
+          >
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  variant === 'layout2' && (
+    <section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8">
+      <div class="max-w-4xl mx-auto">
+        <h2
+          class="text-4xl sm:text-5xl lg:text-6xl text-gray-900 font-light tracking-[0.3em] uppercase text-center mb-8 sm:mb-10"
+          style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+        >
+          {title}
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div class="w-full aspect-square overflow-hidden bg-gray-100">
+            {
+              imageSrc ? (
+                <img
+                  src={imageSrc}
+                  alt={imageAlt}
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div
+                  class="flex h-full w-full items-center justify-center border border-dashed border-gray-300"
+                  aria-hidden="true"
+                >
+                  <span class="font-sans text-xs tracking-[0.2em] uppercase text-gray-400">
+                    Image placeholder
+                  </span>
+                </div>
+              )
+            }
+          </div>
+
+          <div>
+            <div class="mb-10 space-y-4 font-sans text-gray-700 leading-relaxed">
+              <slot>
+                {
+                  description && (
+                    <p class="text-body-intro">{description}</p>
+                  )
+                }
+              </slot>
+            </div>
+
+            <div class="flex flex-nowrap justify-start gap-4">
+              <a
+                href={FRESHA_BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block shrink-0 whitespace-nowrap bg-linear-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
+                >Book Treatment</a
+              >
+              <a
+                href={FRESHA_GIFT_CARDS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block shrink-0 whitespace-nowrap border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
+                >Buy Gift Vouchers</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

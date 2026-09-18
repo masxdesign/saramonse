@@ -1,5 +1,6 @@
 ---
 import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
+import ServiceIntro from '../../components/ServiceIntro.astro';
 import ServiceMenuDownloads from '../../components/ServiceMenuDownloads.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
 import MenuBlocks from '../../components/menus/MenuBlocks.astro';
@@ -14,7 +15,7 @@ import {
   nailsNailArtQuote,
   nailsRemovalBlocks,
 } from '../../data/menus/nails';
-import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.js';
+import { FRESHA_BOOKING_URL } from '../../data/site-urls.js';
 ---
 
 <VideoHeroLayout
@@ -25,43 +26,39 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
   videoPoster="/assets/nails-hero-poster.webp"
   footerTheme="dark"
 >
-  <!-- Intro -->
-  <section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8">
-    <div class="max-w-4xl mx-auto">
-      <h2
-        class="text-4xl sm:text-5xl lg:text-6xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
-        style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
+  <ServiceIntro
+    variant="layout2"
+    title="Nails"
+    imageSrc="/assets/nails-intro.webp"
+    imageAlt="French manicure with soft pink base, white tips, and a glitter accent nail"
+  >
+    <h2
+      class="text-sm sm:text-base font-sans font-semibold tracking-[0.15em] uppercase text-gray-900"
+    >
+      Monse Studio × Sara Monse Beauty
+    </h2>
+    <p class="text-body-intro">
+      Monse Studio is our dedicated nail studio, based within Sara Monse Beauty in Bermondsey, London SE1.
+    </p>
+    <p class="text-body-intro">
+      Specialising in considered manicures, BIAB, gel and soft gel extensions, Monse Studio brings a modern,
+      detail-led approach to every set.
+    </p>
+    <p class="text-body-intro">
+      Discover our latest work on Instagram{' '}
+      <a
+        href="https://www.instagram.com/monsestudiolondon/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline underline-offset-2 hover:text-gray-900"
+        >@monsestudiolondon</a
       >
-        Nails
-      </h2>
-
-      <p class="text-body-intro text-gray-700 font-sans leading-relaxed max-w-3xl mb-10">
-        From express tidy-ups to long-lasting gel finishes, our nail treatments are designed to keep your hands and feet
-        looking polished, healthy, and beautiful.
-      </p>
-
-      <div class="flex flex-wrap justify-start gap-4">
-        <a
-          href={FRESHA_BOOKING_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block bg-linear-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
-          >Book Treatment</a
-        >
-        <a
-          href={FRESHA_GIFT_CARDS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
-          >Buy Gift Vouchers</a
-        >
-      </div>
-    </div>
-  </section>
+    </p>
+  </ServiceIntro>
 
   <!-- Treatments -->
   <section class="px-6 sm:px-8 pt-12 sm:pt-16 lg:pt-20 pb-20 sm:pb-24 lg:pb-28">
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-3xl mx-auto">
       <h2
         class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
         style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
@@ -91,7 +88,7 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
         Removal
       </h2>
 
-      <div class="max-w-3xl space-y-10">
+      <div class="space-y-10">
         <MenuBlocks blocks={nailsRemovalBlocks} />
       </div>
     </div>

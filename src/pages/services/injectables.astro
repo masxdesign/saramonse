@@ -1,5 +1,6 @@
 ---
 import VideoHeroLayout from '../../layouts/VideoHeroLayout.astro';
+import ServiceIntro from '../../components/ServiceIntro.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
 import MenuBlocks from '../../components/menus/MenuBlocks.astro';
 import MenuFatDissolve from '../../components/menus/MenuFatDissolve.astro';
@@ -10,7 +11,7 @@ import {
   injectablesMenu,
   injectablesRestBlocks,
 } from '../../data/menus/injectables';
-import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.js';
+import { FRESHA_BOOKING_URL } from '../../data/site-urls.js';
 ---
 
 <VideoHeroLayout
@@ -21,39 +22,10 @@ import { FRESHA_BOOKING_URL, FRESHA_GIFT_CARDS_URL } from '../../data/site-urls.
   videoPoster="/assets/injectables-hero-poster.webp"
   footerTheme="dark"
 >
-  <!-- Intro -->
-  <section class="py-16 sm:py-20 lg:py-24 px-6 sm:px-8">
-    <div class="max-w-4xl mx-auto">
-      <h2
-        class="text-4xl sm:text-5xl lg:text-6xl text-gray-900 font-light tracking-[0.3em] uppercase mb-6"
-        style="font-family: 'Cormorant Garamond', 'Georgia', serif;"
-      >
-        Injectables
-      </h2>
-
-      <p class="text-body-intro text-gray-700 font-sans leading-relaxed max-w-3xl mb-10">
-        Targeted injectable treatments designed to refine, rejuvenate and restore; delivering natural results with
-        advanced techniques.
-      </p>
-
-      <div class="flex flex-wrap gap-4">
-        <a
-          href={FRESHA_BOOKING_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block bg-linear-to-r from-amber-400 via-orange-400 to-pink-500 text-white font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity"
-          >Book Treatment</a
-        >
-        <a
-          href={FRESHA_GIFT_CARDS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
-          >Buy Gift Vouchers</a
-        >
-      </div>
-    </div>
-  </section>
+  <ServiceIntro
+    title="Injectables"
+    description="Targeted injectable treatments designed to refine, rejuvenate and restore; delivering natural results with advanced techniques."
+  />
 
   <!-- Fat Dissolve Injections -->
   <section class="px-6 sm:px-8 pt-20 sm:pt-24 lg:pt-28 pb-24 sm:pb-28 lg:pb-32">

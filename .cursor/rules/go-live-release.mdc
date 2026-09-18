@@ -1,0 +1,31 @@
+---
+description: Release / go-live workflow using git aliases (release-start, bump, release-finish)
+alwaysApply: true
+---
+
+# Go live / release workflow
+
+When the user asks to **go live**, **release**, **ship**, **deploy a release**, or similar (e.g. “make it go live”), follow this process. Do **not** invent a different release flow.
+
+## Preconditions
+
+- Use the user’s global Git aliases: `release-start`, `release-finish` (git-flow style).
+- Deploy Action runs only on push to **`main`** (Cloudflare Workers via `.github/workflows/build.yml`).
+- Next version = latest tag / `package.json` version bumped by one minor step unless the user names a version (e.g. current `1.2` → next `1.3`).
+
+## Steps (in order)
+
+1. Confirm working tree is clean (or only expected changes). Prefer starting from up-to-date **`develop`**.
+2. Run: `git release-start <version>` (e.g. `git release-start 1.3`) → creates `release-<version>` from `develop`.
+3. Bump **`package.json`** and the top-level **`package-lock.json`** `"version"` fields to `<version>`.
+4. Commit on the release branch (message like `Bump package version to <version>.`).
+5. Push the release branch: `git push -u origin HEAD` (or `origin release-<version>`).
+6. Run: `git release-finish <version>` — merges to `main`, tags `<version>`, merges back to `develop`, pushes `main` + tags + `develop`, deletes the release branch. That **`main` push deploys**.
+7. Tell the user to check GitHub Actions (**Build and deploy**) for the run.
+
+## Do not
+
+- Skip the version bump.
+- Push only `develop` and call it a release (that does not deploy).
+- Force-push `main` / `develop` unless the user explicitly asks.
+- Amend or rewrite release history unless asked.

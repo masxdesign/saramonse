@@ -69,7 +69,7 @@ export const nailsHandsBlocks: MenuBlock[] = [
   {
     type: 'richRow',
     title: 'Soft Gel Extensions - Removal & New Set',
-    price: { kind: 'single', amount: '55' },
+    price: { kind: 'single', amount: '60' },
     body: [
       {
         kind: 'p',
@@ -137,6 +137,11 @@ export const nailsAddOnHandsGridBlock: MenuBlock = {
       feet: { mode: 'dash' },
     },
     {
+      name: 'Massage (10mins)',
+      hands: { mode: 'plain', amount: '10' },
+      feet: { mode: 'dash' },
+    },
+    {
       name: 'Hydrating Hand Treatment',
       hands: { mode: 'plain', amount: '5' },
       feet: { mode: 'dash' },
@@ -165,66 +170,57 @@ export const nailsFeetBlocks: MenuBlock[] = [
     body: [
       {
         kind: 'p',
-        text:
-          'A complete pedicure including expert shaping, cuticle care and a high-gloss gel finish. Leaves feet looking neat, refreshed and perfectly maintained.',
+        text: 'A clean, detailed gel treatment for beautifully finished toes.',
       },
-      { kind: 'p', text: '(Dry Pedicure)' },
+      {
+        kind: 'p',
+        text:
+          'Includes nail shaping, detailed cuticle preparation and your choice of gel colour, finished with cuticle oil.',
+      },
+      {
+        kind: 'p',
+        text:
+          'This is a dry nail treatment and does not include foot filing, exfoliation, mask or hot towels.',
+      },
+      {
+        kind: 'p',
+        text: 'For full foot care, please select our Signature Foot Facial.',
+      },
     ],
   },
   {
     type: 'richRow',
-    title: 'Signature Gel Pedicure',
-    price: { kind: 'single', amount: '45' },
+    title: 'Signature Foot Facial - Gel',
+    price: { kind: 'single', amount: '50' },
     body: [
       {
         kind: 'p',
         text:
-          'A complete pedicure including shaping, cuticle care and gel polish, enhanced with steam, exfoliation and a relaxing massage.',
+          'Our complete foot-care ritual for beautifully smooth, refreshed feet and perfectly finished toes.',
       },
-      { kind: 'p', text: 'Designed to soften, smooth and restore the skin.' },
+      {
+        kind: 'p',
+        text:
+          'Performed comfortably on the treatment couch, including steam, hard-skin filing, exfoliating scrub, treatment mask, warm towels, detailed cuticle care, nail shaping and moisturising foot cream.',
+      },
+      { kind: 'p', text: 'Finished with your choice of long-lasting gel colour.' },
     ],
   },
   {
     type: 'richRow',
-    title: 'File, Cuticle & Polish - Toes',
-    price: { kind: 'single', amount: '25' },
+    title: 'Signature Foot Facial - Polish',
+    price: { kind: 'single', amount: '40' },
     body: [
       {
         kind: 'p',
-        text:
-          'Nails are shaped, cuticles refined and finished with your chosen polish. Leaves toes looking clean, neat and well-groomed.',
-      },
-      { kind: 'p', text: '(Dry Pedicure)' },
-      { kind: 'p', text: '***Pedicure treatment upgrade available***' },
-    ],
-  },
-  {
-    type: 'richRow',
-    title: 'Signature Polish Pedicure',
-    price: { kind: 'single', amount: '35' },
-    body: [
-      {
-        kind: 'p',
-        text:
-          'A complete pedicure including shaping, cuticle care and polish, enhanced with steam, exfoliation and a relaxing massage.',
-      },
-      { kind: 'p', text: 'Leaves feet soft, smooth and well-maintained.' },
-    ],
-  },
-  {
-    type: 'richRow',
-    title: 'Gel Toe - File & Colour',
-    price: { kind: 'single', amount: '30' },
-    body: [
-      {
-        kind: 'p',
-        text:
-          'Nails are shaped and finished with a high-gloss gel colour for long-lasting wear. Perfect for a clean, polished look.',
+        text: 'A restorative treatment designed to smooth, soften and refresh tired feet.',
       },
       {
         kind: 'p',
-        text: '(Due to speedy nature of treatment the 7 day guarantee does not apply).',
+        text:
+          'Performed comfortably on the treatment couch, including steam, hard-skin filing, exfoliating scrub, treatment mask, warm towels, detailed cuticle care, nail shaping and moisturising foot cream.',
       },
+      { kind: 'p', text: 'Finished with your choice of classic polish.' },
     ],
   },
   {
@@ -265,6 +261,26 @@ export const nailsAddOnFeetGridBlock: MenuBlock = {
       hands: { mode: 'literal', text: '£10 – £15' },
       feet: { mode: 'dash' },
     },
+    {
+      name: 'Nail Repair (Big Toe)',
+      hands: { mode: 'plain', amount: '5' },
+      feet: { mode: 'dash' },
+    },
+    {
+      name: 'Nail Repair (Natural nail)',
+      hands: { mode: 'plain', amount: '4' },
+      feet: { mode: 'dash' },
+    },
+    {
+      name: 'French Design',
+      hands: { mode: 'plain', amount: '5' },
+      feet: { mode: 'dash' },
+    },
+    {
+      name: 'Massage (10mins)',
+      hands: { mode: 'plain', amount: '12' },
+      feet: { mode: 'dash' },
+    },
   ],
 };
 
@@ -274,7 +290,7 @@ export const nailsFeetSectionBlocks: MenuBlock[] = [...nailsFeetBlocks, nailsAdd
 export const nailsRemovalBlocks: MenuBlock[] = [
   {
     type: 'removalGroup',
-    groupTitle: 'Gel Polish Removal',
+    groupTitle: 'Biab or Gel Polish Removal',
     intro: [
       {
         kind: 'p',
@@ -292,33 +308,14 @@ export const nailsRemovalBlocks: MenuBlock[] = [
     ],
   },
   {
-    type: 'removalGroup',
-    groupTitle: 'BIAB / Builder Gel Removal',
-    intro: [
-      {
-        kind: 'p',
-        text:
-          'Professional removal of builder gel or BIAB, carefully refined to protect the natural nail.',
-      },
-      {
-        kind: 'p',
-        text: 'Pricing varies depending on previous application.',
-      },
-    ],
-    items: [
-      { label: 'Applied by Monse Studio.', amount: '5' },
-      { label: 'Applied by another technician', amount: '12' },
-    ],
-  },
-  {
     type: 'richRow',
-    title: 'Hard Gel / Acrylic / Gel X Removal',
+    title: 'Soft Gel Extensions (Applied by Monse)',
     price: { kind: 'single', amount: '20' },
     body: [
       {
         kind: 'p',
         text:
-          'Safe removal of Hard Gel, Acrylic, Gel X enhancements applied by another technician.',
+          'Safe removal of Soft Gel Extensions (Designxpro or Gel X Applied by Monse)',
       },
       {
         kind: 'p',

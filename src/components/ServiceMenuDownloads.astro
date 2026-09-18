@@ -15,7 +15,7 @@ const fullBrochureHref = '/assets/all-services-menu.pdf';
 const sectionPdfHref = `/assets/${menu.pdfFileName}`;
 ---
 
-<div class="max-w-4xl mx-auto flex flex-col gap-8">
+<div class="max-w-3xl mx-auto flex flex-col gap-8">
   <div class:list={['flex flex-wrap gap-6', primaryRowClass]}>
     <slot />
   </div>
@@ -31,13 +31,16 @@ const sectionPdfHref = `/assets/${menu.pdfFileName}`;
       Download price list
     </p>
     <div
-      class:list={['flex flex-wrap gap-4', centerDownloads ? 'justify-center' : '']}
+      class:list={[
+        'inline-grid grid-flow-col auto-cols-fr gap-4 max-w-full',
+        centerDownloads ? 'mx-auto' : '',
+      ]}
     >
       <a
         href={fullBrochureHref}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
+        class="block w-full text-center border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
       >
         Full salon menu (PDF)
       </a>
@@ -45,7 +48,7 @@ const sectionPdfHref = `/assets/${menu.pdfFileName}`;
         href={sectionPdfHref}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-block border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
+        class="block w-full text-center border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
       >
         {menu.displayName} only (PDF)
       </a>

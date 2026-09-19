@@ -40,6 +40,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Menu PDFs under public/assets/ are not committed; `npm run build` runs `generate:menus` first.
       # Bakes PUBLIC_GTM_CONTAINER_ID into the static build (GA4, Clarity, etc. are tags inside GTM).
       # Optional: PUBLIC_SITE_URL (e.g. https://yourdomain.com) for canonical URLs, JSON-LD, and OG tags; defaults in astro.config.mjs.
       - name: Build site

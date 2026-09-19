@@ -32,7 +32,7 @@ const sectionPdfHref = `/assets/${menu.pdfFileName}`;
     </p>
     <div
       class:list={[
-        'inline-grid grid-flow-col auto-cols-fr gap-4 max-w-full',
+        'grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full',
         centerDownloads ? 'mx-auto' : '',
       ]}
     >
@@ -40,7 +40,7 @@ const sectionPdfHref = `/assets/${menu.pdfFileName}`;
         href={fullBrochureHref}
         target="_blank"
         rel="noopener noreferrer"
-        class="block w-full text-center border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
+        class="block w-full text-center border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.12em] sm:tracking-[0.2em] uppercase px-5 sm:px-8 py-3.5 sm:py-4 hover:bg-gray-900 hover:text-white transition-colors"
       >
         Full salon menu (PDF)
       </a>
@@ -48,7 +48,7 @@ const sectionPdfHref = `/assets/${menu.pdfFileName}`;
         href={sectionPdfHref}
         target="_blank"
         rel="noopener noreferrer"
-        class="block w-full text-center border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.2em] uppercase px-8 py-4 hover:bg-gray-900 hover:text-white transition-colors"
+        class="block w-full text-center border border-gray-900 text-gray-900 font-sans text-sm tracking-[0.12em] sm:tracking-[0.2em] uppercase px-5 sm:px-8 py-3.5 sm:py-4 hover:bg-gray-900 hover:text-white transition-colors"
       >
         {menu.displayName} only (PDF)
       </a>

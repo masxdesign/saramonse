@@ -47,7 +47,7 @@ export const nailsHandsBlocks: MenuBlock[] = [
   },
   {
     type: 'richRow',
-    title: 'Soft Gel Extensions - New Set',
+    title: 'Gel-X Extensions - New Set',
     price: { kind: 'single', amount: '50' },
     body: [
       {
@@ -68,7 +68,7 @@ export const nailsHandsBlocks: MenuBlock[] = [
   },
   {
     type: 'richRow',
-    title: 'Soft Gel Extensions - Removal & New Set',
+    title: 'Gel-X Extensions - Removal & New Set',
     price: { kind: 'single', amount: '60' },
     body: [
       {
@@ -325,58 +325,6 @@ export const nailsRemovalBlocks: MenuBlock[] = [
   },
 ];
 
-export const nailsNailArtQuote: MenuBlock = {
-  type: 'prose',
-  variant: 'quote',
-  text:
-    'Nail art is creative way to express your personality through colour, design and detail. From simple elegance to bold statements, it transforms your nails into tiny works of art.',
-};
-
-/** Left column on web grid; PDF stacks columns in order. */
-export const nailsNailArtColLeft: MenuBlock[] = [
-  {
-    type: 'simpleRow',
-    title: 'Chrome / Cat-Eye Effect (Fullset)',
-    price: { kind: 'single', amount: '12' },
-    description:
-      "A layer of luxe, light-reflecting chrome. AKA the trending 'Glazed Donut' manicure, available in four stunning shades.",
-  },
-  {
-    type: 'simpleRow',
-    title: 'Feature Nail Art (one nail per hand)',
-    price: { kind: 'single', amount: '10' },
-    description: 'Touch of detail on one nail each hand. Marble, Floral, chrome accent.',
-  },
-  {
-    type: 'simpleRow',
-    title: 'Gems / Charms (per nail)',
-    price: { kind: 'from', amount: '2' },
-    description: 'Add sparkle or texture with rhinestones or mini charms, priced per gem & nail.',
-  },
-];
-
-export const nailsNailArtColRight: MenuBlock[] = [
-  {
-    type: 'simpleRow',
-    title: 'Bespoke (Fullset)',
-    price: { kind: 'from', amount: '40' },
-    description:
-      "Custom hand-painted designs. Show a photo you've seen on social media, or we can discuss ideas together to create a personalised look.",
-  },
-  {
-    type: 'simpleRow',
-    title: 'NAIL ART - SM Collection',
-    price: { kind: 'from', amount: '16' },
-    description: 'Choose from my curated set of trendy, pre-approved designs for a stylish full look.',
-  },
-];
-
-export const nailsNailArtBlocks: MenuBlock[] = [
-  nailsNailArtQuote,
-  ...nailsNailArtColLeft,
-  ...nailsNailArtColRight,
-];
-
 export const nailsMenu: ServiceMenu = {
   serviceId: 'nails',
   displayName: 'Nails',
@@ -388,7 +336,5 @@ export const nailsMenu: ServiceMenu = {
     ...nailsFeetSectionBlocks,
     { type: 'section', title: 'Removal' },
     ...nailsRemovalBlocks,
-    { type: 'section', title: 'Nail Art' },
-    ...nailsNailArtBlocks,
   ],
 };

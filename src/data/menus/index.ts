@@ -10,9 +10,6 @@ import {
   nailsHandsBlocks,
   nailsHandsSectionBlocks,
   nailsMenu,
-  nailsNailArtColLeft,
-  nailsNailArtColRight,
-  nailsNailArtQuote,
   nailsRemovalBlocks,
 } from './nails';
 import type { ServiceMenu } from './types';
@@ -35,9 +32,6 @@ export {
   nailsHandsBlocks,
   nailsHandsSectionBlocks,
   nailsMenu,
-  nailsNailArtColLeft,
-  nailsNailArtColRight,
-  nailsNailArtQuote,
   nailsRemovalBlocks,
 };
 
